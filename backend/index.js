@@ -28,6 +28,25 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+// create helpers
+const CryptoHelper = require("./logic/helpers/crypto.helper")(config.pwSecret);
+const SocketHelper = require("./logic/helpers/socket.helper")(sio);
+
+// create middleware
+const authMiddleware = require("./logic/middleware/auth.middleware")(config.tokenSecret);
+
+// const repositories
+const authRepository = require("./logic/repositories/auth.repository")(UserModel, config, CryptoHelper);
+const userRepository = require("./logic/repositories/user.repository")(UserModel);
+
+// create routes
+const authRoute = require("./routes/auth.route")(express, authRepository);
+const userRoute = require("./routes/user.route")(express, userRepository);
+
+// set routes
+app.use("/api/v1", authRoute);
+app.use("/api/v1/user", userRoute);
+
 // socket.io connection
 sio.on("connection", (socket) => {
   console.log(`New Client has connected ${socket.id}`);
