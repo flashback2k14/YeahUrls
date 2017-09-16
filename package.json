@@ -1,0 +1,18 @@
+{
+  "name": "yeah-urls",
+  "version": "0.0.1",
+  "description": "Rewrite from YeaHUrls without firebase",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "flashback2k14",
+  "license": "MIT",
+  "homepage": "https://github.com/flashback2k14/YeahUrls#readme",
+  "bugs": {
+    "url": "https://github.com/flashback2k14/YeahUrls/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/flashback2k14/YeahUrls.git"
+  }
+}
