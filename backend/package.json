@@ -17,6 +17,7 @@
     "type": "git",
     "url": "git+https://github.com/flashback2k14/YeahUrls.git"
   },
+  "private": true,
   "dependencies": {
     "body-parser": "~1.18.1",
     "cors": "~2.8.4",
