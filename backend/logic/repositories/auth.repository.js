@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 
 module.exports = (UserModel, Config, CryptoHelper) => {
 
-  signIn = async (username, userpassword) => {
+  async function signIn (username, userpassword) {
     // search for username
     const foundUser = await UserModel.findOne({ name: username }).lean();
     // validate founduser
@@ -22,9 +22,9 @@ module.exports = (UserModel, Config, CryptoHelper) => {
     }
   }
 
-  signUp = async (username, userpassword, isAdmin) => {
+  async function signUp (username, userpassword, isAdmin) {
     // try to find the user
-    const foundUser = await UserModel.findOne({name: username}); 
+    const foundUser = await UserModel.findOne({name: username}).lean();
     // check if user is available
     if (foundUser) throw new Error("Username is already registered. Please use another Username.");
     // create new User object

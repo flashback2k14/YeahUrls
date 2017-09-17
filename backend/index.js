@@ -19,8 +19,8 @@ const sio = require("socket.io").listen(server);
 // config mongoose
 mongoose.Promise = global.Promise;
 mongoose.connect(config.database, { useMongoClient: true }, (err) => {
-  if (err) console.error(err); return;
-  console.log("Successfully conntected to MongoDB Server!");
+  if (err) console.error(err);
+  else console.log("Successfully conntected to MongoDB Server!");
 });
 
 // config app
@@ -45,7 +45,7 @@ const userRoute = require("./routes/user.route")(express, userRepository);
 
 // set routes
 app.use("/api/v1", authRoute);
-app.use("/api/v1/user", userRoute);
+app.use("/api/v1/user", authMiddleware.checkAuthState, userRoute);
 
 // socket.io connection
 sio.on("connection", (socket) => {

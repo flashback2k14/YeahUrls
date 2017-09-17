@@ -1,8 +1,11 @@
+const jwt = require("jsonwebtoken");
+
 module.exports = (tokenSecret) => {
 
-  checkAuthState = async (req, res, next) => {
+  async function checkAuthState (req, res, next) {
     // get token from request
     const token = req.body.token || req.query.token || req.headers["x-access-token"];
+    
     // check if token is available
     if (!token) {
       return res.status(403).json({ message: "No token provided." });

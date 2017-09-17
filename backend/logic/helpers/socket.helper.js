@@ -9,7 +9,7 @@ module.exports = (sio) => {
     TAGDELETED : "tag_deleted"
   };
 
-  publishChanges = (eventName, changedObject) => {
+  function publishChanges (eventName, changedObject) {
     sio.emit(eventName, changedObject);
   }
 

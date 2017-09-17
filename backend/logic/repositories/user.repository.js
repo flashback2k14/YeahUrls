@@ -1,11 +1,11 @@
 module.exports = (UserModel) => {
-  getAll = async () => {
-    const users = await UserModel.find({});
+  async function getAll () {
+    const users = await UserModel.find({}).lean();
     return users;
   }
 
-  getById = async (id) => {
-    const user = await UserModel.findById(id);
+  async function getById (id) {
+    const user = await UserModel.findById(id).lean();
     return user;
   }
 
