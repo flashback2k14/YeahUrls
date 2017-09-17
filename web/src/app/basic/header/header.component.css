@@ -1,0 +1,15 @@
+header {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 72px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: calc(100% - 24px);
+  padding: 12px;
+  border-bottom: solid 1px black;
+}
+
+.header-title {
+  font-size: xx-large;
+}
