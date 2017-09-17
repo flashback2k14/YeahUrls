@@ -2,6 +2,16 @@ const jwt = require("jsonwebtoken");
 
 module.exports = (UserModel, Config, CryptoHelper) => {
 
+  function _transformUser (user) {
+    return {
+      "id": user._id,
+      "name": user.name,
+      "isAdmin": user.isAdmin,
+      "created": user.createdAt,
+      "updated": user.updatedAt 
+    }
+  }
+
   async function signIn (username, userpassword) {
     // search for username
     const foundUser = await UserModel.findOne({ name: username }).lean();
@@ -18,7 +28,7 @@ module.exports = (UserModel, Config, CryptoHelper) => {
     // return token and user
     return {
       token: token,
-      user: foundUser
+      user: this._transformUser(foundUser)
     }
   }
 
@@ -39,11 +49,12 @@ module.exports = (UserModel, Config, CryptoHelper) => {
     delete createdUser.passwordHash;
     // return user
     return {
-      user: createdUser
+      user: this._transformUser(createdUser)
     }
   }
 
   return {
+    _transformUser,
     signIn,
     signUp
   }

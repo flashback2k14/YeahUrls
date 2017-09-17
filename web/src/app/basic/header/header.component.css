@@ -1,6 +1,7 @@
 header {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: space-between;
   flex: 0 0 72px;
   position: absolute;
   left: 0;
@@ -11,5 +12,29 @@ header {
 }
 
 .header-title {
+  display: flex;
   font-size: xx-large;
+}
+
+.header-user {
+  display: flex;
+  align-items: flex-start;
+}
+
+.header-user_text {
+  font-size: large;
+}
+
+.header-user_separator {
+  margin-left: 4px;
+  margin-right: 4px;
+  font-size: large;
+}
+
+.header-user_action {
+  font-size: large;
+}
+.header-user_action:hover {
+  text-decoration: underline;
+  cursor: pointer;
 }

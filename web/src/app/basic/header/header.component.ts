@@ -1,15 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { Keys } from '../../../helper/keys';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
 
-  constructor() { }
+  constructor (private _router: Router) { }
 
-  ngOnInit() {
+  logout (): void {
+    localStorage.removeItem(Keys.USERTOKEN);
+    localStorage.removeItem(Keys.USERINFO);
+    this._router.navigate(["/login"]);
   }
-
 }
