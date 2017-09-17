@@ -20,7 +20,7 @@ const sio = require("socket.io").listen(server);
 mongoose.Promise = global.Promise;
 mongoose.connect(Config.database, { useMongoClient: true }, (err) => {
   if (err) console.error(err);
-  else console.log("Successfully conntected to MongoDB Server!");
+  else console.log(`MONGODB SERVER: successfully connected under ${Config.database}`);
 });
 
 // config app
@@ -44,8 +44,8 @@ const urlRepository = require("./logic/repositories/url.repository")(UrlModel, T
 // create routes
 const authRoute = require("./routes/auth.route")(express, authRepository);
 const userRoute = require("./routes/user.route")(express, userRepository);
-const tagRoute = require("./routes/tag.route")(express, tagRepository);
-const urlRoute = require("./routes/url.route")(express, urlRepository);
+const tagRoute = require("./routes/tag.route")(express, tagRepository, SocketHelper);
+const urlRoute = require("./routes/url.route")(express, urlRepository, SocketHelper);
 
 // set routes
 app.use("/api/v1", authRoute);
@@ -55,9 +55,9 @@ app.use("/api/v1/url", authMiddleware.checkAuthState, urlRoute);
 
 // socket.io connection
 sio.on("connection", (socket) => {
-  console.log(`New Client has connected ${socket.id}`);
-  socket.on("disconnect", () => console.log("A Client has disconnected"));
+  console.log(`SOCKET.IO: new client has connected ${socket.id}`);
+  socket.on("disconnect", () => console.log("SOCKET.IO: a client has disconnected"));
 });
 
 // start the server
-server.listen(Config.port, () => console.log(`Server is running under PORT ${Config.port}`));
+server.listen(Config.port, () => console.log(`SERVER: is running under PORT ${Config.port}`));

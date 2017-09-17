@@ -18,6 +18,12 @@ module.exports = (TagModel) => {
     return this._transformTag(tag);
   }
 
+  async function createNewTag (name) {
+    await TagModel.findOne({ name }).lean();
+    const createdTag = await new TagModel({ name }).save();
+    return this._transformTag(createdTag);
+  }
+
   async function updateById (id, name) {
     const body = { name };
     const updatedTag = await TagModel.findByIdAndUpdate({ _id: id, }, { $set: body }, { new: true }).lean();
@@ -33,6 +39,7 @@ module.exports = (TagModel) => {
     _transformTag,
     getAll,
     getById,
+    createNewTag,
     updateById,
     deleteById
   }
