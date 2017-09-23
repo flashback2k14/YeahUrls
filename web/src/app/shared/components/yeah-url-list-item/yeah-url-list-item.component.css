@@ -15,7 +15,19 @@
 
 .item-container_top-url {
   padding-left: 4px;
-  font-size: medium;
+  font-size: large;
+}
+
+.item-container_top-url_text {
+  text-decoration: none;
+  outline: none;
+}
+.item-container_top-url_text:hover,
+.item-container_top-url_text:focus {
+  text-decoration: underline;
+}
+.item-container_top-url_text:visited {
+  color: #C0CCDA;
 }
 
 .item-container_top-action {

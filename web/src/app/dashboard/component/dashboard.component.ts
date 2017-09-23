@@ -14,20 +14,20 @@ export class DashboardComponent implements OnInit {
     // TODO: Create Objects for URL and TAG
     this.urlList = [
       {
-        name: "www.google.de",
+        name: "https://www.google.de",
         tags: [
           "tag1",
           "tag2"
         ]
       },
       {
-        name: "www.golem.de",
+        name: "https://www.golem.de",
         tags: [
           "tag1"
         ]
       },
       {
-        name: "www.github.com",
+        name: "https://www.github.com",
         tags: [
           "tag1",
           "tag2",
