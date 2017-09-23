@@ -7,12 +7,51 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor () { }
-  ngOnInit () { }
+  urlList: Array<any>
 
-  handleSubmittedSearchRequest (searchRequest): void {
-    if (searchRequest) {
-      alert(searchRequest);
+  constructor () { }
+  ngOnInit () {
+    // TODO: Create Objects for URL and TAG
+    this.urlList = [
+      {
+        name: "www.google.de",
+        tags: [
+          "tag1",
+          "tag2"
+        ]
+      },
+      {
+        name: "www.golem.de",
+        tags: [
+          "tag1"
+        ]
+      },
+      {
+        name: "www.github.com",
+        tags: [
+          "tag1",
+          "tag2",
+          "tag3"
+        ]
+      }
+    ];
+  }
+
+  handleSubmittedSearchRequest (requestedSearchTerm: string): void {
+    if (requestedSearchTerm) {
+      alert(requestedSearchTerm);
     }
+  }
+
+  handleSubmittedEditUrlItemRequest (requestedUrl: any): void {
+    alert(requestedUrl.name);
+  }
+
+  handleSubmittedDeleteUrlItemRequest (requestedUrl: any): void {
+    alert(requestedUrl.name);
+  }
+
+  handleSubmittedTagNameAsSearchRequest (requestedSearchTerm: string): void {
+    alert(requestedSearchTerm)
   }
 }

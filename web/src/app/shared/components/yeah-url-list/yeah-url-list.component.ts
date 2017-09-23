@@ -8,8 +8,6 @@ import { Component, OnInit } from '@angular/core';
 export class YeahUrlListComponent implements OnInit {
 
   constructor() { }
-
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
 }

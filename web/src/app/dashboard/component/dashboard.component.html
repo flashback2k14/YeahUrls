@@ -1,16 +1,12 @@
 <div>
   <yeah-url-list-search (searchRequestSubmitted)="handleSubmittedSearchRequest($event)"></yeah-url-list-search>
   <yeah-url-list>
-    <yeah-url-list-item>
-      <yeah-url-list-tag></yeah-url-list-tag>
-    </yeah-url-list-item>
-    <yeah-url-list-item>
-      <yeah-url-list-tag></yeah-url-list-tag>
-    </yeah-url-list-item>
-    <yeah-url-list-item>
-      <yeah-url-list-tag></yeah-url-list-tag>
-      <yeah-url-list-tag></yeah-url-list-tag>
-      <yeah-url-list-tag></yeah-url-list-tag>
+    <yeah-url-list-item *ngFor="let url of urlList" [url]="url"
+      (editUrlItemRequestSubmitted)="handleSubmittedEditUrlItemRequest($event)"
+      (deleteUrlItemRequestSubmitted)="handleSubmittedDeleteUrlItemRequest($event)">
+      <yeah-url-list-tag *ngFor="let tag of url.tags" [name]="tag"
+        (tagNameAsSearchRequestSubmitted)="handleSubmittedTagNameAsSearchRequest($event)">
+      </yeah-url-list-tag>
     </yeah-url-list-item>
   </yeah-url-list>
 </div>

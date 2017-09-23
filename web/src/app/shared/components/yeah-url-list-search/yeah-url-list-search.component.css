@@ -22,6 +22,7 @@
 .search-container_button {
   width: 80px;
   background: transparent;
+  font-size: small;
 }
 
 .search-container_button-send {
