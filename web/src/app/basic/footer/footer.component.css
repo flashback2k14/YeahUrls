@@ -7,5 +7,31 @@ footer {
   bottom: 0;
   width: calc(100% - 24px);
   padding: 12px;
-  border-top: solid 1px black;
+  font-size: small;
+}
+
+.footer-anchor {
+  display: flex;
+  flex: 1 1 auto;
+  text-decoration: none;
+  color: #C0CCDA;
+  outline: none;
+}
+.footer-anchor:hover,
+.footer-anchor:focus {
+  text-decoration: underline;
+}
+.footer-anchor:visited {
+  color: #C0CCDA;
+}
+.footer-icon {
+  margin-right: 12px;
+}
+
+/* Smartphones (portrait and landscape) ----------- */
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+  .anchor-style {
+    justify-content: center;
+    font-size: small;
+  }
 }
