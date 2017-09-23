@@ -14,7 +14,8 @@ import { MainComponent } from "./main/main.component";
   exports: [
     FooterComponent,
     HeaderComponent,
-    MainComponent
+    MainComponent,
+    CommonModule
   ]
 })
 export class BasicModule { }

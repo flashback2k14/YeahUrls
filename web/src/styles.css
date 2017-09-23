@@ -14,6 +14,10 @@ body {
   overflow: auto;
 }
 
+/*
+  COLORS
+*/
+
 .background-color {
   background: #252C36;
 }
@@ -36,4 +40,47 @@ body {
 
 .text-color_accent-2 {
   color: #E4676A;
+}
+
+/*
+  INPUTS
+*/
+
+.custom-input {
+  margin: 12px;
+  padding-bottom: 4px;
+  border: 0;
+  border-bottom: 1px solid #141E2A;
+  font-size: medium;
+  outline: none;
+}
+.custom-input::placeholder {
+  color: #414953;
+}
+.custom-input:hover,
+.custom-input:focus,
+.custom-input:valid {
+  border-bottom: 1px solid #81D4FA;
+}
+
+/*
+  BUTTONS
+*/
+
+.custom-button {
+  width: 150px;
+  margin-top: 12px;
+  padding: 3px;
+  border: 0;
+  border-radius: 4px;
+  font-size: medium;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.4);
+  transition: 0.3s;
+  outline: none;
+}
+.custom-button:hover,
+.custom-button:focus {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.6);
 }

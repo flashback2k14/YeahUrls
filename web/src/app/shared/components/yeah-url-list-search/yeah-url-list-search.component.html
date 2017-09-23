@@ -1,0 +1,12 @@
+<div class="search-container">
+  <input #txtSearchTerm class="custom-input background-color text-color search-container_input"
+    type="text" required placeholder="Enter your search term...">
+  <div class="search-container_actions">
+    <button class="custom-button search-container_button search-container_button-send"
+      (click)="sendSearchRequest(txtSearchTerm)">Send
+    </button>
+    <button class="custom-button search-container_button search-container_button-clear"
+      (click)="clear(txtSearchTerm)">Clear
+    </button>
+  </div>
+</div>
