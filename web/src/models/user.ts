@@ -1,6 +1,6 @@
 export class User {
   id: string;
-  username: string;
+  name: string;
   isAdmin: boolean;
   created: Date;
   updated: Date;

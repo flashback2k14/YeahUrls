@@ -8,7 +8,6 @@ header {
   top: 0;
   width: calc(100% - 24px);
   padding: 12px;
-  border-bottom: solid 1px black;
 }
 
 .header-title {
@@ -22,17 +21,17 @@ header {
 }
 
 .header-user_text {
-  font-size: large;
+  font-size: medium;
 }
 
 .header-user_separator {
   margin-left: 4px;
   margin-right: 4px;
-  font-size: large;
+  font-size: medium;
 }
 
 .header-user_action {
-  font-size: large;
+  font-size: medium;
 }
 .header-user_action:hover {
   text-decoration: underline;
