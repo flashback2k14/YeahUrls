@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../core/auth.service';
-import { LoginResult } from '../../models/login-result';
 import { Router } from '@angular/router';
-import { Keys } from '../../helper/keys';
+import { AuthService } from '../../core/auth.service';
+import { LoginResult } from '../../../models/login-result';
+import { Keys } from '../../../helper/keys';
 
 @Component({
   selector: 'app-login',
