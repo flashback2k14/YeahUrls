@@ -55,11 +55,16 @@ form {
   font-size: medium;
   text-transform: uppercase;
   cursor: pointer;
+  background: transparent;
+  color: #81D4FA;
+  border: 1px solid #81D4FA;
   box-shadow: 0 2px 4px 0 rgba(0,0,0,0.4);
   transition: 0.3s;
   outline: none;
 }
 .login-container_button:hover,
 .login-container_button:focus {
+  background: #81D4FA;
+  color: black;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.6);
 }

@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Url } from '../../../models/url';
+import { UrlService } from '../../core/services/url.service';
+import { Helper } from '../../../helper/helper';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,34 +10,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
-  urlList: Array<any>
+  urlList: Array<Url>;
 
-  constructor () { }
+  constructor (private _urlService: UrlService) { }
+
   ngOnInit () {
-    // TODO: Create Objects for URL and TAG
-    this.urlList = [
-      {
-        name: "https://www.google.de",
-        tags: [
-          "tag1",
-          "tag2"
-        ]
-      },
-      {
-        name: "https://www.golem.de",
-        tags: [
-          "tag1"
-        ]
-      },
-      {
-        name: "https://www.github.com",
-        tags: [
-          "tag1",
-          "tag2",
-          "tag3"
-        ]
-      }
-    ];
+    this._urlService.getUrlsByUser(Helper.getUserId())
+      .then(result => this.urlList = result)
+      .catch(error => console.error(error));
   }
 
   handleSubmittedSearchRequest (requestedSearchTerm: string): void {
@@ -43,12 +26,12 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  handleSubmittedEditUrlItemRequest (requestedUrl: any): void {
-    alert(requestedUrl.name);
+  handleSubmittedEditUrlItemRequest (requestedUrl: Url): void {
+    alert(requestedUrl.url);
   }
 
-  handleSubmittedDeleteUrlItemRequest (requestedUrl: any): void {
-    alert(requestedUrl.name);
+  handleSubmittedDeleteUrlItemRequest (requestedUrl: Url): void {
+    alert(requestedUrl.url);
   }
 
   handleSubmittedTagNameAsSearchRequest (requestedSearchTerm: string): void {
