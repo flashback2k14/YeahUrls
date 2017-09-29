@@ -1,35 +1,61 @@
 module.exports = (UrlModel, TagModel, UserModel) => {
 
-  async function _createNewTags (tags) {
+  /**
+   * PRIVATE API
+   */
+
+  function _transformTag (tag) {
+    return {
+      "id": tag._id,
+      "name": tag.name,
+      "created": tag.createdAt,
+      "updated": tag.updatedAt 
+    };
+  }
+
+  async function _getTagsFromUrl (tags) {
     return await Promise.all(tags.map(async tag => {
-      // search for tag if already created
-      let foundTag = await TagModel.findOne({ name: tag }).lean();
-      // if no tag is found then create a new tag
-      if (!foundTag) foundTag = await new TagModel({ name: tag }).save();
-      // return tag id
-      return foundTag._id;
+      return this._transformTag(await TagModel.findById(tag).lean());
     }));
   }
 
-  function _transformUrl (url) {
+  async function _transformUrl (url) {
     return {
       "id": url._id,
       "url": url.url,
       "user": url.user,
-      "tags": url.tags,
+      "tags": await this._getTagsFromUrl(url.tags),
       "created": url.createdAt,
       "updated": url.updatedAt 
-    }
+    };
   }
+
+  async function _transformAllUrls (urls) {
+    return await Promise.all(urls.map(async url => {
+      return await this._transformUrl(url)
+    }));
+  }
+
+  async function _createNewTags (tags) {
+    return await Promise.all(tags.map(async tag => {
+      let foundTag = await TagModel.findOne({ name: tag }).lean();
+      if (!foundTag) foundTag = await new TagModel({ name: tag }).save();
+      return foundTag._id;
+    }));
+  }
+
+  /**
+   * PUBLIC API
+   */
 
   async function getAll () {
     const urls = await UrlModel.find({}).lean();
-    return urls.map(this._transformUrl);
+    return await this._transformAllUrls(urls);
   }
 
   async function getAllByUserId (userId) {
     const urls = await UrlModel.find({ user: userId }).lean();
-    return urls.map(this._transformUrl);
+    return await this._transformAllUrls(urls);
   }
 
   async function getByUserIdAndUrlId (userId, urlId) {
@@ -110,7 +136,10 @@ module.exports = (UrlModel, TagModel, UserModel) => {
 
   return {
     _createNewTags,
+    _getTagsFromUrl,
+    _transformTag,
     _transformUrl,
+    _transformAllUrls,
     getAll,
     getAllByUserId,
     getByUserIdAndUrlId,
@@ -119,5 +148,5 @@ module.exports = (UrlModel, TagModel, UserModel) => {
     createNewTagForUserIdAndUrlId,
     deleteByUserIdAndUrlId,
     deleteTagByUserIdAndUrlId
-  }
+  };
 }
