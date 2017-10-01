@@ -18,7 +18,9 @@ footer {
   outline: none;
 }
 .footer-anchor:hover,
-.footer-anchor:focus {
+.footer-import:hover,
+.footer-anchor:focus,
+.footer-import:focus {
   text-decoration: underline;
 }
 .footer-anchor:visited {

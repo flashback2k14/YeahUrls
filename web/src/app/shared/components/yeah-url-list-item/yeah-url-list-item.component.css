@@ -30,31 +30,6 @@
   color: #C0CCDA;
 }
 
-.item-container_top-action {
-  background: transparent;
-  border-radius: 4px;
-  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.4);
-  transition: 0.3s;
-}
-
-.item-container_top-action-edit {
-  color: #81D4FA;
-  border: 1px solid #81D4FA;
-}
-.item-container_top-action-edit:hover {
-  background: #81D4FA;
-  color: black;
-}
-
-.item-container_top-action-delete {
-  color: #E4676A;
-  border: 1px solid #E4676A;
-}
-.item-container_top-action-delete:hover {
-  background: #E4676A;
-  color: black;
-}
-
 .item-container_bottom {
   display: flex;
   margin-top: 2px;

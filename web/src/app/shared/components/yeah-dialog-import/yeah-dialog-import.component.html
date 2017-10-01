@@ -1,0 +1,15 @@
+<yeah-dialog [(visible)]="showDialog">
+  <div>
+    <h3>IMPORT from Firebase Data</h3>
+  </div>
+  <div style="margin-right:8px;">
+    <textarea #taImportData style="width:100%;" class="background-color text-color"
+      name="import-data" id="taImportData" rows="30">
+    </textarea>
+  </div>
+  <div>
+    <button class="custom-button custom-button_ok"
+      (click)="test(taImportData)">IMPORT
+    </button>
+  </div>
+</yeah-dialog>

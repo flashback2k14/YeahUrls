@@ -3,5 +3,6 @@
   <app-main>
     <router-outlet></router-outlet>
   </app-main>
-  <app-footer></app-footer>
+  <app-footer (openImportRequestSubmitted)="handleSubmittedOpenImportRequest()"></app-footer>
+  <yeah-dialog-import [(showDialog)]="showImportDialog"></yeah-dialog-import>
 </div>

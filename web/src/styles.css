@@ -68,12 +68,13 @@ body {
 */
 
 .custom-button {
-  width: 150px;
+  width: 80px;
   margin-top: 12px;
   padding: 3px;
   border: 0;
   border-radius: 4px;
-  font-size: medium;
+  background: transparent;
+  font-size: small;
   text-transform: uppercase;
   cursor: pointer;
   box-shadow: 0 2px 4px 0 rgba(0,0,0,0.4);
@@ -83,6 +84,24 @@ body {
 .custom-button:hover,
 .custom-button:focus {
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.6);
+}
+
+.custom-button_ok {
+  color: #81D4FA;
+  border: 1px solid #81D4FA;
+}
+.custom-button_ok:hover {
+  background: #81D4FA;
+  color: black;
+}
+
+.custom-button_cancel {
+  color: #E4676A;
+  border: 1px solid #E4676A;
+}
+.custom-button_cancel:hover {
+  background: #E4676A;
+  color: black;
 }
 
 /* theming scrollbars */

@@ -1,0 +1,7 @@
+<div [@dialog-animation] *ngIf="visible" class="dialog-containter background-color text-color">
+  <ng-content></ng-content>
+  <button *ngIf="closable" class="dialog-button_close text-color"
+    (click)="close()" aria-label="close">X
+  </button>
+</div>
+<div *ngIf="visible" class="dialog-overlay" (click)="close()"></div>

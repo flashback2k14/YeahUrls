@@ -11,11 +11,15 @@ import { Keys } from '../../helper/keys';
 })
 export class AppComponent implements OnInit {
 
+  showImportDialog: boolean;
+
   constructor (
     private _authService: AuthService,
     private _headerService: HeaderService,
     private _router: Router
-  ) {}
+  ) {
+    this.showImportDialog = false;
+  }
 
   ngOnInit(): void {
     if (this._authService.isLoggedIn) {
@@ -31,5 +35,9 @@ export class AppComponent implements OnInit {
     const userObj = JSON.parse(localStorage.getItem(Keys.USERINFO));
     if (userObj) return userObj.name;
     return "Unknown User";
+  }
+
+  handleSubmittedOpenImportRequest (): void {
+    this.showImportDialog = true;
   }
 }

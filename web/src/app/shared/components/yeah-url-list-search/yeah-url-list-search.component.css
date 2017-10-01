@@ -18,27 +18,3 @@
   justify-content: center;
   margin-right: 12px;
 }
-
-.search-container_button {
-  width: 80px;
-  background: transparent;
-  font-size: small;
-}
-
-.search-container_button-send {
-  color: #81D4FA;
-  border: 1px solid #81D4FA;
-}
-.search-container_button-send:hover {
-  background: #81D4FA;
-  color: black;
-}
-
-.search-container_button-clear {
-  color: #E4676A;
-  border: 1px solid #E4676A;
-}
-.search-container_button-clear:hover {
-  background: #E4676A;
-  color: black;
-}
