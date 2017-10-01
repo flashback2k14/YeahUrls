@@ -4,6 +4,7 @@ import { UrlService } from '../../core/services/url.service';
 import { Helper } from '../../../helper/helper';
 import { Tag } from '../../../models/tag';
 import { YeahDialogDeleteComponent } from '../../shared/components/yeah-dialog-delete/yeah-dialog-delete.component';
+import { YeahDialogEditComponent } from '../../shared/components/yeah-dialog-edit/yeah-dialog-edit.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,6 +13,7 @@ import { YeahDialogDeleteComponent } from '../../shared/components/yeah-dialog-d
 })
 export class DashboardComponent implements OnInit {
 
+  @ViewChild("yeahUrlEditDialog") yeahUrlEditDialog: YeahDialogEditComponent;
   @ViewChild("yeahUrlDeleteDialog") yeahUrlDeleteDialog: YeahDialogDeleteComponent;
 
   private _urlList: Array<Url>;
@@ -55,7 +57,13 @@ export class DashboardComponent implements OnInit {
   }
 
   handleSubmittedEditUrlItemRequest (requestedUrl: Url): void {
-    alert("Open Dialog");
+    this.yeahUrlEditDialog.open(requestedUrl);
+  }
+
+  handleCompletedEditUrlItem (modifiedUrl: Url): void {
+    const foundIndex = this._urlList.findIndex((url: Url) => url.id === modifiedUrl.id);
+    this._urlList.splice(foundIndex, 1, modifiedUrl);
+    this.filteredUrlList = this._urlList;
   }
 
   handleSubmittedDeleteUrlItemRequest (requestedUrl: Url): void {

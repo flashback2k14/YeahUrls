@@ -28,7 +28,7 @@ export class UrlService {
   }
 
   async putUrlByUserAndId (userId: string, urlId: string, urlData: any): Promise<Url> {
-    const data: Response = await this._http.put(`${this._baseUrl}/${userId}`, urlData,
+    const data: Response = await this._http.put(`${this._baseUrl}/${userId}/${urlId}`, urlData,
                                                 { headers: this._headers}).toPromise();
     const result = await data.json() as Url;
     return result;

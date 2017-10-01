@@ -1,0 +1,22 @@
+.input-container {
+  margin-top: 16px;
+}
+
+.edit-input {
+  width: 100%;
+  /* margin: 12px; */
+  padding-bottom: 4px;
+  border: 0;
+  border-bottom: 1px solid #141E2A;
+  font-size: medium;
+  outline: none;
+  word-wrap: break-word;
+}
+.edit-input::placeholder {
+  color: #414953;
+}
+.edit-input:hover,
+.edit-input:focus,
+.edit-input:valid {
+  border-bottom: 1px solid #81D4FA;
+}

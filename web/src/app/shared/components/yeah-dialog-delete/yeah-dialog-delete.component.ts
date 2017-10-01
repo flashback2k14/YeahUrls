@@ -33,5 +33,5 @@ export class YeahDialogDeleteComponent {
     const removedUrlId = await this._urlService.deleteUrlByUserAndId(Helper.getUserId(), this._url.id);
     this.deleteUrlCompleted.emit(removedUrlId);
     this.showDialog = false;
-  } 
+  }
 }
