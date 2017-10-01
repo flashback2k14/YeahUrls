@@ -5,6 +5,7 @@ import { Helper } from '../../../helper/helper';
 import { Tag } from '../../../models/tag';
 import { YeahDialogDeleteComponent } from '../../shared/components/yeah-dialog-delete/yeah-dialog-delete.component';
 import { YeahDialogEditComponent } from '../../shared/components/yeah-dialog-edit/yeah-dialog-edit.component';
+import { YeahUrlListSearchComponent } from '../../shared/components/yeah-url-list-search/yeah-url-list-search.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,6 +14,7 @@ import { YeahDialogEditComponent } from '../../shared/components/yeah-dialog-edi
 })
 export class DashboardComponent implements OnInit {
 
+  @ViewChild("yeahUrlSearchElement") yeahUrlSearchElement: YeahUrlListSearchComponent;
   @ViewChild("yeahUrlEditDialog") yeahUrlEditDialog: YeahDialogEditComponent;
   @ViewChild("yeahUrlDeleteDialog") yeahUrlDeleteDialog: YeahDialogDeleteComponent;
 
@@ -77,6 +79,6 @@ export class DashboardComponent implements OnInit {
   }
 
   handleSubmittedTagNameAsSearchRequest (requestedSearchTerm: string): void {
-    alert(requestedSearchTerm)
+    this.yeahUrlSearchElement.setSearchInputText(requestedSearchTerm);
   }
 }

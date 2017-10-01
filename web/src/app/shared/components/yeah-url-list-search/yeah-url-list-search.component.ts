@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'yeah-url-list-search',
@@ -7,9 +7,10 @@ import { Component, Output, EventEmitter } from '@angular/core';
 })
 export class YeahUrlListSearchComponent {
 
+  @ViewChild("txtSearchTerm") txtSearchTerm: any;
   @Output() searchRequestSubmitted: EventEmitter<string>;
 
-  constructor () { 
+  constructor () {
     this.searchRequestSubmitted = new EventEmitter<string>();
   }
 
@@ -24,5 +25,10 @@ export class YeahUrlListSearchComponent {
       this.searchRequestSubmitted.next(null);
       txtSearchTerm.value = "";
     }
+  }
+
+  setSearchInputText (value: string): void {
+    this.txtSearchTerm.nativeElement.value = value;
+    this.sendSearchRequest(this.txtSearchTerm.nativeElement);
   }
 }
