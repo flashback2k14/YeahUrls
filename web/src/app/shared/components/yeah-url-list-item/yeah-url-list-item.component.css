@@ -14,8 +14,10 @@
 }
 
 .item-container_top-url {
+  width: 80%;
   padding-left: 4px;
   font-size: large;
+  word-wrap: break-word;
 }
 
 .item-container_top-url_text {

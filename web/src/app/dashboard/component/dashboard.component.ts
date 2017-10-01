@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Url } from '../../../models/url';
 import { UrlService } from '../../core/services/url.service';
 import { Helper } from '../../../helper/helper';
+import { Tag } from '../../../models/tag';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,385 +13,18 @@ export class DashboardComponent implements OnInit {
 
   private _urlList: Array<Url>;
   filteredUrlList: Array<Url>;
+  showLoading: boolean;
 
-  constructor (private _urlService: UrlService) { }
+  constructor (private _urlService: UrlService) {
+    this.showLoading = true;
+  }
 
   ngOnInit () {
-
-    // this.urlList = [
-    //   {
-    //     "id": "59be3e2cf5ae3a384349f702",
-    //     "url": "http://www.google.com",
-    //     "user": "59be2f6cd634c130224fe7d3",
-    //     "tags": [
-    //       {
-    //         "id": "59be3e24f5ae3a384349f700",
-    //         "name": "GOOGLE",
-    //         "created": "2017-09-17T09:19:32.808Z",
-    //         "updated": "2017-09-17T09:46:24.087Z"
-    //       }
-    //     ],
-    //     "created": "2017-09-17T09:19:54.644Z",
-    //     "updated": "2017-09-17T11:37:35.115Z"
-    //   },
-    //   {
-    //     "id": "59be3e2cf5ae3a384349f702",
-    //     "url": "http://www.google.com",
-    //     "user": "59be2f6cd634c130224fe7d3",
-    //     "tags": [
-    //       {
-    //         "id": "59be3e24f5ae3a384349f700",
-    //         "name": "GOOGLE",
-    //         "created": "2017-09-17T09:19:32.808Z",
-    //         "updated": "2017-09-17T09:46:24.087Z"
-    //       }
-    //     ],
-    //     "created": "2017-09-17T09:19:54.644Z",
-    //     "updated": "2017-09-17T11:37:35.115Z"
-    //   },
-    //   {
-    //     "id": "59be3e2cf5ae3a384349f702",
-    //     "url": "http://www.google.com",
-    //     "user": "59be2f6cd634c130224fe7d3",
-    //     "tags": [
-    //       {
-    //         "id": "59be3e24f5ae3a384349f700",
-    //         "name": "GOOGLE",
-    //         "created": "2017-09-17T09:19:32.808Z",
-    //         "updated": "2017-09-17T09:46:24.087Z"
-    //       }
-    //     ],
-    //     "created": "2017-09-17T09:19:54.644Z",
-    //     "updated": "2017-09-17T11:37:35.115Z"
-    //   }, {
-    //     "id": "59be3e2cf5ae3a384349f702",
-    //     "url": "http://www.google.com",
-    //     "user": "59be2f6cd634c130224fe7d3",
-    //     "tags": [
-    //       {
-    //         "id": "59be3e24f5ae3a384349f700",
-    //         "name": "GOOGLE",
-    //         "created": "2017-09-17T09:19:32.808Z",
-    //         "updated": "2017-09-17T09:46:24.087Z"
-    //       }
-    //     ],
-    //     "created": "2017-09-17T09:19:54.644Z",
-    //     "updated": "2017-09-17T11:37:35.115Z"
-    //   }, {
-    //     "id": "59be3e2cf5ae3a384349f702",
-    //     "url": "http://www.google.com",
-    //     "user": "59be2f6cd634c130224fe7d3",
-    //     "tags": [
-    //       {
-    //         "id": "59be3e24f5ae3a384349f700",
-    //         "name": "GOOGLE",
-    //         "created": "2017-09-17T09:19:32.808Z",
-    //         "updated": "2017-09-17T09:46:24.087Z"
-    //       }
-    //     ],
-    //     "created": "2017-09-17T09:19:54.644Z",
-    //     "updated": "2017-09-17T11:37:35.115Z"
-    //   }, {
-    //     "id": "59be3e2cf5ae3a384349f702",
-    //     "url": "http://www.google.com",
-    //     "user": "59be2f6cd634c130224fe7d3",
-    //     "tags": [
-    //       {
-    //         "id": "59be3e24f5ae3a384349f700",
-    //         "name": "GOOGLE",
-    //         "created": "2017-09-17T09:19:32.808Z",
-    //         "updated": "2017-09-17T09:46:24.087Z"
-    //       }
-    //     ],
-    //     "created": "2017-09-17T09:19:54.644Z",
-    //     "updated": "2017-09-17T11:37:35.115Z"
-    //   }, {
-    //     "id": "59be3e2cf5ae3a384349f702",
-    //     "url": "http://www.google.com",
-    //     "user": "59be2f6cd634c130224fe7d3",
-    //     "tags": [
-    //       {
-    //         "id": "59be3e24f5ae3a384349f700",
-    //         "name": "GOOGLE",
-    //         "created": "2017-09-17T09:19:32.808Z",
-    //         "updated": "2017-09-17T09:46:24.087Z"
-    //       }
-    //     ],
-    //     "created": "2017-09-17T09:19:54.644Z",
-    //     "updated": "2017-09-17T11:37:35.115Z"
-    //   }, {
-    //     "id": "59be3e2cf5ae3a384349f702",
-    //     "url": "http://www.google.com",
-    //     "user": "59be2f6cd634c130224fe7d3",
-    //     "tags": [
-    //       {
-    //         "id": "59be3e24f5ae3a384349f700",
-    //         "name": "GOOGLE",
-    //         "created": "2017-09-17T09:19:32.808Z",
-    //         "updated": "2017-09-17T09:46:24.087Z"
-    //       }
-    //     ],
-    //     "created": "2017-09-17T09:19:54.644Z",
-    //     "updated": "2017-09-17T11:37:35.115Z"
-    //   }, {
-    //     "id": "59be3e2cf5ae3a384349f702",
-    //     "url": "http://www.google.com",
-    //     "user": "59be2f6cd634c130224fe7d3",
-    //     "tags": [
-    //       {
-    //         "id": "59be3e24f5ae3a384349f700",
-    //         "name": "GOOGLE",
-    //         "created": "2017-09-17T09:19:32.808Z",
-    //         "updated": "2017-09-17T09:46:24.087Z"
-    //       }
-    //     ],
-    //     "created": "2017-09-17T09:19:54.644Z",
-    //     "updated": "2017-09-17T11:37:35.115Z"
-    //   }, {
-    //     "id": "59be3e2cf5ae3a384349f702",
-    //     "url": "http://www.google.com",
-    //     "user": "59be2f6cd634c130224fe7d3",
-    //     "tags": [
-    //       {
-    //         "id": "59be3e24f5ae3a384349f700",
-    //         "name": "GOOGLE",
-    //         "created": "2017-09-17T09:19:32.808Z",
-    //         "updated": "2017-09-17T09:46:24.087Z"
-    //       }
-    //     ],
-    //     "created": "2017-09-17T09:19:54.644Z",
-    //     "updated": "2017-09-17T11:37:35.115Z"
-    //   }, {
-    //     "id": "59be3e2cf5ae3a384349f702",
-    //     "url": "http://www.google.com",
-    //     "user": "59be2f6cd634c130224fe7d3",
-    //     "tags": [
-    //       {
-    //         "id": "59be3e24f5ae3a384349f700",
-    //         "name": "GOOGLE",
-    //         "created": "2017-09-17T09:19:32.808Z",
-    //         "updated": "2017-09-17T09:46:24.087Z"
-    //       }
-    //     ],
-    //     "created": "2017-09-17T09:19:54.644Z",
-    //     "updated": "2017-09-17T11:37:35.115Z"
-    //   }, {
-    //     "id": "59be3e2cf5ae3a384349f702",
-    //     "url": "http://www.google.com",
-    //     "user": "59be2f6cd634c130224fe7d3",
-    //     "tags": [
-    //       {
-    //         "id": "59be3e24f5ae3a384349f700",
-    //         "name": "GOOGLE",
-    //         "created": "2017-09-17T09:19:32.808Z",
-    //         "updated": "2017-09-17T09:46:24.087Z"
-    //       }
-    //     ],
-    //     "created": "2017-09-17T09:19:54.644Z",
-    //     "updated": "2017-09-17T11:37:35.115Z"
-    //   }, {
-    //     "id": "59be3e2cf5ae3a384349f702",
-    //     "url": "http://www.google.com",
-    //     "user": "59be2f6cd634c130224fe7d3",
-    //     "tags": [
-    //       {
-    //         "id": "59be3e24f5ae3a384349f700",
-    //         "name": "GOOGLE",
-    //         "created": "2017-09-17T09:19:32.808Z",
-    //         "updated": "2017-09-17T09:46:24.087Z"
-    //       }
-    //     ],
-    //     "created": "2017-09-17T09:19:54.644Z",
-    //     "updated": "2017-09-17T11:37:35.115Z"
-    //   }, {
-    //     "id": "59be3e2cf5ae3a384349f702",
-    //     "url": "http://www.google.com",
-    //     "user": "59be2f6cd634c130224fe7d3",
-    //     "tags": [
-    //       {
-    //         "id": "59be3e24f5ae3a384349f700",
-    //         "name": "GOOGLE",
-    //         "created": "2017-09-17T09:19:32.808Z",
-    //         "updated": "2017-09-17T09:46:24.087Z"
-    //       }
-    //     ],
-    //     "created": "2017-09-17T09:19:54.644Z",
-    //     "updated": "2017-09-17T11:37:35.115Z"
-    //   }, {
-    //     "id": "59be3e2cf5ae3a384349f702",
-    //     "url": "http://www.google.com",
-    //     "user": "59be2f6cd634c130224fe7d3",
-    //     "tags": [
-    //       {
-    //         "id": "59be3e24f5ae3a384349f700",
-    //         "name": "GOOGLE",
-    //         "created": "2017-09-17T09:19:32.808Z",
-    //         "updated": "2017-09-17T09:46:24.087Z"
-    //       }
-    //     ],
-    //     "created": "2017-09-17T09:19:54.644Z",
-    //     "updated": "2017-09-17T11:37:35.115Z"
-    //   }, {
-    //     "id": "59be3e2cf5ae3a384349f702",
-    //     "url": "http://www.google.com",
-    //     "user": "59be2f6cd634c130224fe7d3",
-    //     "tags": [
-    //       {
-    //         "id": "59be3e24f5ae3a384349f700",
-    //         "name": "GOOGLE",
-    //         "created": "2017-09-17T09:19:32.808Z",
-    //         "updated": "2017-09-17T09:46:24.087Z"
-    //       }
-    //     ],
-    //     "created": "2017-09-17T09:19:54.644Z",
-    //     "updated": "2017-09-17T11:37:35.115Z"
-    //   }, {
-    //     "id": "59be3e2cf5ae3a384349f702",
-    //     "url": "http://www.google.com",
-    //     "user": "59be2f6cd634c130224fe7d3",
-    //     "tags": [
-    //       {
-    //         "id": "59be3e24f5ae3a384349f700",
-    //         "name": "GOOGLE",
-    //         "created": "2017-09-17T09:19:32.808Z",
-    //         "updated": "2017-09-17T09:46:24.087Z"
-    //       }
-    //     ],
-    //     "created": "2017-09-17T09:19:54.644Z",
-    //     "updated": "2017-09-17T11:37:35.115Z"
-    //   }, {
-    //     "id": "59be3e2cf5ae3a384349f702",
-    //     "url": "http://www.google.com",
-    //     "user": "59be2f6cd634c130224fe7d3",
-    //     "tags": [
-    //       {
-    //         "id": "59be3e24f5ae3a384349f700",
-    //         "name": "GOOGLE",
-    //         "created": "2017-09-17T09:19:32.808Z",
-    //         "updated": "2017-09-17T09:46:24.087Z"
-    //       }
-    //     ],
-    //     "created": "2017-09-17T09:19:54.644Z",
-    //     "updated": "2017-09-17T11:37:35.115Z"
-    //   }, {
-    //     "id": "59be3e2cf5ae3a384349f702",
-    //     "url": "http://www.google.com",
-    //     "user": "59be2f6cd634c130224fe7d3",
-    //     "tags": [
-    //       {
-    //         "id": "59be3e24f5ae3a384349f700",
-    //         "name": "GOOGLE",
-    //         "created": "2017-09-17T09:19:32.808Z",
-    //         "updated": "2017-09-17T09:46:24.087Z"
-    //       }
-    //     ],
-    //     "created": "2017-09-17T09:19:54.644Z",
-    //     "updated": "2017-09-17T11:37:35.115Z"
-    //   }, {
-    //     "id": "59be3e2cf5ae3a384349f702",
-    //     "url": "http://www.google.com",
-    //     "user": "59be2f6cd634c130224fe7d3",
-    //     "tags": [
-    //       {
-    //         "id": "59be3e24f5ae3a384349f700",
-    //         "name": "GOOGLE",
-    //         "created": "2017-09-17T09:19:32.808Z",
-    //         "updated": "2017-09-17T09:46:24.087Z"
-    //       }
-    //     ],
-    //     "created": "2017-09-17T09:19:54.644Z",
-    //     "updated": "2017-09-17T11:37:35.115Z"
-    //   }, {
-    //     "id": "59be3e2cf5ae3a384349f702",
-    //     "url": "http://www.google.com",
-    //     "user": "59be2f6cd634c130224fe7d3",
-    //     "tags": [
-    //       {
-    //         "id": "59be3e24f5ae3a384349f700",
-    //         "name": "GOOGLE",
-    //         "created": "2017-09-17T09:19:32.808Z",
-    //         "updated": "2017-09-17T09:46:24.087Z"
-    //       }
-    //     ],
-    //     "created": "2017-09-17T09:19:54.644Z",
-    //     "updated": "2017-09-17T11:37:35.115Z"
-    //   }, {
-    //     "id": "59be3e2cf5ae3a384349f702",
-    //     "url": "http://www.google.com",
-    //     "user": "59be2f6cd634c130224fe7d3",
-    //     "tags": [
-    //       {
-    //         "id": "59be3e24f5ae3a384349f700",
-    //         "name": "GOOGLE",
-    //         "created": "2017-09-17T09:19:32.808Z",
-    //         "updated": "2017-09-17T09:46:24.087Z"
-    //       }
-    //     ],
-    //     "created": "2017-09-17T09:19:54.644Z",
-    //     "updated": "2017-09-17T11:37:35.115Z"
-    //   }, {
-    //     "id": "59be3e2cf5ae3a384349f702",
-    //     "url": "http://www.google.com",
-    //     "user": "59be2f6cd634c130224fe7d3",
-    //     "tags": [
-    //       {
-    //         "id": "59be3e24f5ae3a384349f700",
-    //         "name": "GOOGLE",
-    //         "created": "2017-09-17T09:19:32.808Z",
-    //         "updated": "2017-09-17T09:46:24.087Z"
-    //       }
-    //     ],
-    //     "created": "2017-09-17T09:19:54.644Z",
-    //     "updated": "2017-09-17T11:37:35.115Z"
-    //   }, {
-    //     "id": "59be3e2cf5ae3a384349f702",
-    //     "url": "http://www.google.com",
-    //     "user": "59be2f6cd634c130224fe7d3",
-    //     "tags": [
-    //       {
-    //         "id": "59be3e24f5ae3a384349f700",
-    //         "name": "GOOGLE",
-    //         "created": "2017-09-17T09:19:32.808Z",
-    //         "updated": "2017-09-17T09:46:24.087Z"
-    //       }
-    //     ],
-    //     "created": "2017-09-17T09:19:54.644Z",
-    //     "updated": "2017-09-17T11:37:35.115Z"
-    //   }, {
-    //     "id": "59be3e2cf5ae3a384349f702",
-    //     "url": "http://www.google.com",
-    //     "user": "59be2f6cd634c130224fe7d3",
-    //     "tags": [
-    //       {
-    //         "id": "59be3e24f5ae3a384349f700",
-    //         "name": "GOOGLE",
-    //         "created": "2017-09-17T09:19:32.808Z",
-    //         "updated": "2017-09-17T09:46:24.087Z"
-    //       }
-    //     ],
-    //     "created": "2017-09-17T09:19:54.644Z",
-    //     "updated": "2017-09-17T11:37:35.115Z"
-    //   }, {
-    //     "id": "59be3e2cf5ae3a384349f702",
-    //     "url": "http://www.google.com",
-    //     "user": "59be2f6cd634c130224fe7d3",
-    //     "tags": [
-    //       {
-    //         "id": "59be3e24f5ae3a384349f700",
-    //         "name": "GOOGLE",
-    //         "created": "2017-09-17T09:19:32.808Z",
-    //         "updated": "2017-09-17T09:46:24.087Z"
-    //       }
-    //     ],
-    //     "created": "2017-09-17T09:19:54.644Z",
-    //     "updated": "2017-09-17T11:37:35.115Z"
-    //   }
-    // ];
-
     this._urlService.getUrlsByUser(Helper.getUserId())
       .then(result => {
         this._urlList = result;
         this.filteredUrlList = this._urlList;
+        this.showLoading = false;
       })
       .catch(error => console.error(error));
   }
@@ -400,17 +34,32 @@ export class DashboardComponent implements OnInit {
       this.filteredUrlList = this._urlList;
       return;
     }
-    this.filteredUrlList = this._urlList.filter((urlItem: Url) => {
-      return urlItem.url.includes(requestedSearchTerm);
+
+    const filteredUrlsByNameList = this._urlList.filter((urlItem: Url) => {
+      return urlItem.url.toLowerCase().includes(requestedSearchTerm.toLowerCase());
     });
+
+    let filteredUrlsByTagList = new Array<any>();
+    this._urlList.forEach(url => {
+      url.tags.forEach(tag => {
+        if (tag.name.toLowerCase().includes(requestedSearchTerm.toLowerCase())) {
+          filteredUrlsByTagList.push(url);
+        }
+      })
+    });
+
+    this.filteredUrlList = Array.from(new Set([...filteredUrlsByNameList, ...filteredUrlsByTagList]));
   }
 
   handleSubmittedEditUrlItemRequest (requestedUrl: Url): void {
     alert(requestedUrl.url);
   }
 
-  handleSubmittedDeleteUrlItemRequest (requestedUrl: Url): void {
-    alert(requestedUrl.url);
+  async handleSubmittedDeleteUrlItemRequest (requestedUrl: Url): Promise<void> {
+    const removedUrlId = await this._urlService.deleteUrlByUserAndId(Helper.getUserId(), requestedUrl.id);
+    const foundIndex = this._urlList.findIndex((url: Url) => url.id === removedUrlId);
+    this._urlList.splice(foundIndex, 1);
+    this.filteredUrlList = this._urlList;
   }
 
   handleSubmittedTagNameAsSearchRequest (requestedSearchTerm: string): void {

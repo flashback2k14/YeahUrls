@@ -1,6 +1,7 @@
 <div class="dashboard-container">
   <yeah-url-list-search (searchRequestSubmitted)="handleSubmittedSearchRequest($event)"></yeah-url-list-search>
   <yeah-url-list>
+    <div *ngIf="showLoading" class="loading-text text-color">Loading...</div>
     <yeah-url-list-item *ngFor="let url of filteredUrlList" [url]="url"
       (editUrlItemRequestSubmitted)="handleSubmittedEditUrlItemRequest($event)"
       (deleteUrlItemRequestSubmitted)="handleSubmittedDeleteUrlItemRequest($event)">

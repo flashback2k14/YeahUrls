@@ -21,8 +21,24 @@ export class UrlService {
   }
 
   async getUrlsByUser (userId: string): Promise<Array<Url>> {
-    const data: Response = await this._http.get(`${this._baseUrl}/${userId}`, { headers: this._headers}).toPromise();
+    const data: Response = await this._http.get(`${this._baseUrl}/${userId}`,
+                                                { headers: this._headers}).toPromise();
     const result = await data.json() as Array<Url>;
     return result;
+  }
+
+
+  async postUrlByUser (userId: string, urlData: any): Promise<Url> {
+    const data: Response = await this._http.post(`${this._baseUrl}/${userId}`, urlData,
+                                                  { headers: this._headers}).toPromise();
+    const result = await data.json() as Url;
+    return result;
+  }
+
+  async deleteUrlByUserAndId (userId: string, urlId: string): Promise<string> {
+    const data: Response = await this._http.delete(`${this._baseUrl}/${userId}/${urlId}`,
+                                                   { headers: this._headers}).toPromise();
+    const result = await data.json();
+    return result.urlId;
   }
 }

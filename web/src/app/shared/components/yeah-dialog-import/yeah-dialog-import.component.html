@@ -7,9 +7,15 @@
       name="import-data" id="taImportData" rows="30">
     </textarea>
   </div>
-  <div>
+  <div style="text-align: right">
+    <button class="custom-button custom-button_cancel"
+      (click)="clear(taImportData)">CLEAR
+    </button>
     <button class="custom-button custom-button_ok"
-      (click)="test(taImportData)">IMPORT
+      (click)="parse(taImportData)">PARSE
+    </button>
+    <button class="custom-button custom-button_ok"
+      (click)="import(taImportData)">IMPORT
     </button>
   </div>
 </yeah-dialog>
