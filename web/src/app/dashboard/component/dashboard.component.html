@@ -1,10 +1,10 @@
-<div>
+<div class="dashboard-container">
   <yeah-url-list-search (searchRequestSubmitted)="handleSubmittedSearchRequest($event)"></yeah-url-list-search>
   <yeah-url-list>
-    <yeah-url-list-item *ngFor="let url of urlList" [url]="url"
+    <yeah-url-list-item *ngFor="let url of filteredUrlList" [url]="url"
       (editUrlItemRequestSubmitted)="handleSubmittedEditUrlItemRequest($event)"
       (deleteUrlItemRequestSubmitted)="handleSubmittedDeleteUrlItemRequest($event)">
-      <yeah-url-list-tag *ngFor="let tag of url.tags" [name]="tag"
+      <yeah-url-list-tag *ngFor="let tag of url.tags" [tag]="tag"
         (tagNameAsSearchRequestSubmitted)="handleSubmittedTagNameAsSearchRequest($event)">
       </yeah-url-list-tag>
     </yeah-url-list-item>

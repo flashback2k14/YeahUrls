@@ -5,5 +5,4 @@ main {
   height: calc(100vh - 110px);
   margin: 64px 12px 48px 12px;
   overflow: auto;
-  /* background: green; */
 }

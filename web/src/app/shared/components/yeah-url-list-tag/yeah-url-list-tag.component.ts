@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Tag } from '../../../../models/tag';
 
 @Component({
   selector: 'yeah-url-list-tag',
@@ -7,7 +8,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 })
 export class YeahUrlListTagComponent{
 
-  @Input() name: string;
+  @Input() tag: Tag;
   @Output() tagNameAsSearchRequestSubmitted: EventEmitter<string>;
 
   constructor() {
@@ -15,6 +16,6 @@ export class YeahUrlListTagComponent{
   }
 
   tagNameClicked () {
-    this.tagNameAsSearchRequestSubmitted.emit(this.name);
+    this.tagNameAsSearchRequestSubmitted.emit(this.tag.name);
   }
 }
