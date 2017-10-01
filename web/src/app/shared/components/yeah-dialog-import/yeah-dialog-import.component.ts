@@ -20,6 +20,8 @@ export class YeahDialogImportComponent {
   }
 
   parse (ta: HTMLTextAreaElement): void {
+    if (!ta.value) return;
+
     const urlObjects = JSON.parse(ta.value);
 
     const parsedUrls = Object.values(urlObjects).map(urlArray => {
@@ -34,6 +36,8 @@ export class YeahDialogImportComponent {
   }
 
   async import (ta: HTMLTextAreaElement): Promise<void> {
+    if (!ta.value) return;
+
     try {
       const userId = Helper.getUserId();
       const urlArrays = JSON.parse(ta.value);

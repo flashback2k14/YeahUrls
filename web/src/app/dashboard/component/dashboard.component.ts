@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Url } from '../../../models/url';
 import { UrlService } from '../../core/services/url.service';
 import { Helper } from '../../../helper/helper';
 import { Tag } from '../../../models/tag';
+import { YeahDialogDeleteComponent } from '../../shared/components/yeah-dialog-delete/yeah-dialog-delete.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,6 +11,8 @@ import { Tag } from '../../../models/tag';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+
+  @ViewChild("yeahUrlDeleteDialog") yeahUrlDeleteDialog: YeahDialogDeleteComponent;
 
   private _urlList: Array<Url>;
   filteredUrlList: Array<Url>;
@@ -52,11 +55,14 @@ export class DashboardComponent implements OnInit {
   }
 
   handleSubmittedEditUrlItemRequest (requestedUrl: Url): void {
-    alert(requestedUrl.url);
+    alert("Open Dialog");
   }
 
-  async handleSubmittedDeleteUrlItemRequest (requestedUrl: Url): Promise<void> {
-    const removedUrlId = await this._urlService.deleteUrlByUserAndId(Helper.getUserId(), requestedUrl.id);
+  handleSubmittedDeleteUrlItemRequest (requestedUrl: Url): void {
+    this.yeahUrlDeleteDialog.open(requestedUrl);
+  }
+
+  handleCompletedDeleteUrlItem (removedUrlId: string): void {
     const foundIndex = this._urlList.findIndex((url: Url) => url.id === removedUrlId);
     this._urlList.splice(foundIndex, 1);
     this.filteredUrlList = this._urlList;

@@ -1,0 +1,13 @@
+<yeah-dialog class="delete-dialog-container" [(visible)]="showDialog">
+  <div>
+    <h3>Are you sure to delete this URL?</h3>
+  </div>
+  <div style="text-align: right">
+    <button class="custom-button custom-button_cancel"
+      (click)="cancel()">CANCEL
+    </button>
+    <button class="custom-button custom-button_ok"
+      (click)="ok()">OK
+    </button>
+  </div>
+</yeah-dialog>

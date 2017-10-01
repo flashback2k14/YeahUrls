@@ -6,6 +6,8 @@ import { YeahUrlListItemComponent } from './components/yeah-url-list-item/yeah-u
 import { YeahUrlListTagComponent } from './components/yeah-url-list-tag/yeah-url-list-tag.component';
 import { YeahDialogComponent } from './components/yeah-dialog/yeah-dialog.component';
 import { YeahDialogImportComponent } from './components/yeah-dialog-import/yeah-dialog-import.component';
+import { YeahDialogEditComponent } from './components/yeah-dialog-edit/yeah-dialog-edit.component';
+import { YeahDialogDeleteComponent } from './components/yeah-dialog-delete/yeah-dialog-delete.component';
 
 @NgModule({
   imports: [CommonModule],
@@ -15,7 +17,9 @@ import { YeahDialogImportComponent } from './components/yeah-dialog-import/yeah-
     YeahUrlListItemComponent,
     YeahUrlListTagComponent,
     YeahDialogComponent,
-    YeahDialogImportComponent
+    YeahDialogImportComponent,
+    YeahDialogEditComponent,
+    YeahDialogDeleteComponent
   ],
   exports: [
     YeahUrlListComponent,
@@ -24,6 +28,8 @@ import { YeahDialogImportComponent } from './components/yeah-dialog-import/yeah-
     YeahUrlListTagComponent,
     YeahDialogComponent,
     YeahDialogImportComponent,
+    YeahDialogEditComponent,
+    YeahDialogDeleteComponent,
     CommonModule
   ]
 })
