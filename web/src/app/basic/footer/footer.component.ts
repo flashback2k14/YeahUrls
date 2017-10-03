@@ -1,6 +1,6 @@
 import { Component, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
-import { UiService } from '../../core/services/ui/ui.service';
+import { UiService } from '../../core/services/index';
 
 @Component({
   selector: 'app-footer',

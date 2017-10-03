@@ -1,0 +1,21 @@
+<yeah-dialog-base [(visible)]="showDialog">
+  <div>
+    <h3>Import Firebase Data</h3>
+  </div>
+  <div style="margin-right:8px;">
+    <textarea #taImportData style="width:100%;" class="background-color text-color"
+      name="import-data" id="taImportData" rows="30">
+    </textarea>
+  </div>
+  <div style="text-align: right">
+    <button class="custom-button custom-button_cancel"
+      (click)="clear(taImportData)">CLEAR
+    </button>
+    <button class="custom-button custom-button_ok"
+      (click)="parse(taImportData)">PARSE
+    </button>
+    <button class="custom-button custom-button_ok"
+      (click)="import(taImportData)">IMPORT
+    </button>
+  </div>
+</yeah-dialog-base>

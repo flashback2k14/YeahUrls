@@ -1,0 +1,15 @@
+<yeah-dialog-base [(visible)]="showDialog">
+  <div class="input-container">
+    <textarea #taEditInput class="edit-input background-color text-color"
+      name="edit-data" id="taEditInput">
+    </textarea>
+  </div>
+  <div style="text-align: right">
+    <button class="custom-button custom-button_cancel"
+      (click)="cancel()">CANCEL
+    </button>
+    <button class="custom-button custom-button_ok"
+      (click)="edit(taEditInput)">EDIT
+    </button>
+  </div>
+</yeah-dialog-base>

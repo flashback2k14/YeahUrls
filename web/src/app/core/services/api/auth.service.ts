@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http, Response } from '@angular/http';
 import "rxjs/add/operator/toPromise";
-import { Config } from '../../../../helper/config';
-import { Keys } from '../../../../helper/keys';
-import { JwtHelper } from '../../../../helper/jwt-helper';
-import { LoginResult } from '../../../../models/login-result';
+import { JwtHelper } from '../../../../helper/index';
+import { Config, StorageKeys, LoginResult } from '../../../../models/index';
 
 @Injectable()
 export class AuthService {
@@ -22,7 +20,7 @@ export class AuthService {
   }
 
   get isLoggedIn (): boolean {
-    const token = localStorage.getItem(Keys.USERTOKEN);
+    const token = localStorage.getItem(StorageKeys.USERTOKEN);
     if (token && !JwtHelper.isTokenExpired(token)) {
       this._isLoggedIn = true;
     }
@@ -39,8 +37,8 @@ export class AuthService {
   }
 
   async logout (): Promise<void> {
-    localStorage.removeItem(Keys.USERTOKEN);
-    localStorage.removeItem(Keys.USERINFO);
+    localStorage.removeItem(StorageKeys.USERTOKEN);
+    localStorage.removeItem(StorageKeys.USERINFO);
     this._isLoggedIn = false;
   }
 }

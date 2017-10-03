@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Helper } from '../../helper/helper';
-import { Keys } from '../../helper/keys';
-import { AuthService } from '../core/services/api/auth.service';
-import { UiService } from '../core/services/ui/ui.service';
+import { Helper } from '../../helper/index';
+import { AuthService, UiService } from '../core/services/index';
 
 @Component({
   selector: 'app-root',

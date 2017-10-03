@@ -2,36 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router, NavigationStart } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
-
-
-export enum NotificationType {
-  Success,
-  Error,
-  Info,
-  Warning
-}
-
-export class Notification {
-  type: NotificationType;
-  message: string;
-  removeAfterDelay: boolean;
-
-  setType (type: NotificationType): this {
-    this.type = type;
-    return this;
-  }
-
-  setMessage (message: string): this {
-    this.message = message;
-    return this;
-  }
-
-  setRemoveAfterDelay (removeAfterDelay: boolean): this {
-    this.removeAfterDelay = removeAfterDelay;
-    return this;
-  }
-}
-
+import { Notification, NotificationType } from '../../../../models/index';
 
 @Injectable()
 export class NotifyService {

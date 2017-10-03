@@ -1,16 +1,15 @@
 import { Response } from "@angular/http";
-import { Keys } from "./keys";
-import { User } from "../models/user";
+import { StorageKeys, User } from "../models/index";
 
 export class Helper {
   public static getUserId (): string {
-    const userObj = JSON.parse(localStorage.getItem(Keys.USERINFO)) as User;
+    const userObj = JSON.parse(localStorage.getItem(StorageKeys.USERINFO)) as User;
     if (userObj) return userObj.id;
     return "-1";
   }
 
   public static getUsername(): string {
-    const userObj = JSON.parse(localStorage.getItem(Keys.USERINFO)) as User;
+    const userObj = JSON.parse(localStorage.getItem(StorageKeys.USERINFO)) as User;
     if (userObj) return userObj.name;
     return "Unknown User";
   }

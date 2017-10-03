@@ -1,11 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Keys } from '../../../helper/keys';
-import { Helper } from '../../../helper/helper';
-import { LoginResult } from '../../../models/login-result';
-import { UiService } from '../../core/services/ui/ui.service';
-import { AuthService } from '../../core/services/api/auth.service';
-import { NotifyService } from '../../core/services/ui/notify.service';
+import { Helper } from '../../../helper/index';
+import { LoginResult, StorageKeys } from '../../../models/index';
+import { AuthService, UiService, NotifyService } from '../../core/services/index';
 
 @Component({
   selector: 'app-login',
@@ -37,7 +34,7 @@ export class LoginComponent {
   }
 
   private _setResultToLocalStorage(result: LoginResult) {
-    localStorage.setItem(Keys.USERTOKEN, result.token);
-    localStorage.setItem(Keys.USERINFO, JSON.stringify(result.user));
+    localStorage.setItem(StorageKeys.USERTOKEN, result.token);
+    localStorage.setItem(StorageKeys.USERINFO, JSON.stringify(result.user));
   }
 }

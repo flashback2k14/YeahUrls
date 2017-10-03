@@ -1,10 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
-import { Keys } from '../../../helper/keys';
-import { UiService } from '../../core/services/ui/ui.service';
-import { AuthService } from '../../core/services/api/auth.service';
-import { NotifyService } from '../../core/services/ui/notify.service';
+import { AuthService, UiService, NotifyService } from '../../core/services/index';
 
 @Component({
   selector: 'app-header',

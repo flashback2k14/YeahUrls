@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { NotifyService, Notification, NotificationType } from '../../../core/services/ui/notify.service';
+import { NotifyService } from '../../../core/services/index';
+import { Notification, NotificationType } from '../../../../models/index';
 
 @Component({
   selector: 'yeah-notify',
@@ -15,13 +16,13 @@ export class YeahNotifyComponent implements OnInit {
   }
 
   ngOnInit () {
-    this._notifyService.getNotifications().subscribe((notfication: Notification) => {
-      if (!notfication) {
+    this._notifyService.getNotifications().subscribe((notification: Notification) => {
+      if (!notification) {
         this.notifications = new Array<Notification>();
         return;
       }
-      this.notifications.push(notfication);
-      this._removeNotificationAfterDelay(notfication);
+      this.notifications.push(notification);
+      this._removeNotificationAfterDelay(notification);
     });
   }
 
@@ -44,7 +45,7 @@ export class YeahNotifyComponent implements OnInit {
     this.notifications = this.notifications.filter(entry => entry !== notify);
   }
 
-  private _removeNotificationAfterDelay(notfication: Notification) {
+  private _removeNotificationAfterDelay (notfication: Notification): void {
     setTimeout(() => {
       this.notifications.forEach(notification => {
         if (notfication.removeAfterDelay) {

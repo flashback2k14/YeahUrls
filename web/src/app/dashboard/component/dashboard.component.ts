@@ -1,12 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Helper } from '../../../helper/helper';
-import { Url } from '../../../models/url';
-import { Tag } from '../../../models/tag';
-import { YeahDialogDeleteComponent } from '../../shared/components/yeah-dialog-delete/yeah-dialog-delete.component';
-import { YeahDialogEditComponent } from '../../shared/components/yeah-dialog-edit/yeah-dialog-edit.component';
-import { YeahUrlListSearchComponent } from '../../shared/components/yeah-url-list-search/yeah-url-list-search.component';
-import { UrlService } from '../../core/services/api/url.service';
-import { NotifyService } from '../../core/services/ui/notify.service';
+import { YeahDialogDeleteComponent, YeahDialogEditComponent, YeahUrlListSearchComponent } from '../../shared/components/index';
+import { UrlService, NotifyService } from '../../core/services/index';
+import { Helper } from '../../../helper/index';
+import { Url } from '../../../models/index';
 
 @Component({
   selector: 'app-dashboard',
