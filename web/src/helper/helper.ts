@@ -5,7 +5,14 @@ import { User } from "../models/user";
 export class Helper {
   public static getUserId (): string {
     const userObj = JSON.parse(localStorage.getItem(Keys.USERINFO)) as User;
-    return userObj.id;
+    if (userObj) return userObj.id;
+    return "-1";
+  }
+
+  public static getUsername(): string {
+    const userObj = JSON.parse(localStorage.getItem(Keys.USERINFO)) as User;
+    if (userObj) return userObj.name;
+    return "Unknown User";
   }
 
   public static extractBackendError (error: Response | any): string {

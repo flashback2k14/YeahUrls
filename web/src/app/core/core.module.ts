@@ -1,7 +1,7 @@
 import { NgModule, Optional, SkipSelf } from "@angular/core";
 import { AuthService } from "./services/api/auth.service";
 import { AuthguardService } from "./services/ui/authguard.service";
-import { HeaderService } from "./services/ui/header.service";
+import { UiService } from "./services/ui/ui.service";
 import { UrlService } from "./services/api/url.service";
 import { NotifyService } from "./services/ui/notify.service";
 
@@ -9,7 +9,7 @@ import { NotifyService } from "./services/ui/notify.service";
   providers: [
     AuthService,
     AuthguardService,
-    HeaderService,
+    UiService,
     UrlService,
     NotifyService
   ]

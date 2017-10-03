@@ -3,5 +3,5 @@
     <img class="footer-icon" src="./../../../assets/github.svg" alt="Github Icon">
     View Source Code on Github created by flashback2k14
   </a>
-  <div class="footer-import" (click)="openImport()">IMPORT</div>
+  <div *ngIf="showFooterAreaForImportFunction" class="footer-import" (click)="openImport()">IMPORT</div>
 </footer>

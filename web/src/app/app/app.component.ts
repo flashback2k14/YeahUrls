@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Helper } from '../../helper/helper';
 import { Keys } from '../../helper/keys';
 import { AuthService } from '../core/services/api/auth.service';
-import { HeaderService } from '../core/services/ui/header.service';
+import { UiService } from '../core/services/ui/ui.service';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +16,7 @@ export class AppComponent implements OnInit {
 
   constructor (
     private _authService: AuthService,
-    private _headerService: HeaderService,
+    private _uiService: UiService,
     private _router: Router
   ) {
     this.showImportDialog = false;
@@ -24,17 +25,12 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     if (this._authService.isLoggedIn) {
       this._router.navigate(["/dashboard"]);
-      this._headerService.toggleUserArea();
-      this._headerService.changeUsername(this._getUsername());
+      this._uiService.toggleHeaderAreaForUserinformation();
+      this._uiService.changeUsernameAtHeaderArea(Helper.getUsername());
+      this._uiService.toggleFooterAreaForImportFunction();
     } else {
       this._router.navigate(["/login"]);
     }
-  }
-
-  private _getUsername(): string {
-    const userObj = JSON.parse(localStorage.getItem(Keys.USERINFO));
-    if (userObj) return userObj.name;
-    return "Unknown User";
   }
 
   handleSubmittedOpenImportRequest (): void {

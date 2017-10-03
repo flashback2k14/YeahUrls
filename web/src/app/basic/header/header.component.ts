@@ -2,8 +2,8 @@ import { Component, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { Keys } from '../../../helper/keys';
+import { UiService } from '../../core/services/ui/ui.service';
 import { AuthService } from '../../core/services/api/auth.service';
-import { HeaderService } from '../../core/services/ui/header.service';
 import { NotifyService } from '../../core/services/ui/notify.service';
 
 @Component({
@@ -13,36 +13,35 @@ import { NotifyService } from '../../core/services/ui/notify.service';
 })
 export class HeaderComponent implements OnDestroy {
 
-  private _changeUsernameSubscription: Subscription;
-  private _toggleUserAreaSubscription: Subscription;
-
+  private _toggleHeaderAreaForUserinformationSubscription: Subscription;
+  private _changeUsernameAtHeaderAreaSubscription: Subscription;
+  showHeaderAreaForUserinformation: boolean;
   username: string;
-  showUserArea: boolean;
 
   constructor (
     private _authService: AuthService,
-    private _headerService: HeaderService,
+    private _uiService: UiService,
     private _notifyService: NotifyService,
     private _router: Router
   ) {
+    this.showHeaderAreaForUserinformation = false;
     this.username = "Unknown User";
-    this.showUserArea = false;
-    this._changeUsernameSubscription = this._headerService
-      .changeUsername$.subscribe(username => this.username = username);
-    this._toggleUserAreaSubscription = this._headerService
-      .toggleUserArea$.subscribe(() => this.showUserArea = !this.showUserArea);
+    this._toggleHeaderAreaForUserinformationSubscription = this._uiService.toggleHeaderAreaForUserinformation$
+      .subscribe(() => this.showHeaderAreaForUserinformation = !this.showHeaderAreaForUserinformation);
+    this._changeUsernameAtHeaderAreaSubscription = this._uiService.changeUsernameAtHeaderArea$
+      .subscribe(username => this.username = username);
   }
 
   ngOnDestroy(): void {
-    this._changeUsernameSubscription.unsubscribe();
-    this._toggleUserAreaSubscription.unsubscribe();
+    this._toggleHeaderAreaForUserinformationSubscription.unsubscribe();
+    this._changeUsernameAtHeaderAreaSubscription.unsubscribe();
   }
 
   async logout (): Promise<void> {
     this._notifyService.onInfo("Logging out...", true, true);
     await this._authService.logout();
-    this.username = "Unknown User";
-    this.showUserArea = false;
+    this._uiService.toggleHeaderAreaForUserinformation();
+    this._uiService.toggleFooterAreaForImportFunction();
     this._router.navigate(["/login"]);
   }
 }

@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { Keys } from '../../../helper/keys';
 import { Helper } from '../../../helper/helper';
 import { LoginResult } from '../../../models/login-result';
+import { UiService } from '../../core/services/ui/ui.service';
 import { AuthService } from '../../core/services/api/auth.service';
-import { HeaderService } from '../../core/services/ui/header.service';
 import { NotifyService } from '../../core/services/ui/notify.service';
 
 @Component({
@@ -16,7 +16,7 @@ export class LoginComponent {
 
   constructor (
     private _authService: AuthService,
-    private _headerService: HeaderService,
+    private _uiService: UiService,
     private _notifyService: NotifyService,
     private _router: Router
   ) { }
@@ -26,7 +26,9 @@ export class LoginComponent {
     try {
       const result: LoginResult = await this._authService.signIn(value.username, value.password);
       this._setResultToLocalStorage(result);
-      this._callHeaderService(result);
+      this._uiService.toggleHeaderAreaForUserinformation();
+      this._uiService.changeUsernameAtHeaderArea(result.user.name);
+      this._uiService.toggleFooterAreaForImportFunction();
       this._router.navigate(["/dashboard"]);
       this._notifyService.onSuccess("Logged in!", true, true);
     } catch (error) {
@@ -37,10 +39,5 @@ export class LoginComponent {
   private _setResultToLocalStorage(result: LoginResult) {
     localStorage.setItem(Keys.USERTOKEN, result.token);
     localStorage.setItem(Keys.USERINFO, JSON.stringify(result.user));
-  }
-
-  private _callHeaderService(result: LoginResult) {
-    this._headerService.toggleUserArea();
-    this._headerService.changeUsername(result.user.name);
   }
 }
