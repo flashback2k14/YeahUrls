@@ -1,7 +1,6 @@
 .list-container {
   display: flex;
   flex-direction: column;
-  width: 50vw;
   height: calc(100vh - 188px);
   margin-top: 12px;
   padding-top: 4px;

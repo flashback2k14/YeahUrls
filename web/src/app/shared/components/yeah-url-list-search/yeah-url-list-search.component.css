@@ -3,7 +3,6 @@
   flex-direction: row;
   justify-content: space-between;
   height: 48px;
-  margin-top: 6px;
   font-size: medium;
   border: 1px solid  rgba(0,0,0,0.1);
   border-radius: 4px;
@@ -17,4 +16,10 @@
 .search-container_actions {
   justify-content: center;
   margin-right: 12px;
+}
+
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+  .search-container_input {
+    font-size: small;
+  }
 }

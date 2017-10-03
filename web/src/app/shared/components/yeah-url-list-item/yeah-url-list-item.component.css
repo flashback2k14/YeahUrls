@@ -14,13 +14,15 @@
 }
 
 .item-container_top-url {
-  width: 80%;
+  display: flex;
+  width: 78%;
   padding-left: 4px;
   font-size: large;
   word-wrap: break-word;
 }
 
 .item-container_top-url_text {
+  width: inherit;
   text-decoration: none;
   outline: none;
 }
@@ -32,7 +34,22 @@
   color: #C0CCDA;
 }
 
+.item-container_top-actions {
+  display: flex;
+  align-items: center;
+}
+
 .item-container_bottom {
   display: flex;
   margin-top: 2px;
+}
+
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+  .item-container_top-url_text {
+    font-size: small;
+  }
+
+  .item-container_top-actions {
+    flex-direction: column;
+  }
 }
