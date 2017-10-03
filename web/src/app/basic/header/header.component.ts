@@ -1,9 +1,10 @@
 import { Component, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { Keys } from '../../../helper/keys';
-import { AuthService } from '../../core/services/auth.service';
-import { HeaderService } from '../../core/services/header.service';
 import { Subscription } from 'rxjs/Subscription';
+import { Keys } from '../../../helper/keys';
+import { AuthService } from '../../core/services/api/auth.service';
+import { HeaderService } from '../../core/services/ui/header.service';
+import { NotifyService } from '../../core/services/ui/notify.service';
 
 @Component({
   selector: 'app-header',
@@ -21,6 +22,7 @@ export class HeaderComponent implements OnDestroy {
   constructor (
     private _authService: AuthService,
     private _headerService: HeaderService,
+    private _notifyService: NotifyService,
     private _router: Router
   ) {
     this.username = "Unknown User";
@@ -37,6 +39,7 @@ export class HeaderComponent implements OnDestroy {
   }
 
   async logout (): Promise<void> {
+    this._notifyService.onInfo("Logging out...", true, true);
     await this._authService.logout();
     this.username = "Unknown User";
     this.showUserArea = false;

@@ -1,11 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Url } from '../../../models/url';
-import { UrlService } from '../../core/services/url.service';
 import { Helper } from '../../../helper/helper';
+import { Url } from '../../../models/url';
 import { Tag } from '../../../models/tag';
 import { YeahDialogDeleteComponent } from '../../shared/components/yeah-dialog-delete/yeah-dialog-delete.component';
 import { YeahDialogEditComponent } from '../../shared/components/yeah-dialog-edit/yeah-dialog-edit.component';
 import { YeahUrlListSearchComponent } from '../../shared/components/yeah-url-list-search/yeah-url-list-search.component';
+import { UrlService } from '../../core/services/api/url.service';
+import { NotifyService } from '../../core/services/ui/notify.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -22,7 +23,10 @@ export class DashboardComponent implements OnInit {
   filteredUrlList: Array<Url>;
   showLoading: boolean;
 
-  constructor (private _urlService: UrlService) {
+  constructor (
+    private _urlService: UrlService,
+    private _notifyService: NotifyService
+  ) {
     this.showLoading = true;
   }
 
@@ -33,7 +37,7 @@ export class DashboardComponent implements OnInit {
         this.filteredUrlList = this._urlList;
         this.showLoading = false;
       })
-      .catch(error => console.error(error));
+      .catch(error => this._notifyService.onError(Helper.extractBackendError(error)));
   }
 
   handleSubmittedSearchRequest (requestedSearchTerm: string): void {

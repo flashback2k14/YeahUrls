@@ -1,7 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { Url } from '../../../../models/url';
-import { UrlService } from '../../../core/services/url.service';
 import { Helper } from '../../../../helper/helper';
+import { UrlService } from '../../../core/services/api/url.service';
+import { NotifyService } from '../../../core/services/ui/notify.service';
 
 @Component({
   selector: 'yeah-dialog-edit',
@@ -14,17 +15,20 @@ export class YeahDialogEditComponent {
   @Input() showDialog: boolean;
   @Output() editUrlCompleted: EventEmitter<Url>;
 
-  url: Url;
+  private _url: Url;
 
-  constructor (private _urlService: UrlService) {
+  constructor (
+    private _urlService: UrlService,
+    private _notifyService: NotifyService
+  ) {
     this.showDialog = false;
     this.editUrlCompleted = new EventEmitter<Url>();
   }
 
   open (url: Url): void {
     this.showDialog = true;
-    this.url = url;
-    this.taEditInput.nativeElement.value = this.url.url;
+    this._url = url;
+    this.taEditInput.nativeElement.value = this._url.url;
   }
 
   cancel (): void {
@@ -33,9 +37,13 @@ export class YeahDialogEditComponent {
 
   async edit (taEditInput: HTMLTextAreaElement): Promise<void> {
     if (!taEditInput.value) return;
-    const urlData = { url: taEditInput.value };
-    const modifiedUrl = await this._urlService.putUrlByUserAndId(Helper.getUserId(), this.url.id, urlData);
-    this.editUrlCompleted.emit(modifiedUrl);
-    this.showDialog = false;
+    try {
+      const urlData = { url: taEditInput.value };
+      const modifiedUrl = await this._urlService.putUrlByUserAndId(Helper.getUserId(), this._url.id, urlData);
+      this.editUrlCompleted.emit(modifiedUrl);
+      this.showDialog = false;
+    } catch (error) {
+      this._notifyService.onError(Helper.extractBackendError(error));
+    }
   } 
 }

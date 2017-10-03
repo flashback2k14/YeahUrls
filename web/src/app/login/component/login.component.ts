@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../../core/services/auth.service';
-import { HeaderService } from '../../core/services/header.service';
-import { LoginResult } from '../../../models/login-result';
 import { Keys } from '../../../helper/keys';
-import { NotifyService } from '../../core/services/notify.service';
 import { Helper } from '../../../helper/helper';
+import { LoginResult } from '../../../models/login-result';
+import { AuthService } from '../../core/services/api/auth.service';
+import { HeaderService } from '../../core/services/ui/header.service';
+import { NotifyService } from '../../core/services/ui/notify.service';
 
 @Component({
   selector: 'app-login',
@@ -28,10 +28,9 @@ export class LoginComponent {
       this._setResultToLocalStorage(result);
       this._callHeaderService(result);
       this._router.navigate(["/dashboard"]);
-      this._notifyService.onSuccess("Logged in!", true);
+      this._notifyService.onSuccess("Logged in!", true, true);
     } catch (error) {
-      const msg = Helper.extractBackendError(error);
-      this._notifyService.onError(msg);
+      this._notifyService.onError(Helper.extractBackendError(error));
     }
   }
 

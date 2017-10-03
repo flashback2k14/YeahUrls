@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NotifyService, Notification, NotificationType } from '../../../core/services/notify.service';
+import { NotifyService, Notification, NotificationType } from '../../../core/services/ui/notify.service';
 
 @Component({
   selector: 'yeah-notify',
@@ -21,6 +21,7 @@ export class YeahNotifyComponent implements OnInit {
         return;
       }
       this.notifications.push(notfication);
+      this._removeNotificationAfterDelay(notfication);
     });
   }
 
@@ -41,5 +42,15 @@ export class YeahNotifyComponent implements OnInit {
 
   removeNotification (notify: Notification): void {
     this.notifications = this.notifications.filter(entry => entry !== notify);
+  }
+
+  private _removeNotificationAfterDelay(notfication: Notification) {
+    setTimeout(() => {
+      this.notifications.forEach(notification => {
+        if (notfication.removeAfterDelay) {
+          this.removeNotification(notfication);
+        }
+      });
+    }, 4000);
   }
 }

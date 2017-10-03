@@ -1,7 +1,8 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { UrlService } from '../../../core/services/url.service';
 import { Helper } from '../../../../helper/helper';
 import { Url } from '../../../../models/url';
+import { UrlService } from '../../../core/services/api/url.service';
+import { NotifyService } from '../../../core/services/ui/notify.service';
 
 @Component({
   selector: 'yeah-dialog-delete',
@@ -15,7 +16,10 @@ export class YeahDialogDeleteComponent {
 
   private _url: Url;
 
-  constructor (private _urlService: UrlService) {
+  constructor (
+    private _urlService: UrlService,
+    private _notifyService: NotifyService
+  ) {
     this.showDialog = false;
     this.deleteUrlCompleted = new EventEmitter<string>();
   }
@@ -30,8 +34,12 @@ export class YeahDialogDeleteComponent {
   }
 
   async ok (): Promise<void> {
-    const removedUrlId = await this._urlService.deleteUrlByUserAndId(Helper.getUserId(), this._url.id);
-    this.deleteUrlCompleted.emit(removedUrlId);
-    this.showDialog = false;
+    try {
+      const removedUrlId = await this._urlService.deleteUrlByUserAndId(Helper.getUserId(), this._url.id);
+      this.deleteUrlCompleted.emit(removedUrlId);
+      this.showDialog = false;
+    } catch (error) {
+      this._notifyService.onError(Helper.extractBackendError(error));
+    }
   }
 }

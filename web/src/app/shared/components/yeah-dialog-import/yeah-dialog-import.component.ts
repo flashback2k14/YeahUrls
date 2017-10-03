@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { UrlService } from '../../../core/services/url.service';
 import { Helper } from '../../../../helper/helper';
+import { UrlService } from '../../../core/services/api/url.service';
+import { NotifyService } from '../../../core/services/ui/notify.service';
 
 @Component({
   selector: 'yeah-dialog-import',
@@ -11,7 +12,10 @@ export class YeahDialogImportComponent {
 
   @Input() showDialog: boolean;
 
-  constructor (private _urlService: UrlService) {
+  constructor (
+    private _urlService: UrlService,
+    private _notifyService: NotifyService
+  ) {
     this.showDialog = false;
   }
 
@@ -37,7 +41,6 @@ export class YeahDialogImportComponent {
 
   async import (ta: HTMLTextAreaElement): Promise<void> {
     if (!ta.value) return;
-
     try {
       const userId = Helper.getUserId();
       const urlArrays = JSON.parse(ta.value);
@@ -48,7 +51,7 @@ export class YeahDialogImportComponent {
       });
       ta.value = "import finished - please reload";
     } catch (error) {
-      console.error(error);
+      this._notifyService.onError(Helper.extractBackendError(error));
     }
   }
 }

@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http, Response } from '@angular/http';
 import "rxjs/add/operator/toPromise";
-import { Config } from '../../../helper/config';
-import { Keys } from '../../../helper/keys';
-import { JwtHelper } from '../../../helper/jwt-helper';
-import { LoginResult } from '../../../models/login-result';
-
+import { Config } from '../../../../helper/config';
+import { Keys } from '../../../../helper/keys';
+import { JwtHelper } from '../../../../helper/jwt-helper';
+import { LoginResult } from '../../../../models/login-result';
 
 @Injectable()
 export class AuthService {
