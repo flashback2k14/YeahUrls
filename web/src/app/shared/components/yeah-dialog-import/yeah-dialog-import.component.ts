@@ -32,7 +32,7 @@ export class YeahDialogImportComponent {
     });
 
     ta.value = "";
-    ta.value = JSON.stringify(parsedUrls);
+    ta.value = JSON.stringify(parsedUrls, null, 2);
   }
 
   async import (ta: HTMLTextAreaElement): Promise<void> {

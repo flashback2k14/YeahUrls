@@ -3,13 +3,15 @@ import { AuthService } from "./services/auth.service";
 import { AuthguardService } from "./services/authguard.service";
 import { HeaderService } from "./services/header.service";
 import { UrlService } from "./services/url.service";
+import { NotifyService } from "./services/notify.service";
 
 @NgModule({
   providers: [
     AuthService,
     AuthguardService,
     HeaderService,
-    UrlService
+    UrlService,
+    NotifyService
   ]
 })
 export class CoreModule {

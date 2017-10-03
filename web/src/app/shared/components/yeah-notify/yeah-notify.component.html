@@ -1,0 +1,8 @@
+<div *ngFor="let notify of notifications" class="{{ getCssClassByType(notify.type) }}">
+  <div class="notify-container_text">
+    {{ notify.message }}
+  </div>
+  <div class="notify-container_action">
+    <a class="notify-close" (click)="removeNotification(notify)">&times;</a>
+  </div>
+</div>
