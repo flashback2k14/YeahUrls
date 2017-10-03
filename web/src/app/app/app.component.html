@@ -1,9 +1,9 @@
 <div class="app-container">
-  <app-header></app-header>
-  <app-main>
+  <yeah-header></yeah-header>
+  <yeah-main>
     <router-outlet></router-outlet>
-  </app-main>
-  <app-footer (openImportRequestSubmitted)="handleSubmittedOpenImportRequest()"></app-footer>
+  </yeah-main>
+  <yeah-footer (openImportRequestSubmitted)="handleSubmittedOpenImportRequest()"></yeah-footer>
   <yeah-dialog-import [(showDialog)]="showImportDialog"></yeah-dialog-import>
   <yeah-notify></yeah-notify>
 </div>

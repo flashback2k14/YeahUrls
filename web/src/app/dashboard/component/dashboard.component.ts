@@ -1,13 +1,13 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { YeahDialogDeleteComponent, YeahDialogEditComponent, YeahUrlListSearchComponent } from '../../shared/components/index';
-import { UrlService, NotifyService } from '../../core/services/index';
-import { Helper } from '../../../helper/index';
-import { Url } from '../../../models/index';
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { YeahDialogDeleteComponent, YeahDialogEditComponent, YeahUrlListSearchComponent } from "../../shared/components/index";
+import { UrlService, NotifyService } from "../../core/services/index";
+import { Helper } from "../../../helper/index";
+import { Url } from "../../../models/index";
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  selector: "yeah-dashboard",
+  templateUrl: "./dashboard.component.html",
+  styleUrls: ["./dashboard.component.css"]
 })
 export class DashboardComponent implements OnInit {
 
@@ -46,13 +46,13 @@ export class DashboardComponent implements OnInit {
       return urlItem.url.toLowerCase().includes(requestedSearchTerm.toLowerCase());
     });
 
-    let filteredUrlsByTagList = new Array<any>();
+    const filteredUrlsByTagList = new Array<any>();
     this._urlList.forEach(url => {
       url.tags.forEach(tag => {
         if (tag.name.toLowerCase().includes(requestedSearchTerm.toLowerCase())) {
           filteredUrlsByTagList.push(url);
         }
-      })
+      });
     });
 
     this.filteredUrlList = Array.from(new Set([...filteredUrlsByNameList, ...filteredUrlsByTagList]));

@@ -1,7 +1,9 @@
+/*tslint:disable:no-bitwise*/
+
 // Credits to https://github.com/auth0/angular2-jwt/blob/master/angular2-jwt.ts
 export class JwtHelper {
   public static isTokenExpired (token: string, offsetSeconds?: number): boolean {
-    let date = this._getTokenExpirationDate(token);
+    const date = this._getTokenExpirationDate(token);
     offsetSeconds = offsetSeconds || 0;
 
     if (date == null) {
@@ -13,41 +15,41 @@ export class JwtHelper {
   }
 
   private static _getTokenExpirationDate (token: string): Date {
-    let decoded = this._decodeToken(token);
+    const decoded = this._decodeToken(token);
 
-    if (!decoded.hasOwnProperty('exp')) {
+    if (!decoded.hasOwnProperty("exp")) {
       return null;
     }
 
-    let date = new Date(0); // The 0 here is the key, which sets the date to the epoch
+    const date = new Date(0); // The 0 here is the key, which sets the date to the epoch
     date.setUTCSeconds(decoded.exp);
 
     return date;
   }
 
   private static _decodeToken (token: string): any {
-    let parts = token.split('.');
+    const parts = token.split(".");
 
     if (parts.length !== 3) {
-      throw new Error('JWT must have 3 parts');
+      throw new Error("JWT must have 3 parts");
     }
 
-    let decoded = this._urlBase64Decode(parts[1]);
+    const decoded = this._urlBase64Decode(parts[1]);
     if (!decoded) {
-      throw new Error('Cannot decode the token');
+      throw new Error("Cannot decode the token");
     }
 
     return JSON.parse(decoded);
   }
 
   private static _urlBase64Decode (str: string): string {
-    let output = str.replace(/-/g, '+').replace(/_/g, '/');
+    let output = str.replace(/-/g, "+").replace(/_/g, "/");
     switch (output.length % 4) {
       case 0: { break; }
-      case 2: { output += '=='; break; }
-      case 3: { output += '='; break; }
+      case 2: { output += "=="; break; }
+      case 3: { output += "="; break; }
       default: {
-        throw 'Illegal base64url string!';
+        throw new Error("Illegal base64url string!");
       }
     }
     return this._b64DecodeUnicode(output);
@@ -56,24 +58,24 @@ export class JwtHelper {
   // https://developer.mozilla.org/en/docs/Web/API/WindowBase64/Base64_encoding_and_decoding#The_Unicode_Problem
   private static _b64DecodeUnicode (str: any) {
     return decodeURIComponent(Array.prototype.map.call(this._b64decode(str), (c: any) => {
-      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    }).join(''));
+      return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(""));
   }
 
   // credits for decoder goes to https://github.com/atk
   private static _b64decode (str: string): string {
-    let chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
-    let output: string = '';
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+    let output = "";
 
-    str = String(str).replace(/=+$/, '');
+    str = String(str).replace(/=+$/, "");
 
-    if (str.length % 4 == 1) {
+    if (str.length % 4 === 1) {
       throw new Error("'atob' failed: The string to be decoded is not correctly encoded.");
     }
 
     for (
       // initialize result and counters
-      let bc: number = 0, bs: any, buffer: any, idx: number = 0;
+      let bc = 0, bs: any, buffer: any, idx = 0;
       // get next character
       buffer = str.charAt(idx++);
       // character found in table? initialize bit storage and add its ascii value;
@@ -88,3 +90,4 @@ export class JwtHelper {
     return output;
   }
 }
+/*tslint:enable:no-bitwise*/

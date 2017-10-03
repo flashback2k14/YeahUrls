@@ -1,9 +1,9 @@
-import { Component, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, Output, EventEmitter, ViewChild } from "@angular/core";
 
 @Component({
-  selector: 'yeah-url-list-search',
-  templateUrl: './yeah-url-list-search.component.html',
-  styleUrls: ['./yeah-url-list-search.component.css']
+  selector: "yeah-url-list-search",
+  templateUrl: "./yeah-url-list-search.component.html",
+  styleUrls: ["./yeah-url-list-search.component.css"]
 })
 export class YeahUrlListSearchComponent {
 

@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import { Http, Headers, Response } from '@angular/http';
+import { Injectable } from "@angular/core";
+import { Http, Headers, Response } from "@angular/http";
 import "rxjs/add/operator/toPromise";
-import { Config, Url, StorageKeys } from '../../../../models/index';
+import { Config, Url, StorageKeys } from "../../../../models/index";
 
 @Injectable()
 export class UrlService {

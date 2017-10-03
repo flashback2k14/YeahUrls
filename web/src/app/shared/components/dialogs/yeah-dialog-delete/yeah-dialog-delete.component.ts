@@ -1,12 +1,12 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { UrlService, NotifyService } from '../../../../core/services/index';
-import { Helper } from '../../../../../helper/index';
-import { Url } from '../../../../../models/index';
+import { Component, Input, Output, EventEmitter } from "@angular/core";
+import { UrlService, NotifyService } from "../../../../core/services/index";
+import { Helper } from "../../../../../helper/index";
+import { Url } from "../../../../../models/index";
 
 @Component({
-  selector: 'yeah-dialog-delete',
-  templateUrl: './yeah-dialog-delete.component.html',
-  styleUrls: ['./yeah-dialog-delete.component.css']
+  selector: "yeah-dialog-delete",
+  templateUrl: "./yeah-dialog-delete.component.html",
+  styleUrls: ["./yeah-dialog-delete.component.css"]
 })
 export class YeahDialogDeleteComponent {
 

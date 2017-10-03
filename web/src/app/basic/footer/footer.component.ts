@@ -1,11 +1,11 @@
-import { Component, Output, EventEmitter, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs/Subscription';
-import { UiService } from '../../core/services/index';
+import { Component, Output, EventEmitter, OnDestroy } from "@angular/core";
+import { Subscription } from "rxjs/Subscription";
+import { UiService } from "../../core/services/index";
 
 @Component({
-  selector: 'app-footer',
-  templateUrl: './footer.component.html',
-  styleUrls: ['./footer.component.css']
+  selector: "yeah-footer",
+  templateUrl: "./footer.component.html",
+  styleUrls: ["./footer.component.css"]
 })
 export class FooterComponent implements OnDestroy {
 

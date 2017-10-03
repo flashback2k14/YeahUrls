@@ -1,11 +1,11 @@
-import { Component, Input } from '@angular/core';
-import { UrlService, NotifyService } from '../../../../core/services/index';
-import { Helper } from '../../../../../helper/index';
+import { Component, Input } from "@angular/core";
+import { UrlService, NotifyService } from "../../../../core/services/index";
+import { Helper } from "../../../../../helper/index";
 
 @Component({
-  selector: 'yeah-dialog-import',
-  templateUrl: './yeah-dialog-import.component.html',
-  styleUrls: ['./yeah-dialog-import.component.css']
+  selector: "yeah-dialog-import",
+  templateUrl: "./yeah-dialog-import.component.html",
+  styleUrls: ["./yeah-dialog-import.component.css"]
 })
 export class YeahDialogImportComponent {
 
@@ -23,13 +23,13 @@ export class YeahDialogImportComponent {
   }
 
   parse (ta: HTMLTextAreaElement): void {
-    if (!ta.value) return;
+    if (!ta.value) { return; }
 
     const urlObjects = JSON.parse(ta.value);
 
     const parsedUrls = Object.values(urlObjects).map(urlArray => {
       return urlArray.map(url => {
-        if (!url) return {};
+        if (!url) { return {}; }
         return { url: url.value, tags: url.keywords.split(" - ") };
       }).filter(result => Object.keys(result).length > 0);
     });
@@ -39,7 +39,7 @@ export class YeahDialogImportComponent {
   }
 
   async import (ta: HTMLTextAreaElement): Promise<void> {
-    if (!ta.value) return;
+    if (!ta.value) { return; }
     try {
       const userId = Helper.getUserId();
       const urlArrays = JSON.parse(ta.value);

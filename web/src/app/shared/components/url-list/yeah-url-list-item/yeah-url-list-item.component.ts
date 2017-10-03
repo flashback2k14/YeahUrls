@@ -1,9 +1,9 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from "@angular/core";
 
 @Component({
-  selector: 'yeah-url-list-item',
-  templateUrl: './yeah-url-list-item.component.html',
-  styleUrls: ['./yeah-url-list-item.component.css']
+  selector: "yeah-url-list-item",
+  templateUrl: "./yeah-url-list-item.component.html",
+  styleUrls: ["./yeah-url-list-item.component.css"]
 })
 export class YeahUrlListItemComponent {
 

@@ -1,12 +1,12 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
-import { UrlService, NotifyService } from '../../../../core/services/index';
-import { Helper } from '../../../../../helper/index';
-import { Url } from '../../../../../models/index';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from "@angular/core";
+import { UrlService, NotifyService } from "../../../../core/services/index";
+import { Helper } from "../../../../../helper/index";
+import { Url } from "../../../../../models/index";
 
 @Component({
-  selector: 'yeah-dialog-edit',
-  templateUrl: './yeah-dialog-edit.component.html',
-  styleUrls: ['./yeah-dialog-edit.component.css']
+  selector: "yeah-dialog-edit",
+  templateUrl: "./yeah-dialog-edit.component.html",
+  styleUrls: ["./yeah-dialog-edit.component.css"]
 })
 export class YeahDialogEditComponent {
 
@@ -35,7 +35,7 @@ export class YeahDialogEditComponent {
   }
 
   async edit (taEditInput: HTMLTextAreaElement): Promise<void> {
-    if (!taEditInput.value) return;
+    if (!taEditInput.value) { return; }
     try {
       const urlData = { url: taEditInput.value };
       const modifiedUrl = await this._urlService.putUrlByUserAndId(Helper.getUserId(), this._url.id, urlData);
@@ -44,5 +44,5 @@ export class YeahDialogEditComponent {
     } catch (error) {
       this._notifyService.onError(Helper.extractBackendError(error));
     }
-  } 
+  }
 }

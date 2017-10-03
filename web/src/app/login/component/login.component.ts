@@ -1,13 +1,13 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { Helper } from '../../../helper/index';
-import { LoginResult, StorageKeys } from '../../../models/index';
-import { AuthService, UiService, NotifyService } from '../../core/services/index';
+import { Component } from "@angular/core";
+import { Router } from "@angular/router";
+import { Helper } from "../../../helper/index";
+import { LoginResult, StorageKeys } from "../../../models/index";
+import { AuthService, UiService, NotifyService } from "../../core/services/index";
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: "yeah-login",
+  templateUrl: "./login.component.html",
+  styleUrls: ["./login.component.css"]
 })
 export class LoginComponent {
 

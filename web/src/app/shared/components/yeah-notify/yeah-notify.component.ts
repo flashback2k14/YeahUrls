@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { NotifyService } from '../../../core/services/index';
-import { Notification, NotificationType } from '../../../../models/index';
+import { Component, OnInit } from "@angular/core";
+import { NotifyService } from "../../../core/services/index";
+import { Notification, NotificationType } from "../../../../models/index";
 
 @Component({
-  selector: 'yeah-notify',
-  templateUrl: './yeah-notify.component.html',
-  styleUrls: ['./yeah-notify.component.css']
+  selector: "yeah-notify",
+  templateUrl: "./yeah-notify.component.html",
+  styleUrls: ["./yeah-notify.component.css"]
 })
 export class YeahNotifyComponent implements OnInit {
 

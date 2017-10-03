@@ -8,4 +8,3 @@ export class Url {
   created: Date;
   updated: Date;
 }
-  

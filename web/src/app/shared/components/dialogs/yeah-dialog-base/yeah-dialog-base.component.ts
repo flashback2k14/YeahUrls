@@ -1,18 +1,18 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { trigger, transition, style, animate } from '@angular/animations';
+import { Component, Input, Output, EventEmitter } from "@angular/core";
+import { trigger, transition, style, animate } from "@angular/animations";
 
 @Component({
-  selector: 'yeah-dialog-base',
-  templateUrl: './yeah-dialog-base.component.html',
-  styleUrls: ['./yeah-dialog-base.component.css'],
+  selector: "yeah-dialog-base",
+  templateUrl: "./yeah-dialog-base.component.html",
+  styleUrls: ["./yeah-dialog-base.component.css"],
   animations: [
-    trigger('dialog-animation', [
-      transition('void => *', [
-        style({ transform: 'scale3d(.3, .3, .3)' }),
+    trigger("dialog-animation", [
+      transition("void => *", [
+        style({ transform: "scale3d(.3, .3, .3)" }),
         animate(100)
       ]),
-      transition('* => void', [
-        animate(100, style({ transform: 'scale3d(.0, .0, .0)' }))
+      transition("* => void", [
+        animate(100, style({ transform: "scale3d(.0, .0, .0)" }))
       ])
     ])
   ]

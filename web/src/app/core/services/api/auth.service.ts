@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { Headers, Http, Response } from '@angular/http';
+import { Injectable } from "@angular/core";
+import { Headers, Http, Response } from "@angular/http";
 import "rxjs/add/operator/toPromise";
-import { JwtHelper } from '../../../../helper/index';
-import { Config, StorageKeys, LoginResult } from '../../../../models/index';
+import { JwtHelper } from "../../../../helper/index";
+import { Config, StorageKeys, LoginResult } from "../../../../models/index";
 
 @Injectable()
 export class AuthService {

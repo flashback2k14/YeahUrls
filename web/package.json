@@ -10,7 +10,7 @@
     "build": "ng build",
     "build:o": "ng build --aot --build-optimizer --named-chunks",
     "test": "ng test",
-    "lint": "ng lint",
+    "lint": "ng lint --type-check",
     "e2e": "ng e2e"
   },
   "private": true,
