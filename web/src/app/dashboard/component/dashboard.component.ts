@@ -30,14 +30,14 @@ export class DashboardComponent implements OnInit {
     this.showLoading = true;
   }
 
-  ngOnInit () {
-    this._urlService.getUrlsByUser(Helper.getUserId())
-      .then(result => {
-        this._urlList = result;
-        this.filteredUrlList = this._urlList;
-        this.showLoading = false;
-      })
-      .catch(error => this._notifyService.onError(Helper.extractBackendError(error)));
+  async ngOnInit () {
+    try {
+      this._urlList = await this._urlService.getUrlsByUser(Helper.getUserId());
+      this.filteredUrlList = this._urlList;
+      this.showLoading = false;
+    } catch (error) {
+      this._notifyService.onError(Helper.extractBackendError(error));
+    }
   }
 
   handleSubmittedSearchRequest (requestedSearchTerm: string): void {
