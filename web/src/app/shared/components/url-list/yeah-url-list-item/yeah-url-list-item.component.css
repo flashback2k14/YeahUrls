@@ -15,7 +15,7 @@
 
 .item-container_top-url {
   display: flex;
-  width: 78%;
+  width: 88%;
   padding-left: 4px;
   font-size: large;
   word-wrap: break-word;
@@ -42,6 +42,10 @@
 .item-container_bottom {
   display: flex;
   margin-top: 2px;
+}
+
+.right-spacing {
+  margin-right: 4px;
 }
 
 @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
