@@ -3,4 +3,5 @@ export class Config {
   public static APIVERSION = "/api/v1";
   public static SIGNINROUTE = "/signin";
   public static URLROUTE = "/url";
+  public static TAGROUTE = "/tag";
 }

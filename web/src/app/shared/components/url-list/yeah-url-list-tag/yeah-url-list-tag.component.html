@@ -1,1 +1,4 @@
-<div class="tag-container" (click)="tagNameClicked()">{{ tag.name }}</div>
+<div class="tag-container">
+  <div class="tag-container_text" (click)="tagNameClicked()">{{ tag.name }}</div>
+  <div *ngIf="showRemoveButton" class="tag-container_remove" (click)="tagNameClickedForRemoving()">X</div>
+</div>

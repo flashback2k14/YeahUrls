@@ -1,4 +1,11 @@
 .tag-container {
+  display: flex;
+  align-items: center;
+  margin-top: 2px;
+}
+
+.tag-container_text {
+  display: flex;
   margin: 1px 4px;
   padding: 1px 4px;
   border: 1px solid #81D4FA;
@@ -9,8 +16,16 @@
   transition: 0.3s;
 }
 
-.tag-container:hover {
+.tag-container_text:hover {
   background: #81D4FA;
   color: black;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.6);
+}
+
+.tag-container_remove {
+  display: flex;
+  margin-left: 4px;
+  margin-right: 4px;
+  font-size: small;
+  cursor: pointer;
 }

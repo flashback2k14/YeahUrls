@@ -1,10 +1,20 @@
 <yeah-dialog-base [(visible)]="showDialog">
-  <div class="input-container">
+  <div class="edit-input-container">
     <textarea #taEditInput class="edit-input background-color text-color"
-      name="edit-data" id="taEditInput">
+      name="edit-data" id="taEditInput" rows="4">
     </textarea>
   </div>
-  <div style="text-align: right">
+  <div class="tag-list-container">
+    <yeah-url-list-tag *ngFor="let tag of _selectedTags" [tag]="tag" [showRemoveButton]="true"
+      (tagNameAsRemoveRequestSubmitted)="handleSubmittedTagNameAsRemoveRequest($event)">
+    </yeah-url-list-tag>
+  </div>
+  <div class="tag-selection-container">
+    <select class="tag-selection text-color" name="selectTag" (change)="handleSelectedTag($event)">
+      <option *ngFor="let tag of _allTags" [ngValue]="tag">{{ tag.name }}</option>
+    </select>
+  </div>
+  <div class="edit-action-container">
     <button class="custom-button custom-button_cancel"
       (click)="cancel()">CANCEL
     </button>

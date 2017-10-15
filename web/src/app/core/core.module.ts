@@ -1,10 +1,16 @@
 import { NgModule, Optional, SkipSelf } from "@angular/core";
-import { AuthService, AuthguardService, UiService, UrlService, NotifyService } from "./services/index";
+import {
+  AuthService, AuthguardService,
+  UiService,
+  TagService, UrlService,
+  NotifyService
+} from "./services/index";
 
 @NgModule({
   providers: [
     AuthService,
     AuthguardService,
+    TagService,
     UiService,
     UrlService,
     NotifyService

@@ -1,16 +1,17 @@
-.input-container {
-  margin-top: 16px;
+.edit-input-container {
+  margin-top: 24px;
+  margin-right: 4px;
 }
 
 .edit-input {
   width: 100%;
-  /* margin: 12px; */
   padding-bottom: 4px;
   border: 0;
   border-bottom: 1px solid #141E2A;
   font-size: medium;
   outline: none;
   word-wrap: break-word;
+  resize: none;
 }
 .edit-input::placeholder {
   color: #414953;
@@ -19,4 +20,38 @@
 .edit-input:focus,
 .edit-input:valid {
   border-bottom: 1px solid #81D4FA;
+}
+
+.tag-list-container {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+.tag-selection-container {
+  margin-top: 12px;
+}
+
+.tag-selection {
+  width: 100%;
+  padding: 4px 0 4px 4px;
+  background: #252C36 url("./../../../../../assets/down.svg") no-repeat 99% 50%;
+  font-size: small;
+  border: 0 solid white;
+  border-bottom: 1px solid #1f2d3d;
+  border-radius: 0;
+  cursor: pointer;
+  overflow: hidden;
+  box-shadow: none;
+  -webkit-appearance: none;
+  outline: none;
+}
+
+.tag-selection:hover,
+.tag-selection:focus {
+  border-bottom: 1px solid #81D4FA;
+}
+
+.edit-action-container {
+  text-align: right;
 }
