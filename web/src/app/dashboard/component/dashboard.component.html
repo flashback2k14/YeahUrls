@@ -1,6 +1,7 @@
 <div class="dashboard-container">
   <yeah-url-list-search #yeahUrlSearchElement
-    (searchRequestSubmitted)="handleSubmittedSearchRequest($event)">
+    (searchRequestSubmitted)="handleSubmittedSearchRequest($event)"
+    (addRequestSubmitted)="handleSubmittedAddRequest()">
   </yeah-url-list-search>
   <yeah-url-list>
     <div *ngIf="showLoading" class="loading-text text-color">Loading...</div>
@@ -18,4 +19,7 @@
   <yeah-dialog-delete #yeahUrlDeleteDialog
     (deleteUrlCompleted)="handleCompletedDeleteUrlItem($event)">
   </yeah-dialog-delete>
+  <yeah-dialog-add #yeahUrlAddDialog
+    (addUrlCompleted)="handleCompletedAddUrlItem($event)">
+  </yeah-dialog-add>
 </div>

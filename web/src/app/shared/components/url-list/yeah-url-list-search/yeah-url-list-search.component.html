@@ -3,10 +3,13 @@
     type="text" required placeholder="Enter your search term...">
   <div class="search-container_actions">
     <button class="custom-button custom-button_ok"
-      (click)="sendSearchRequest(txtSearchTerm)">Send
+      (click)="sendSearchRequest(txtSearchTerm)">Search
     </button>
     <button class="custom-button custom-button_cancel"
       (click)="clear(txtSearchTerm)">Clear
+    </button>
+    <button class="custom-button custom-button_add"
+      (click)="sendAddRequest()">Add
     </button>
   </div>
 </div>

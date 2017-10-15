@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
-import { YeahDialogDeleteComponent, YeahDialogEditComponent, YeahUrlListSearchComponent } from "../../shared/components/index";
+import {
+  YeahDialogDeleteComponent, YeahDialogEditComponent, YeahDialogAddComponent, YeahUrlListSearchComponent
+} from "../../shared/components/index";
 import { UrlService, NotifyService } from "../../core/services/index";
 import { Helper } from "../../../helper/index";
 import { Url } from "../../../models/index";
@@ -14,6 +16,7 @@ export class DashboardComponent implements OnInit {
   @ViewChild("yeahUrlSearchElement") yeahUrlSearchElement: YeahUrlListSearchComponent;
   @ViewChild("yeahUrlEditDialog") yeahUrlEditDialog: YeahDialogEditComponent;
   @ViewChild("yeahUrlDeleteDialog") yeahUrlDeleteDialog: YeahDialogDeleteComponent;
+  @ViewChild("yeahUrlAddDialog") yeahUrlAddDialog: YeahDialogAddComponent;
 
   private _urlList: Array<Url>;
   filteredUrlList: Array<Url>;
@@ -35,6 +38,8 @@ export class DashboardComponent implements OnInit {
       this._notifyService.onError(Helper.extractBackendError(error));
     }
   }
+
+  // region yeah-url-list-search
 
   handleSubmittedSearchRequest (requestedSearchTerm: string): void {
     if (!requestedSearchTerm) {
@@ -58,9 +63,33 @@ export class DashboardComponent implements OnInit {
     this.filteredUrlList = Array.from(new Set([...filteredUrlsByNameList, ...filteredUrlsByTagList]));
   }
 
+  handleSubmittedAddRequest (): void {
+    this.yeahUrlAddDialog.open();
+  }
+
+  // endregion
+
+  // region yeah-url-list-item
+
   handleSubmittedEditUrlItemRequest (requestedUrl: Url): void {
     this.yeahUrlEditDialog.open(requestedUrl);
   }
+
+  handleSubmittedDeleteUrlItemRequest (requestedUrl: Url): void {
+    this.yeahUrlDeleteDialog.open(requestedUrl);
+  }
+
+  // endregion
+
+  // region yeah-url-list-tag
+
+  handleSubmittedTagNameAsSearchRequest (requestedSearchTerm: string): void {
+    this.yeahUrlSearchElement.setSearchInputText(requestedSearchTerm);
+  }
+
+  // endregion
+
+  // region yeah-dialog-edit
 
   handleCompletedEditUrlItem (modifiedUrl: Url): void {
     const foundIndex = this._urlList.findIndex((url: Url) => url.id === modifiedUrl.id);
@@ -68,9 +97,9 @@ export class DashboardComponent implements OnInit {
     this.filteredUrlList = this._urlList;
   }
 
-  handleSubmittedDeleteUrlItemRequest (requestedUrl: Url): void {
-    this.yeahUrlDeleteDialog.open(requestedUrl);
-  }
+  // endregion
+
+  // region yeah-dialog-delete
 
   handleCompletedDeleteUrlItem (removedUrlId: string): void {
     const foundIndex = this._urlList.findIndex((url: Url) => url.id === removedUrlId);
@@ -78,7 +107,14 @@ export class DashboardComponent implements OnInit {
     this.filteredUrlList = this._urlList;
   }
 
-  handleSubmittedTagNameAsSearchRequest (requestedSearchTerm: string): void {
-    this.yeahUrlSearchElement.setSearchInputText(requestedSearchTerm);
+  // endregion
+
+  // region yeah-dialog-add
+
+  handleCompletedAddUrlItem (addedUrl: Url): void {
+    this._urlList.unshift(addedUrl);
+    this.filteredUrlList = this._urlList;
   }
+
+  // endregion
 }

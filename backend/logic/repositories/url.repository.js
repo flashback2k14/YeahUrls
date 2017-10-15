@@ -86,9 +86,7 @@ module.exports = (UrlModel, TagModel, UserModel) => {
     // save new url object
     const createdUrl = await newUrl.save();
     // return data
-    return {
-      url: this._transformUrl(createdUrl)
-    };
+    return await this._transformUrl(createdUrl);
   }
 
   async function createNewTagForUserIdAndUrlId (userId, urlId, body) {

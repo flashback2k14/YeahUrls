@@ -3,7 +3,7 @@ import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import {
   YeahUrlListComponent, YeahUrlListSearchComponent, YeahUrlListItemComponent, YeahUrlListTagComponent,
-  YeahDialogBaseComponent, YeahDialogImportComponent, YeahDialogEditComponent, YeahDialogDeleteComponent,
+  YeahDialogAddComponent, YeahDialogBaseComponent, YeahDialogImportComponent, YeahDialogEditComponent, YeahDialogDeleteComponent,
   YeahNotifyComponent
 } from "./components/index";
 
@@ -14,6 +14,7 @@ import {
     YeahUrlListSearchComponent,
     YeahUrlListItemComponent,
     YeahUrlListTagComponent,
+    YeahDialogAddComponent,
     YeahDialogBaseComponent,
     YeahDialogImportComponent,
     YeahDialogEditComponent,
@@ -25,6 +26,7 @@ import {
     YeahUrlListSearchComponent,
     YeahUrlListItemComponent,
     YeahUrlListTagComponent,
+    YeahDialogAddComponent,
     YeahDialogBaseComponent,
     YeahDialogImportComponent,
     YeahDialogEditComponent,

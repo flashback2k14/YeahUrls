@@ -1,0 +1,27 @@
+<yeah-dialog-base [(visible)]="showDialog">
+  <div class="add-input-container">
+    <textarea #taAddInput class="background-color text-color add-input"
+      placeholder="Add new URL..." name="add-data" id="taAddInput" rows="4">
+    </textarea>
+    <input #txtKeywords class="custom-input background-color text-color keyword-input"
+      type="text" required placeholder="Enter your keywords...">
+  </div>
+  <div class="tag-list-container">
+    <yeah-url-list-tag *ngFor="let tag of selectedTags" [tag]="tag" [showRemoveButton]="true"
+      (tagNameAsRemoveRequestSubmitted)="handleSubmittedTagNameAsRemoveRequest($event)">
+    </yeah-url-list-tag>
+  </div>
+  <div class="tag-selection-container">
+    <select class="tag-selection text-color" name="selectTag" (change)="handleSelectedTag($event)">
+      <option *ngFor="let tag of allTags" [ngValue]="tag">{{ tag.name }}</option>
+    </select>
+  </div>
+  <div class="add-action-container">
+    <button class="custom-button custom-button_cancel"
+      (click)="cancel()">CANCEL
+    </button>
+    <button class="custom-button custom-button_ok"
+      (click)="add(taAddInput)">ADD
+    </button>
+  </div>
+</yeah-dialog-base>

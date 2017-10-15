@@ -9,9 +9,11 @@ export class YeahUrlListSearchComponent {
 
   @ViewChild("txtSearchTerm") txtSearchTerm: any;
   @Output() searchRequestSubmitted: EventEmitter<string>;
+  @Output() addRequestSubmitted: EventEmitter<void>;
 
   constructor () {
     this.searchRequestSubmitted = new EventEmitter<string>();
+    this.addRequestSubmitted = new EventEmitter<void>();
   }
 
   sendSearchRequest (txtSearchTerm: HTMLInputElement): void {
@@ -25,6 +27,10 @@ export class YeahUrlListSearchComponent {
       this.searchRequestSubmitted.next(null);
       txtSearchTerm.value = "";
     }
+  }
+
+  sendAddRequest (): void {
+    this.addRequestSubmitted.emit();
   }
 
   setSearchInputText (value: string): void {

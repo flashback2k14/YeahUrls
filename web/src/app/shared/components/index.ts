@@ -1,3 +1,4 @@
+export * from "./dialogs/yeah-dialog-add/yeah-dialog-add.component";
 export * from "./dialogs/yeah-dialog-base/yeah-dialog-base.component";
 export * from "./dialogs/yeah-dialog-delete/yeah-dialog-delete.component";
 export * from "./dialogs/yeah-dialog-edit/yeah-dialog-edit.component";
