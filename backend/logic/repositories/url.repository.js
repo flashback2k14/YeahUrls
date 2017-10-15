@@ -63,11 +63,10 @@ module.exports = (UrlModel, TagModel, UserModel) => {
     return this._transformUrl(url);
   }
 
-  async function updateByUserIdAndUrlId (userId, urlId, url) {
+  async function updateByUserIdAndUrlId (userId, urlId, body) {
     // check if the user is available
     await UserModel.findById(userId).lean();
     // update url object
-    const body = { url };
     const updatedUrl = await UrlModel.findByIdAndUpdate({ _id: urlId, }, { $set: body }, { new: true }).lean();
     // return data
     return this._transformUrl(updatedUrl);

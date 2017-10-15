@@ -30,7 +30,7 @@ module.exports = (express, UrlRepository, SocketHelper) => {
 
   url.put("/:userid/:urlid", async (req, res) => {
     try {
-      const data = await UrlRepository.updateByUserIdAndUrlId(req.params.userid, req.params.urlid, req.body.url);
+      const data = await UrlRepository.updateByUserIdAndUrlId(req.params.userid, req.params.urlid, req.body);
       SocketHelper.publishChanges(SocketHelper.EVENTNAME.URLUPDATED, data);
       res.status(200).json(data);
     } catch (error) {

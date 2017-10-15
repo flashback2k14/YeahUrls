@@ -398,7 +398,8 @@
   Request Body:
     ```json
     {
-      url: string
+      url: string,
+      tags: [string]
     }
     ```
 

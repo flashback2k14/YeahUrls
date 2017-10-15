@@ -71,8 +71,12 @@ export class YeahDialogEditComponent implements OnInit {
   async edit (taEditInput: HTMLTextAreaElement): Promise<void> {
     if (!taEditInput.value) { return; }
     try {
-      const urlData = { url: taEditInput.value };
+      const urlData = {
+        url: taEditInput.value,
+        tags: this._selectedTags.map((tag: Tag) => tag.id)
+      };
       const modifiedUrl = await this._urlService.putUrlByUserAndId(Helper.getUserId(), this._url.id, urlData);
+      this._notifyService.onSuccess("Successfully modified Url!");
       this.editUrlCompleted.emit(modifiedUrl);
       this.showDialog = false;
     } catch (error) {
