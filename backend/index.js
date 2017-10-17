@@ -48,6 +48,7 @@ const tagRoute = require("./routes/tag.route")(express, tagRepository, SocketHel
 const urlRoute = require("./routes/url.route")(express, urlRepository, SocketHelper);
 
 // set routes
+app.use("/", (req, res) => res.send("Yeah Urls API is ready to Rock!"));
 app.use("/api/v1", authRoute);
 app.use("/api/v1/user", authMiddleware.checkAuthState, userRoute);
 app.use("/api/v1/tag", authMiddleware.checkAuthState, tagRoute);
