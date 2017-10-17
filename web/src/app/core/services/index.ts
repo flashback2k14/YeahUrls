@@ -1,4 +1,5 @@
 export * from "./api/auth.service";
+export * from "./api/config.service";
 export * from "./api/tag.service";
 export * from "./api/url.service";
 export * from "./ui/authguard.service";

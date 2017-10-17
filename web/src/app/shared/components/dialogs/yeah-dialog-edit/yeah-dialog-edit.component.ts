@@ -14,8 +14,8 @@ export class YeahDialogEditComponent implements OnInit {
   @Input() showDialog: boolean;
   @Output() editUrlCompleted: EventEmitter<Url>;
 
-  private _allTags: Array<Tag>;
-  private _selectedTags: Array<Tag>;
+  allTags: Array<Tag>;
+  selectedTags: Array<Tag>;
   private _url: Url;
 
   constructor (
@@ -25,8 +25,8 @@ export class YeahDialogEditComponent implements OnInit {
   ) {
     this.showDialog = false;
     this.editUrlCompleted = new EventEmitter<Url>();
-    this._allTags = new Array<Tag>();
-    this._selectedTags = new Array<Tag>();
+    this.allTags = new Array<Tag>();
+    this.selectedTags = new Array<Tag>();
     this._url = new Url();
   }
 
@@ -34,19 +34,19 @@ export class YeahDialogEditComponent implements OnInit {
 
   async ngOnInit (): Promise<void> {
     try {
-      this._allTags = await this._tagService.getTags();
+      this.allTags = await this._tagService.getTags();
     } catch (error) {
       this._notifyService.onError(Helper.extractBackendError(error));
     }
   }
 
   handleSubmittedTagNameAsRemoveRequest (event): void {
-    this._selectedTags = this._selectedTags.filter((tag: Tag) => tag.id !== event);
+    this.selectedTags = this.selectedTags.filter((tag: Tag) => tag.id !== event);
   }
 
   handleSelectedTag (event): void {
-    const foundTag = this._allTags[event.target.selectedIndex];
-    this._selectedTags.push(foundTag);
+    const foundTag = this.allTags[event.target.selectedIndex];
+    this.selectedTags.push(foundTag);
   }
 
   // endregion eventhandler
@@ -56,7 +56,7 @@ export class YeahDialogEditComponent implements OnInit {
   open (url: Url): void {
     this.showDialog = true;
     this._url = url;
-    this._selectedTags = this._url.tags;
+    this.selectedTags = this._url.tags;
     this.taEditInput.nativeElement.value = this._url.url;
   }
 
@@ -73,7 +73,7 @@ export class YeahDialogEditComponent implements OnInit {
     try {
       const urlData = {
         url: taEditInput.value,
-        tags: this._selectedTags.map((tag: Tag) => tag.id)
+        tags: this.selectedTags.map((tag: Tag) => tag.id)
       };
       const modifiedUrl = await this._urlService.putUrlByUserAndId(Helper.getUserId(), this._url.id, urlData);
       this._notifyService.onSuccess("Successfully modified Url!");

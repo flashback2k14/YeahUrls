@@ -1,0 +1,7 @@
+{
+  "baseUrl": "https://yeah-urls.herokuapp.com",
+  "apiVersion": "/api/v1",
+  "signInRoute": "/signin",
+  "urlRoute": "/url",
+  "tagRoute": "/tag"
+}

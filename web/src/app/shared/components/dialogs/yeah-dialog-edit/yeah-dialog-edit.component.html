@@ -5,13 +5,13 @@
     </textarea>
   </div>
   <div class="tag-list-container">
-    <yeah-url-list-tag *ngFor="let tag of _selectedTags" [tag]="tag" [showRemoveButton]="true"
+    <yeah-url-list-tag *ngFor="let tag of selectedTags" [tag]="tag" [showRemoveButton]="true"
       (tagNameAsRemoveRequestSubmitted)="handleSubmittedTagNameAsRemoveRequest($event)">
     </yeah-url-list-tag>
   </div>
   <div class="tag-selection-container">
     <select class="tag-selection text-color" name="selectTag" (change)="handleSelectedTag($event)">
-      <option *ngFor="let tag of _allTags" [ngValue]="tag">{{ tag.name }}</option>
+      <option *ngFor="let tag of allTags" [ngValue]="tag">{{ tag.name }}</option>
     </select>
   </div>
   <div class="edit-action-container">

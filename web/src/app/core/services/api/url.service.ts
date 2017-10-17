@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { Http, Headers, Response } from "@angular/http";
 import "rxjs/add/operator/toPromise";
 import { Config, Url, StorageKeys } from "../../../../models/index";
+import { ConfigService } from "./config.service";
 
 @Injectable()
 export class UrlService {
@@ -9,8 +10,8 @@ export class UrlService {
   private _baseUrl: string;
   private _headers: Headers;
 
-  constructor (private _http: Http) {
-    this._baseUrl = Config.BASEURL + Config.APIVERSION + Config.URLROUTE;
+  constructor (private _configService: ConfigService, private _http: Http) {
+    this._baseUrl = _configService.config.baseUrl + _configService.config.apiVersion + _configService.config.urlRoute;
     this._headers = new Headers();
     this._headers.append("accept", "application/json");
     this._headers.append("content-type", "application/json");

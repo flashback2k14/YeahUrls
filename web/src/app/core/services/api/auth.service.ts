@@ -3,6 +3,7 @@ import { Headers, Http, Response } from "@angular/http";
 import "rxjs/add/operator/toPromise";
 import { JwtHelper } from "../../../../helper/index";
 import { Config, StorageKeys, LoginResult } from "../../../../models/index";
+import { ConfigService } from "./config.service";
 
 @Injectable()
 export class AuthService {
@@ -11,8 +12,8 @@ export class AuthService {
   private _baseUrl: string;
   private _headers: Headers;
 
-  constructor (private _http: Http) {
-    this._baseUrl = Config.BASEURL + Config.APIVERSION;
+  constructor (private _configService: ConfigService, private _http: Http) {
+    this._baseUrl = _configService.config.baseUrl + _configService.config.apiVersion;
     this._headers = new Headers();
     this._headers.append("accept", "application/json");
     this._headers.append("content-type", "application/json");
@@ -28,7 +29,7 @@ export class AuthService {
   }
 
   async signIn (username, password): Promise<LoginResult> {
-    const url = this._baseUrl + Config.SIGNINROUTE;
+    const url = this._baseUrl + this._configService.config.signInRoute;
     const body = JSON.stringify({ username, password });
     const data: Response = await this._http.post(url, body, { headers: this._headers }).toPromise();
     const result = await data.json();
