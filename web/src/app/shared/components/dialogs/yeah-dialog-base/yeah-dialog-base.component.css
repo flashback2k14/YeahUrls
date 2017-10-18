@@ -30,6 +30,13 @@
   border: 0;
   background: none;
   font-size: small;
+  cursor: pointer;
+}
+
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+  .dialog-containter {
+    top: 40px;
+  }
 }
 
 @media (min-width: 768px) {

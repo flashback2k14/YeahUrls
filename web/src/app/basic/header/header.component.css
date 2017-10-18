@@ -37,3 +37,9 @@ header {
   text-decoration: underline;
   cursor: pointer;
 }
+
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+  .header-title {
+    font-size: large;
+  }
+}

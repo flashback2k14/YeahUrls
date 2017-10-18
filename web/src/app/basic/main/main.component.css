@@ -6,3 +6,10 @@ main {
   margin: 64px 12px 48px 12px;
   overflow: auto;
 }
+
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+  main {
+    height: calc(100vh - 98px);
+    margin: 50px 12px 48px 12px;
+  }
+}

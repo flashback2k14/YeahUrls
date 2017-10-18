@@ -1,5 +1,6 @@
 footer {
   display: flex;
+  justify-content: space-between;
   flex: 0 0 48px;
   align-items: center;
   position: absolute;
@@ -12,7 +13,7 @@ footer {
 
 .footer-anchor {
   display: flex;
-  flex: 1 1 auto;
+  /* flex: 1 1 auto; */
   text-decoration: none;
   color: #C0CCDA;
   outline: none;
@@ -22,6 +23,7 @@ footer {
 .footer-anchor:focus,
 .footer-import:focus {
   text-decoration: underline;
+  cursor: pointer;
 }
 .footer-anchor:visited {
   color: #C0CCDA;

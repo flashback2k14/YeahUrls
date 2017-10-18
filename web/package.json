@@ -15,7 +15,8 @@
     "test": "ng test",
     "lint": "ng lint --type-check",
     "e2e": "ng e2e",
-    "deploy": "npm run clean && npm run build:p && cd dist && surge --domain https://yeah-urls.surge.sh"
+    "create:200": "cat dist/index.html >> dist/200.html",
+    "deploy": "npm run clean && npm run build:p && cd dist && npm run create:200 && surge --domain https://yeah-urls.surge.sh"
   },
   "engines": {
     "node": "8.4.0",

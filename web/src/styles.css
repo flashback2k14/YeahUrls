@@ -179,4 +179,9 @@ svg {
     width: 60px;
     padding: 0;
   }
+
+  .custom-button-small {
+    width: 30px;
+    height: 30px;
+  }
 }

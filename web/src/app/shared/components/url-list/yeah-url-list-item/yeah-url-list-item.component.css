@@ -50,10 +50,18 @@
 
 @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
   .item-container_top-url_text {
-    font-size: small;
+    font-size: medium;
   }
 
   .item-container_top-actions {
     flex-direction: column;
+  }
+
+  .item-container_bottom {
+    margin-top: 4px;
+  }
+
+  .right-spacing {
+    margin-right: 0;
   }
 }
