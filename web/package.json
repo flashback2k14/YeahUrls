@@ -16,7 +16,8 @@
     "lint": "ng lint --type-check",
     "e2e": "ng e2e",
     "create:200": "cat dist/index.html >> dist/200.html",
-    "deploy": "npm run clean && npm run build:p && cd dist && npm run create:200 && surge --domain https://yeah-urls.surge.sh"
+    "copy:m": "cp -rv src/manifest.json dist/",
+    "deploy": "npm run clean && npm run build:p && npm run copy:m && cd dist && npm run create:200 &&  surge --domain https://yeah-urls.surge.sh"
   },
   "engines": {
     "node": "8.4.0",
