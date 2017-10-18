@@ -13,7 +13,6 @@ footer {
 
 .footer-anchor {
   display: flex;
-  /* flex: 1 1 auto; */
   text-decoration: none;
   color: #C0CCDA;
   outline: none;
