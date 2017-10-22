@@ -2,11 +2,31 @@
   width: 50vw;
 }
 
+.no-data-text,
 .loading-text {
   width: inherit;
   margin-top: 48px;
   font-size: larger;
   text-align: center;
+}
+
+.loading-text:before {
+  content: ' ';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20%;
+  height: 2px;
+  background: #81D4FA;
+  animation: loading-animation 2s ease-out infinite;
+}
+@keyframes loading-animation {
+  0% {
+    transform: translate(0%);
+  }
+  100% {
+    transform: translate(500%);
+  }
 }
 
 @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {

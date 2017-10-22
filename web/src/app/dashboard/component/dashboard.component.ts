@@ -20,23 +20,46 @@ export class DashboardComponent implements OnInit {
 
   private _urlList: Array<Url>;
   filteredUrlList: Array<Url>;
+  scrollUrlItems: Array<Url>;
+
+  urlChildHeight: number;
   showLoading: boolean;
+  showNoData: boolean;
 
   constructor (
     private _urlService: UrlService,
     private _notifyService: NotifyService
   ) {
+    this._urlList = new Array<Url>();
+    this.filteredUrlList = new Array<Url>();
+    this.scrollUrlItems = new Array<Url>();
     this.showLoading = true;
+    this.showNoData = true;
   }
 
   async ngOnInit () {
     try {
       this._urlList = await this._urlService.getUrlsByUser(Helper.getUserId());
       this.filteredUrlList = this._urlList;
+      this.urlChildHeight = this._determineUrlChildHeight();
       this.showLoading = false;
+      this.showNoData = this._urlList.length <= 0;
     } catch (error) {
       this._notifyService.onError(Helper.extractBackendError(error));
     }
+  }
+
+  private _determineUrlChildHeight (): number {
+    const smallScreen = "(min-device-width : 320px) and (max-device-width : 480px)";
+    const mediumScreen = "(min-device-width : 481px) and (max-device-width : 1024px)";
+
+    if (window.matchMedia(smallScreen).matches) { return 100; }
+    if (window.matchMedia(mediumScreen).matches) { return 85; }
+    return 70;
+  }
+
+  urlItemTracker (index, url: Url) {
+    return url ? url.id : undefined;
   }
 
   // region yeah-url-list-search
@@ -44,6 +67,7 @@ export class DashboardComponent implements OnInit {
   handleSubmittedSearchRequest (requestedSearchTerm: string): void {
     if (!requestedSearchTerm) {
       this.filteredUrlList = this._urlList;
+      this.scrollUrlItems = new Array<Url>();
       return;
     }
 
