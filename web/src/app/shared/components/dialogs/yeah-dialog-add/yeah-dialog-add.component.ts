@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from "@angular/core";
-import { TagService, UrlService, NotifyService } from "../../../../core/services/index";
+import { Component, Input, Output, EventEmitter, ViewChild } from "@angular/core";
+import { UrlService, NotifyService } from "../../../../core/services/index";
 import { Helper } from "../../../../../helper/index";
 import { Url, Tag } from "../../../../../models/index";
 
@@ -8,46 +8,37 @@ import { Url, Tag } from "../../../../../models/index";
   templateUrl: "./yeah-dialog-add.component.html",
   styleUrls: ["./yeah-dialog-add.component.css"]
 })
-export class YeahDialogAddComponent implements OnInit {
+export class YeahDialogAddComponent {
 
   @ViewChild("taAddInput") taAddInput: any;
   @ViewChild("txtKeywords") txtKeywords: any;
 
   @Input() showDialog: boolean;
+  @Input() tagList: Array<Tag>;
   @Output() addUrlCompleted: EventEmitter<Url>;
 
-  allTags: Array<Tag>;
-  selectedTags: Array<Tag>;
   private _url: Url;
+  selectedTags: Array<Tag>;
 
   constructor (
-    private _tagService: TagService,
     private _urlService: UrlService,
     private _notifyService: NotifyService
   ) {
     this.showDialog = false;
     this.addUrlCompleted = new EventEmitter<Url>();
-    this.allTags = new Array<Tag>();
+    this.tagList = new Array<Tag>();
     this.selectedTags = new Array<Tag>();
     this._url = new Url();
   }
 
   // region eventhandler
 
-  async ngOnInit (): Promise<void> {
-    try {
-      this.allTags = await this._tagService.getTags();
-    } catch (error) {
-      this._notifyService.onError(Helper.extractBackendError(error));
-    }
-  }
-
   handleSubmittedTagNameAsRemoveRequest (event): void {
     this.selectedTags = this.selectedTags.filter((tag: Tag) => tag.id !== event);
   }
 
   handleSelectedTag (event): void {
-    const foundTag = this.allTags[event.target.selectedIndex];
+    const foundTag = this.tagList[event.target.selectedIndex];
     this.selectedTags.push(foundTag);
   }
 

@@ -16,13 +16,13 @@
       </yeah-url-list-item>
     </virtual-scroll>
   </yeah-url-list>
-  <yeah-dialog-edit #yeahUrlEditDialog
+  <yeah-dialog-edit #yeahUrlEditDialog [tagList]="tagList"
     (editUrlCompleted)="handleCompletedEditUrlItem($event)">
   </yeah-dialog-edit>
   <yeah-dialog-delete #yeahUrlDeleteDialog
     (deleteUrlCompleted)="handleCompletedDeleteUrlItem($event)">
   </yeah-dialog-delete>
-  <yeah-dialog-add #yeahUrlAddDialog
+  <yeah-dialog-add #yeahUrlAddDialog [tagList]="tagList"
     (addUrlCompleted)="handleCompletedAddUrlItem($event)">
   </yeah-dialog-add>
 </div>

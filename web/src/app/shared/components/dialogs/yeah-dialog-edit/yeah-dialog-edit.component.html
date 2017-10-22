@@ -3,6 +3,8 @@
     <textarea #taEditInput class="edit-input background-color text-color"
       name="edit-data" id="taEditInput" rows="4">
     </textarea>
+    <input #txtKeywords class="custom-input background-color text-color keyword-input"
+    type="text" required placeholder="Enter new keywords here...">
   </div>
   <div class="tag-list-container">
     <yeah-url-list-tag *ngFor="let tag of selectedTags" [tag]="tag" [showRemoveButton]="true"
@@ -11,7 +13,7 @@
   </div>
   <div class="tag-selection-container">
     <select class="tag-selection text-color" name="selectTag" (change)="handleSelectedTag($event)">
-      <option *ngFor="let tag of allTags" [ngValue]="tag">{{ tag.name }}</option>
+      <option *ngFor="let tag of tagList" [ngValue]="tag">{{ tag.name }}</option>
     </select>
   </div>
   <div class="edit-action-container">

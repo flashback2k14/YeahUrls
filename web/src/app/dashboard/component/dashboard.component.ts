@@ -2,9 +2,9 @@ import { Component, OnInit, ViewChild } from "@angular/core";
 import {
   YeahDialogDeleteComponent, YeahDialogEditComponent, YeahDialogAddComponent, YeahUrlListSearchComponent
 } from "../../shared/components/index";
-import { UrlService, NotifyService } from "../../core/services/index";
+import { UrlService, NotifyService, TagService } from "../../core/services/index";
 import { Helper } from "../../../helper/index";
-import { Url } from "../../../models/index";
+import { Url, Tag } from "../../../models/index";
 
 @Component({
   selector: "yeah-dashboard",
@@ -21,18 +21,22 @@ export class DashboardComponent implements OnInit {
   private _urlList: Array<Url>;
   filteredUrlList: Array<Url>;
   scrollUrlItems: Array<Url>;
-
   urlChildHeight: number;
+
+  tagList: Array<Tag>;
+
   showLoading: boolean;
   showNoData: boolean;
 
   constructor (
     private _urlService: UrlService,
+    private _tagService: TagService,
     private _notifyService: NotifyService
   ) {
     this._urlList = new Array<Url>();
     this.filteredUrlList = new Array<Url>();
     this.scrollUrlItems = new Array<Url>();
+    this.tagList = new Array<Tag>();
     this.showLoading = true;
     this.showNoData = true;
   }
@@ -42,6 +46,12 @@ export class DashboardComponent implements OnInit {
       this._urlList = await this._urlService.getUrlsByUser(Helper.getUserId());
       this.filteredUrlList = this._urlList;
       this.urlChildHeight = this._determineUrlChildHeight();
+
+      const unsortedTags = await this._tagService.getTags();
+      this.tagList = unsortedTags.sort((a: Tag, b: Tag) => {
+        return a.name.toUpperCase().localeCompare(b.name.toLocaleUpperCase());
+      });
+
       this.showLoading = false;
       this.showNoData = this._urlList.length <= 0;
     } catch (error) {

@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from "@angular/core";
-import { TagService, UrlService, NotifyService } from "../../../../core/services/index";
+import { Component, Input, Output, EventEmitter, ViewChild } from "@angular/core";
+import { UrlService, NotifyService } from "../../../../core/services/index";
 import { Helper } from "../../../../../helper/index";
 import { Url, Tag } from "../../../../../models/index";
 
@@ -8,44 +8,37 @@ import { Url, Tag } from "../../../../../models/index";
   templateUrl: "./yeah-dialog-edit.component.html",
   styleUrls: ["./yeah-dialog-edit.component.css"]
 })
-export class YeahDialogEditComponent implements OnInit {
+export class YeahDialogEditComponent {
 
   @ViewChild("taEditInput") taEditInput: any;
+  @ViewChild("txtKeywords") txtKeywords: any;
+
   @Input() showDialog: boolean;
+  @Input() tagList: Array<Tag>;
   @Output() editUrlCompleted: EventEmitter<Url>;
 
-  allTags: Array<Tag>;
-  selectedTags: Array<Tag>;
   private _url: Url;
+  selectedTags: Array<Tag>;
 
   constructor (
-    private _tagService: TagService,
     private _urlService: UrlService,
     private _notifyService: NotifyService
   ) {
     this.showDialog = false;
     this.editUrlCompleted = new EventEmitter<Url>();
-    this.allTags = new Array<Tag>();
+    this.tagList = new Array<Tag>();
     this.selectedTags = new Array<Tag>();
     this._url = new Url();
   }
 
   // region eventhandler
 
-  async ngOnInit (): Promise<void> {
-    try {
-      this.allTags = await this._tagService.getTags();
-    } catch (error) {
-      this._notifyService.onError(Helper.extractBackendError(error));
-    }
-  }
-
   handleSubmittedTagNameAsRemoveRequest (event): void {
     this.selectedTags = this.selectedTags.filter((tag: Tag) => tag.id !== event);
   }
 
   handleSelectedTag (event): void {
-    const foundTag = this.allTags[event.target.selectedIndex];
+    const foundTag = this.tagList[event.target.selectedIndex];
     this.selectedTags.push(foundTag);
   }
 
@@ -65,7 +58,7 @@ export class YeahDialogEditComponent implements OnInit {
   // region buttons
 
   cancel (): void {
-    this.showDialog = false;
+    this._clearDialog();
   }
 
   async edit (taEditInput: HTMLTextAreaElement): Promise<void> {
@@ -73,15 +66,35 @@ export class YeahDialogEditComponent implements OnInit {
     try {
       const urlData = {
         url: taEditInput.value,
-        tags: this.selectedTags.map((tag: Tag) => tag.id)
+        tags: this._getTags()
       };
       const modifiedUrl = await this._urlService.putUrlByUserAndId(Helper.getUserId(), this._url.id, urlData);
       this._notifyService.onSuccess("Successfully modified Url!");
       this.editUrlCompleted.emit(modifiedUrl);
-      this.showDialog = false;
+      this._clearDialog();
     } catch (error) {
       this._notifyService.onError(Helper.extractBackendError(error));
     }
+  }
+
+  private _getTags (): Array<string> {
+    let result = new Array<string>();
+    if (this.txtKeywords.nativeElement.value) {
+      const splittedKeywords = this.txtKeywords.nativeElement.value.split(" - ");
+      result = splittedKeywords;
+    }
+    this.selectedTags.forEach((tag: Tag) => {
+      result.push(tag.name);
+    });
+    return result;
+  }
+
+  private _clearDialog (): void {
+    this.taEditInput.nativeElement.value = "";
+    this.txtKeywords.nativeElement.value = "";
+    this.selectedTags = new Array<Tag>();
+    this._url = new Url();
+    this.showDialog = false;
   }
 
   // endregion buttons
