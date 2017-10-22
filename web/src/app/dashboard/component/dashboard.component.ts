@@ -1,19 +1,22 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit, ViewChild, OnDestroy } from "@angular/core";
 import {
-  YeahDialogDeleteComponent, YeahDialogEditComponent, YeahDialogAddComponent, YeahUrlListSearchComponent
+  YeahDialogDeleteComponent, YeahDialogEditComponent,
+  YeahDialogAddComponent, YeahUrlListSearchComponent
 } from "../../shared/components/index";
-import { UrlService, NotifyService, TagService } from "../../core/services/index";
+import { UrlService, NotifyService, TagService, SocketService } from "../../core/services/index";
 import { Helper } from "../../../helper/index";
-import { Url, Tag } from "../../../models/index";
+import { Url, Tag, SocketEvents } from "../../../models/index";
+import { VirtualScrollComponent } from "angular2-virtual-scroll";
 
 @Component({
   selector: "yeah-dashboard",
   templateUrl: "./dashboard.component.html",
   styleUrls: ["./dashboard.component.css"]
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
 
   @ViewChild("yeahUrlSearchElement") yeahUrlSearchElement: YeahUrlListSearchComponent;
+  @ViewChild("urlVirtualScroll") virtualScroll: VirtualScrollComponent;
   @ViewChild("yeahUrlEditDialog") yeahUrlEditDialog: YeahDialogEditComponent;
   @ViewChild("yeahUrlDeleteDialog") yeahUrlDeleteDialog: YeahDialogDeleteComponent;
   @ViewChild("yeahUrlAddDialog") yeahUrlAddDialog: YeahDialogAddComponent;
@@ -30,6 +33,7 @@ export class DashboardComponent implements OnInit {
 
   constructor (
     private _urlService: UrlService,
+    private _socketService: SocketService,
     private _tagService: TagService,
     private _notifyService: NotifyService
   ) {
@@ -54,9 +58,15 @@ export class DashboardComponent implements OnInit {
 
       this.showLoading = false;
       this.showNoData = this._urlList.length <= 0;
+
+      this._initSocketListener();
     } catch (error) {
       this._notifyService.onError(Helper.extractBackendError(error));
     }
+  }
+
+  ngOnDestroy (): void {
+    this._removeSocketListener();
   }
 
   private _determineUrlChildHeight (): number {
@@ -71,6 +81,57 @@ export class DashboardComponent implements OnInit {
   urlItemTracker (index, url: Url) {
     return url ? url.id : undefined;
   }
+
+  // region socket.io
+
+  private _initSocketListener (): void {
+    this._socketService.getSocket().on(SocketEvents.URLADDED, (addedUrl: Url) => {
+      this._urlList.push(addedUrl);
+      this.filteredUrlList = this._urlList;
+      this.virtualScroll.scrollInto(this.filteredUrlList[this.filteredUrlList.length - 1]);
+    });
+    this._socketService.getSocket().on(SocketEvents.URLUPDATED, (modifiedUrl: Url) => {
+      const foundIndex = this._urlList.findIndex((url: Url) => url.id === modifiedUrl.id);
+      this._urlList.splice(foundIndex, 1, modifiedUrl);
+      this.filteredUrlList = this._urlList;
+      this.virtualScroll.scrollInto(this.filteredUrlList[foundIndex]);
+    });
+    this._socketService.getSocket().on(SocketEvents.URLDELETED, (removedUrl: Url) => {
+      const foundIndex = this._urlList.findIndex((url: Url) => url.id === removedUrl.id);
+      this._urlList.splice(foundIndex, 1);
+      this.filteredUrlList = this._urlList;
+      this._refreshUrlList();
+    });
+
+    this._socketService.getSocket().on(SocketEvents.TAGADDED, (addedTag: Tag) => {
+      this.tagList.push(addedTag);
+    });
+    this._socketService.getSocket().on(SocketEvents.TAGUPDATED, (modifiedTag: Tag) => {
+      const foundIndex = this.tagList.findIndex((tag: Tag) => tag.id === modifiedTag.id);
+      this.tagList.splice(foundIndex, 1, modifiedTag);
+    });
+    this._socketService.getSocket().on(SocketEvents.TAGDELETED, (removedTag: Tag) => {
+      const foundIndex = this.tagList.findIndex((tag: Tag) => tag.id === removedTag.id);
+      this.tagList.splice(foundIndex, 1);
+    });
+  }
+
+  private _removeSocketListener (): void {
+    this._socketService.getSocket().off(SocketEvents.URLADDED);
+    this._socketService.getSocket().off(SocketEvents.URLUPDATED);
+    this._socketService.getSocket().off(SocketEvents.URLDELETED);
+    this._socketService.getSocket().off(SocketEvents.TAGADDED);
+    this._socketService.getSocket().off(SocketEvents.TAGUPDATED);
+    this._socketService.getSocket().off(SocketEvents.TAGDELETED);
+  }
+
+  private _refreshUrlList(): any {
+    this.virtualScroll.startupLoop = true;
+    this.virtualScroll.refresh();
+  }
+
+  // endregion
+
 
   // region yeah-url-list-search
 
@@ -119,35 +180,6 @@ export class DashboardComponent implements OnInit {
 
   handleSubmittedTagNameAsSearchRequest (requestedSearchTerm: string): void {
     this.yeahUrlSearchElement.setSearchInputText(requestedSearchTerm);
-  }
-
-  // endregion
-
-  // region yeah-dialog-edit
-
-  handleCompletedEditUrlItem (modifiedUrl: Url): void {
-    const foundIndex = this._urlList.findIndex((url: Url) => url.id === modifiedUrl.id);
-    this._urlList.splice(foundIndex, 1, modifiedUrl);
-    this.filteredUrlList = this._urlList;
-  }
-
-  // endregion
-
-  // region yeah-dialog-delete
-
-  handleCompletedDeleteUrlItem (removedUrlId: string): void {
-    const foundIndex = this._urlList.findIndex((url: Url) => url.id === removedUrlId);
-    this._urlList.splice(foundIndex, 1);
-    this.filteredUrlList = this._urlList;
-  }
-
-  // endregion
-
-  // region yeah-dialog-add
-
-  handleCompletedAddUrlItem (addedUrl: Url): void {
-    this._urlList.unshift(addedUrl);
-    this.filteredUrlList = this._urlList;
   }
 
   // endregion

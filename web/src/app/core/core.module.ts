@@ -2,7 +2,7 @@ import { NgModule, Optional, SkipSelf } from "@angular/core";
 import {
   AuthService, AuthguardService,
   UiService,
-  TagService, UrlService,
+  SocketService, TagService, UrlService,
   NotifyService
 } from "./services/index";
 
@@ -10,6 +10,7 @@ import {
   providers: [
     AuthService,
     AuthguardService,
+    SocketService,
     TagService,
     UiService,
     UrlService,
