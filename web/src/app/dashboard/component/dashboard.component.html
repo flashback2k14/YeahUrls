@@ -6,7 +6,8 @@
   <yeah-url-list>
     <div *ngIf="showLoading" class="loading-text text-color">Loading...</div>
     <div *ngIf="!showLoading && showNoData" class="no-data-text text-color">No Data available...</div>
-    <virtual-scroll #urlVirtualScroll [items]="filteredUrlList" [childHeight]="urlChildHeight" (update)="scrollUrlItems = $event">
+    <virtual-scroll #urlVirtualScroll [items]="filteredUrlList" [bufferAmount]="5"
+      [childHeight]="urlChildHeight" (update)="scrollUrlItems=$event">
       <yeah-url-list-item *ngFor="let url of scrollUrlItems; trackBy:urlItemTracker" [url]="url"
         (editUrlItemRequestSubmitted)="handleSubmittedEditUrlItemRequest($event)"
         (deleteUrlItemRequestSubmitted)="handleSubmittedDeleteUrlItemRequest($event)">

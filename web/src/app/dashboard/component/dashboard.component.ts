@@ -117,8 +117,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   handleSubmittedSearchRequest (requestedSearchTerm: string): void {
     if (!requestedSearchTerm) {
-      this.filteredUrlList = this._urlList;
-      this.scrollUrlItems = new Array<Url>();
+      this.filteredUrlList = [...this._urlList];
+      this.urlChildHeight = this._determineUrlChildHeight();
       return;
     }
 
@@ -136,6 +136,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
     });
 
     this.filteredUrlList = Array.from(new Set([...filteredUrlsByNameList, ...filteredUrlsByTagList]));
+    if (this.filteredUrlList.length <= 5) {
+      this.urlChildHeight = 0;
+    }
   }
 
   handleSubmittedAddRequest (): void {
