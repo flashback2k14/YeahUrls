@@ -38,14 +38,14 @@ const authMiddleware = require("./logic/middleware/auth.middleware")(Config.toke
 // const repositories
 const authRepository = require("./logic/repositories/auth.repository")(UserModel, Config, CryptoHelper);
 const userRepository = require("./logic/repositories/user.repository")(UserModel);
-const tagRepository = require("./logic/repositories/tag.repository")(TagModel);
-const urlRepository = require("./logic/repositories/url.repository")(UrlModel, TagModel, UserModel);
+const tagRepository = require("./logic/repositories/tag.repository")(TagModel, SocketHelper);
+const urlRepository = require("./logic/repositories/url.repository")(UrlModel, TagModel, UserModel, SocketHelper);
 
 // create routes
 const authRoute = require("./routes/auth.route")(express, authRepository);
 const userRoute = require("./routes/user.route")(express, userRepository);
-const tagRoute = require("./routes/tag.route")(express, tagRepository, SocketHelper);
-const urlRoute = require("./routes/url.route")(express, urlRepository, SocketHelper);
+const tagRoute = require("./routes/tag.route")(express, tagRepository);
+const urlRoute = require("./routes/url.route")(express, urlRepository);
 
 // set routes
 app.use("/api/v1", authRoute);

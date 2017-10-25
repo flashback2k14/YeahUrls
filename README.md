@@ -297,7 +297,7 @@
   Response body:
     ```json
     {
-      id: string
+      tagId: string
     }
     ```
 
@@ -511,7 +511,7 @@
   Response body:
     ```json
     {
-      id: string
+      urlId: string
     }
     ```
 
@@ -556,6 +556,7 @@
   Socket.io Event:
     ```
     tag_deleted
+    url_updated
     ```
 
 ## Realtime support for socket io

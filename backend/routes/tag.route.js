@@ -1,4 +1,4 @@
-module.exports = (express, TagRepository, SocketHelper) => {
+module.exports = (express, TagRepository) => {
   const tag = express.Router();
 
   tag.get("/", async (req, res) => {
@@ -22,7 +22,6 @@ module.exports = (express, TagRepository, SocketHelper) => {
   tag.put("/:id", async (req, res) => {
     try {
       const data = await TagRepository.updateById(req.params.id, req.body.name);
-      SocketHelper.publishChanges(SocketHelper.EVENTNAME.TAGUPDATED, data);
       res.status(200).json(data);
     } catch (error) {
       res.status(400).json({ message: error.message });
@@ -32,7 +31,6 @@ module.exports = (express, TagRepository, SocketHelper) => {
   tag.post("/", async (req, res) => {
     try {
       const data = await TagRepository.createNewTag(req.body.name);
-      SocketHelper.publishChanges(SocketHelper.EVENTNAME.TAGADDED, data);
       res.status(200).json(data);
     } catch (error) {
       res.status(400).json({ message: error.message });
@@ -42,7 +40,6 @@ module.exports = (express, TagRepository, SocketHelper) => {
   tag.delete("/:id", async (req, res) => {
     try {
       const data = await TagRepository.deleteById(req.params.id);
-      SocketHelper.publishChanges(SocketHelper.EVENTNAME.TAGDELETED, data);
       res.status(200).json(data);
     } catch (error) {
       res.status(400).json({ message: error.message });

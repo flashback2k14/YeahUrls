@@ -1,4 +1,4 @@
-module.exports = (express, UrlRepository, SocketHelper) => {
+module.exports = (express, UrlRepository) => {
   const url = express.Router();
 
   url.get("/", async (req, res) => {
@@ -31,7 +31,6 @@ module.exports = (express, UrlRepository, SocketHelper) => {
   url.put("/:userid/:urlid", async (req, res) => {
     try {
       const data = await UrlRepository.updateByUserIdAndUrlId(req.params.userid, req.params.urlid, req.body);
-      SocketHelper.publishChanges(SocketHelper.EVENTNAME.URLUPDATED, data);
       res.status(200).json(data);
     } catch (error) {
       res.status(400).json({ message: error.message });
@@ -41,7 +40,6 @@ module.exports = (express, UrlRepository, SocketHelper) => {
   url.post("/:userid", async (req, res) => {
     try {
       const data = await UrlRepository.createNewUrlForUserId(req.params.userid, req.body);
-      SocketHelper.publishChanges(SocketHelper.EVENTNAME.URLADDED, data);
       res.status(200).json(data);
     } catch (error) {
       res.status(400).json({ message: error.message });
@@ -51,8 +49,6 @@ module.exports = (express, UrlRepository, SocketHelper) => {
   url.post("/:userid/:urlid", async (req, res) => {
     try {
       const data = await UrlRepository.createNewTagForUserIdAndUrlId(req.params.userid, req.params.urlid, req.body);
-      SocketHelper.publishChanges(SocketHelper.EVENTNAME.TAGADDED, data);
-      SocketHelper.publishChanges(SocketHelper.EVENTNAME.URLUPDATED, data);
       res.status(200).json(data);
     } catch (error) {
       res.status(400).json({ message: error.message });
@@ -62,7 +58,6 @@ module.exports = (express, UrlRepository, SocketHelper) => {
   url.delete("/:userid/:urlid", async (req, res) => {
     try {
       const data = await UrlRepository.deleteByUserIdAndUrlId(req.params.userid, req.params.urlid);
-      SocketHelper.publishChanges(SocketHelper.EVENTNAME.URLDELETED, data);
       res.status(200).json(data);
     } catch (error) {
       res.status(400).json({ message: error.message });
@@ -72,7 +67,6 @@ module.exports = (express, UrlRepository, SocketHelper) => {
   url.delete("/:userid/:urlid/:tagid", async (req, res) => {
     try {
       const data = await UrlRepository.deleteTagByUserIdAndUrlId(req.params.userid, req.params.urlid, req.params.tagid);
-      SocketHelper.publishChanges(SocketHelper.EVENTNAME.TAGDELETED, data);
       res.status(200).json(data);
     } catch (error) {
       res.status(400).json({ message: error.message });

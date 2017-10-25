@@ -1,4 +1,4 @@
-module.exports = (TagModel) => {
+module.exports = (TagModel, SocketHelper) => {
   function _transformTag (tag) {
     return {
       "id": tag._id,
@@ -21,17 +21,22 @@ module.exports = (TagModel) => {
   async function createNewTag (name) {
     await TagModel.findOne({ name }).lean();
     const createdTag = await new TagModel({ name }).save();
-    return this._transformTag(createdTag);
+    const transformedTag = this._transformTag(createdTag);
+    SocketHelper.publishChanges(SocketHelper.EVENTNAME.TAGADDED, transformedTag);    
+    return transformedTag
   }
 
   async function updateById (id, name) {
     const body = { name };
     const updatedTag = await TagModel.findByIdAndUpdate({ _id: id, }, { $set: body }, { new: true }).lean();
-    return this._transformTag(updatedTag);
+    const transformedTag = this._transformTag(updatedTag);
+    SocketHelper.publishChanges(SocketHelper.EVENTNAME.TAGUPDATED, transformedTag);    
+    return transformedTag;
   }
 
   async function deleteById (id) {
     await TagModel.findByIdAndRemove({ _id: id });
+    SocketHelper.publishChanges(SocketHelper.EVENTNAME.TAGDELETED, id);    
     return { id };
   }
 
