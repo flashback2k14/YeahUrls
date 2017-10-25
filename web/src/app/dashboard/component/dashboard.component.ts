@@ -81,21 +81,22 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this._urlList.splice(foundIndex, 1, modifiedUrl);
       this.filteredUrlList = [...this._urlList];
     });
-    this._socketService.getSocket().on(SocketEvents.URLDELETED, (removedUrlId: any) => {
-      const tmpList = this._urlList.filter((url: Url) => url.id !== removedUrlId.urlId);
+    this._socketService.getSocket().on(SocketEvents.URLDELETED, (removedUrl: any) => {
+      const tmpList = this._urlList.filter((url: Url) => url.id !== removedUrl.urlId);
       this._urlList = tmpList;
       this.filteredUrlList = tmpList;
     });
 
     this._socketService.getSocket().on(SocketEvents.TAGADDED, (addedTag: Tag) => {
-      this.tagList = [...this.tagList, addedTag];
+      const tmpList = [...this.tagList, addedTag];
+      this.tagList = [...tmpList.sort(this._compareTags)];
     });
     this._socketService.getSocket().on(SocketEvents.TAGUPDATED, (modifiedTag: Tag) => {
       const foundIndex = this.tagList.findIndex((tag: Tag) => tag.id === modifiedTag.id);
       this.tagList.splice(foundIndex, 1, modifiedTag);
     });
-    this._socketService.getSocket().on(SocketEvents.TAGDELETED, (removedTag: Tag) => {
-      const foundIndex = this.tagList.findIndex((tag: Tag) => tag.id === removedTag.id);
+    this._socketService.getSocket().on(SocketEvents.TAGDELETED, (removedTag: any) => {
+      const foundIndex = this.tagList.findIndex((tag: Tag) => tag.id === removedTag.urlId);
       this.tagList.splice(foundIndex, 1);
     });
   }

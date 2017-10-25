@@ -132,7 +132,6 @@ module.exports = (UrlModel, TagModel, UserModel, SocketHelper) => {
     const updatedUrl = await foundUrl.save();
     const transformedUrl = await this._transformUrl(updatedUrl);
     
-    SocketHelper.publishChanges(SocketHelper.EVENTNAME.TAGDELETED, { tagId });    
     SocketHelper.publishChanges(SocketHelper.EVENTNAME.URLADDED, transformedUrl);
     return transformedUrl;
   }

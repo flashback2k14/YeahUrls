@@ -555,7 +555,6 @@
 
   Socket.io Event:
     ```
-    tag_deleted
     url_updated
     ```
 
