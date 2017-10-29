@@ -11,12 +11,14 @@ export class YeahAutocompleteComponent {
 
   @Input() placeholderText: string;
   @Input() tagList: Array<Tag>;
+  @Input() shouldClearSearchTextAfterSubmitRequest: boolean;
   @Output() addSearchedTagRequestSubmitted: EventEmitter<Tag>;
   filteredTagList: Array<Tag>;
 
   constructor () {
     this.placeholderText = "Search keyword or create a new one...";
     this.tagList = new Array<Tag>();
+    this.shouldClearSearchTextAfterSubmitRequest = true;
     this.addSearchedTagRequestSubmitted = new EventEmitter<Tag>();
     this.filteredTagList = new Array<Tag>();
   }
@@ -48,9 +50,16 @@ export class YeahAutocompleteComponent {
     }
   }
 
+  handleSelectedTagOnEnter (event: KeyboardEvent, tag: Tag, txtKeywords: HTMLInputElement): void {
+    if (event.keyCode === 13) {
+      this.handleSelectedTag(tag, txtKeywords);
+    }
+  }
+
   handleSelectedTag (tag: Tag, txtKeywords: HTMLInputElement): void {
     this.addSearchedTagRequestSubmitted.emit(tag);
     this.filteredTagList = new Array<Tag>();
-    txtKeywords.value = "";
+    txtKeywords.value = this.shouldClearSearchTextAfterSubmitRequest ? "" : tag.name;
   }
+
 }

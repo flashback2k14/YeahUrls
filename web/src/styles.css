@@ -153,6 +153,16 @@ svg {
   color: black;
 }
 
+.custom-button_switch {
+  color: #FFEB3B;
+  border: 1px solid #FFEB3B;
+}
+.custom-button_switch:hover,
+.custom-button_switch:hover {
+  background: #FFEB3B;
+  color: black;
+}
+
 /* theming scrollbars */
 /* https://css-tricks.com/custom-scrollbars-in-webkit/ */
 ::-webkit-scrollbar {

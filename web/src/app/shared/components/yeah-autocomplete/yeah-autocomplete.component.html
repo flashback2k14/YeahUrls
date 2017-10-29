@@ -1,12 +1,15 @@
 <div class="container">
   <input #txtKeywords class="custom-input background-color text-color keyword-input"
-    type="text" required placeholder="{{ placeholderText }}"
+    type="text" required placeholder="{{ placeholderText }}" tabindex="1"
     (keyup)="filterTagList(txtKeywords)"
     (keydown)="handleNewCreatedTag($event, txtKeywords)">
   <div class="suggestions background-color text-color" *ngIf="filteredTagList.length > 0">
     <ul>
       <li *ngFor="let tag of filteredTagList">
-        <a (click)="handleSelectedTag(tag, txtKeywords)">{{ tag.name }}</a>
+        <a tabindex="2" (click)="handleSelectedTag(tag, txtKeywords)" 
+          (keydown)="handleSelectedTagOnEnter($event, tag, txtKeywords)">
+            {{ tag.name }}
+        </a>
       </li>
     </ul>
   </div>

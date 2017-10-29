@@ -117,8 +117,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   handleSubmittedSearchRequest (requestedSearchTerm: string): void {
     if (!requestedSearchTerm) {
-      this.filteredUrlList = [...this._urlList];
       this.urlChildHeight = this._determineUrlChildHeight();
+      this.filteredUrlList = [...this._urlList];
       return;
     }
 
