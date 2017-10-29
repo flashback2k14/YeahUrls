@@ -127,7 +127,8 @@ svg {
   color: #81D4FA;
   border: 1px solid #81D4FA;
 }
-.custom-button_ok:hover {
+.custom-button_ok:hover,
+.custom-button_ok:hover  {
   background: #81D4FA;
   color: black;
 }
@@ -136,6 +137,7 @@ svg {
   color: #E4676A;
   border: 1px solid #E4676A;
 }
+.custom-button_cancel:hover,
 .custom-button_cancel:hover {
   background: #E4676A;
   color: black;
@@ -145,6 +147,7 @@ svg {
   color: #83FA81;
   border: 1px solid #83FA81;
 }
+.custom-button_add:hover,
 .custom-button_add:hover {
   background: #83FA81;
   color: black;

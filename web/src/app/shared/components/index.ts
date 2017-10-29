@@ -7,4 +7,5 @@ export * from "./url-list/yeah-url-list/yeah-url-list.component";
 export * from "./url-list/yeah-url-list-item/yeah-url-list-item.component";
 export * from "./url-list/yeah-url-list-search/yeah-url-list-search.component";
 export * from "./url-list/yeah-url-list-tag/yeah-url-list-tag.component";
+export * from "./yeah-autocomplete/yeah-autocomplete.component";
 export * from "./yeah-notify/yeah-notify.component";

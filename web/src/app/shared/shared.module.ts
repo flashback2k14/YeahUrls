@@ -4,7 +4,7 @@ import { FormsModule } from "@angular/forms";
 import {
   YeahUrlListComponent, YeahUrlListSearchComponent, YeahUrlListItemComponent, YeahUrlListTagComponent,
   YeahDialogAddComponent, YeahDialogBaseComponent, YeahDialogImportComponent, YeahDialogEditComponent, YeahDialogDeleteComponent,
-  YeahNotifyComponent
+  YeahAutocompleteComponent, YeahNotifyComponent
 } from "./components/index";
 
 @NgModule({
@@ -19,6 +19,7 @@ import {
     YeahDialogImportComponent,
     YeahDialogEditComponent,
     YeahDialogDeleteComponent,
+    YeahAutocompleteComponent,
     YeahNotifyComponent
   ],
   exports: [
@@ -31,6 +32,7 @@ import {
     YeahDialogImportComponent,
     YeahDialogEditComponent,
     YeahDialogDeleteComponent,
+    YeahAutocompleteComponent,
     YeahNotifyComponent,
     CommonModule,
     FormsModule

@@ -11,7 +11,6 @@ import { Url, Tag } from "../../../../../models/index";
 export class YeahDialogAddComponent {
 
   @ViewChild("taAddInput") taAddInput: any;
-  @ViewChild("txtKeywords") txtKeywords: any;
 
   @Input() showDialog: boolean;
   @Input() tagList: Array<Tag>;
@@ -37,9 +36,8 @@ export class YeahDialogAddComponent {
     this.selectedTags = this.selectedTags.filter((tag: Tag) => tag.id !== event);
   }
 
-  handleSelectedTag (event): void {
-    const foundTag = this.tagList[event.target.selectedIndex];
-    this.selectedTags.push(foundTag);
+  handleSubmittedAddSearchTagRequest (event): void {
+    this.selectedTags = [...this.selectedTags, event];
   }
 
   // endregion eventhandler
@@ -81,11 +79,11 @@ export class YeahDialogAddComponent {
   }
 
   private _getTags (): Array<string> {
-    let result = new Array<string>();
-    if (this.txtKeywords.nativeElement.value) {
-      const splittedKeywords = this.txtKeywords.nativeElement.value.split(" - ");
-      result = splittedKeywords;
-    }
+    const result = new Array<string>();
+    // if (this.txtKeywords.nativeElement.value) {
+    //   const splittedKeywords = this.txtKeywords.nativeElement.value.split(" - ");
+    //   result = splittedKeywords;
+    // }
     this.selectedTags.forEach((tag: Tag) => {
       result.push(tag.name);
     });
@@ -94,7 +92,6 @@ export class YeahDialogAddComponent {
 
   private _clearDialog (): void {
     this.taAddInput.nativeElement.value = "";
-    this.txtKeywords.nativeElement.value = "";
     this.selectedTags = new Array<Tag>();
     this._url = new Url();
     this.showDialog = false;
