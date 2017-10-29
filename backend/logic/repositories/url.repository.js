@@ -63,7 +63,7 @@ module.exports = (UrlModel, TagModel, UserModel, SocketHelper) => {
 
   async function getByUserIdAndUrlId (userId, urlId) {
     const url = await UrlModel.findOne({ _id: urlId, user: userId }).lean();
-    return this._transformUrl(url);
+    return await this._transformUrl(url);
   }
 
   async function updateByUserIdAndUrlId (userId, urlId, body) {
@@ -76,7 +76,7 @@ module.exports = (UrlModel, TagModel, UserModel, SocketHelper) => {
     };
 
     const updatedUrl = await UrlModel.findByIdAndUpdate({ _id: urlId, }, { $set: modifiedUrl }, { new: true }).lean();
-    const transformedUrl = this._transformUrl(updatedUrl);
+    const transformedUrl = await this._transformUrl(updatedUrl);
 
     SocketHelper.publishChanges(SocketHelper.EVENTNAME.URLUPDATED, transformedUrl);    
     return transformedUrl;

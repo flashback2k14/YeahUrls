@@ -48,7 +48,7 @@ export class YeahDialogAddComponent {
     this.showDialog = true;
     this.taAddInput.nativeElement.value = "";
     if (url) {
-      this._url = url;
+      this._url = {...url};
       this.selectedTags = this._url.tags;
       this.taAddInput.nativeElement.value = this._url.url;
     }
@@ -79,15 +79,7 @@ export class YeahDialogAddComponent {
   }
 
   private _getTags (): Array<string> {
-    const result = new Array<string>();
-    // if (this.txtKeywords.nativeElement.value) {
-    //   const splittedKeywords = this.txtKeywords.nativeElement.value.split(" - ");
-    //   result = splittedKeywords;
-    // }
-    this.selectedTags.forEach((tag: Tag) => {
-      result.push(tag.name);
-    });
-    return result;
+    return this.selectedTags.map((tag: Tag) => tag.name);
   }
 
   private _clearDialog (): void {
