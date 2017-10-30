@@ -53,6 +53,15 @@ app.use("/api/v1/user", authMiddleware.checkAuthState, userRoute);
 app.use("/api/v1/tag", authMiddleware.checkAuthState, tagRoute);
 app.use("/api/v1/url", authMiddleware.checkAuthState, urlRoute);
 
+// create backup job
+try {
+  const backupJob = require("./logic/jobs/backup.jobs")(Config, urlRepository, tagRepository);
+  backupJob.create();
+} catch (error) {
+  console.error(error);
+  process.exit(1);
+}
+
 // socket.io connection
 sio.on("connection", (socket) => {
   console.log(`SOCKET.IO: new client has connected ${socket.id}`);
