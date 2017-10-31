@@ -52,10 +52,15 @@ module.exports = (Config, UrlRepository, TagRepository) => {
 
   async function create () {
 
+    console.log("SCHEDULE: create backup job");
+    console.log("SCHEDULE: current date: " + new Date());
+    console.log("SCHEDULE: backup job should run at hour: " + Config.scheduleJobHour);
+    console.log("SCHEDULE: backup job should run at minute: " + Config.scheduleJobMinute);    
+
     const scheduleRule = new schedule.RecurrenceRule();
     scheduleRule.dayOfWeek = new schedule.Range(0, 6);
-    scheduleRule.hour = Config.scheduleJobHour;
-    scheduleRule.minute = Config.scheduleJobMinute;
+    scheduleRule.hour = Number(Config.scheduleJobHour);
+    scheduleRule.minute = Number(Config.scheduleJobMinute);
 
     const job = schedule.scheduleJob("Backup", scheduleRule, async () => {
 
