@@ -6,10 +6,12 @@
   <div class="suggestions background-color text-color" *ngIf="filteredTagList.length > 0">
     <ul>
       <li *ngFor="let tag of filteredTagList">
-        <a tabindex="2" (click)="handleSelectedTag(tag, txtKeywords)" 
+        <div tabindex="2"
+          (click)="handleSelectedTag(tag, txtKeywords)"
           (keydown)="handleSelectedTagOnEnter($event, tag, txtKeywords)">
-            {{ tag.name }}
-        </a>
+          <div>{{ tag.name }}</div>
+          <div class="tag-usage-count">{{ tag.count }}</div>
+        </div>
       </li>
     </ul>
   </div>

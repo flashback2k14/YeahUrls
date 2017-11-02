@@ -49,9 +49,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
     try {
       const unsortedUrls = await this._urlService.getUrlsByUser(Helper.getUserId());
       const unsortedTags = await this._tagService.getTags();
+      const tagUsage = this._countTagUsage(unsortedUrls, unsortedTags);
+      const unsortedPatchedTags = this._patchTags(unsortedTags, tagUsage);
 
       this._urlList = [...unsortedUrls.sort(this._compareUrls)];
-      this.tagList = [...unsortedTags.sort(this._compareTags)];
+      this.tagList = [...unsortedPatchedTags.sort(this._compareTags)];
       this.filteredUrlList = [...this._urlList];
 
       this._initSocketListener();
@@ -59,9 +61,38 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.urlChildHeight = this._determineUrlChildHeight();
       this.showLoading = false;
       this.showNoData = this._urlList.length <= 0;
+
     } catch (error) {
       this._notifyService.onError(Helper.extractBackendError(error));
     }
+  }
+
+  private _countTagUsage (urls: Array<Url>, tags: Array<Tag>): Array<any> {
+    const result = new Array<any>();
+
+    tags.forEach((tag: Tag) => {
+      let found = 0;
+      urls.forEach((url: Url) => {
+        url.tags.forEach((urlTag: Tag) => {
+          if (urlTag.id === tag.id) {
+            found++;
+          }
+        });
+      });
+      result.push({ id: tag.id, count: found });
+    });
+
+    return result;
+  }
+
+  private _patchTags(unsortedTags: Tag[], tagUsage: any[]): Array<any> {
+    const result = unsortedTags.map((tag: Tag) => {
+      return {
+        ...tag,
+        count: tagUsage.find((obj: any) => obj.id === tag.id).count
+      };
+    });
+    return result;
   }
 
   ngOnDestroy (): void {
@@ -89,7 +120,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     this._socketService.getSocket().on(SocketEvents.TAGADDED, (addedTag: Tag) => {
       const tmpList = [...this.tagList, addedTag];
-      this.tagList = [...tmpList.sort(this._compareTags)];
+      const tagUsage = this._countTagUsage(this._urlList, tmpList);
+      const unsortedPatchedTags = this._patchTags(tmpList, tagUsage);
+      this.tagList = [...unsortedPatchedTags.sort(this._compareTags)];
     });
     this._socketService.getSocket().on(SocketEvents.TAGUPDATED, (modifiedTag: Tag) => {
       const foundIndex = this.tagList.findIndex((tag: Tag) => tag.id === modifiedTag.id);

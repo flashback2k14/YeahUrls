@@ -30,21 +30,30 @@
   padding: 0;
   margin: 0 4px 0 4px;
   list-style: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.5);  
 }
 
-.suggestions ul li a {
-  display: block;
+.suggestions ul li div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   width: inherit;
   padding: 4px;
+  cursor: pointer;
   text-decoration: none;
   outline: none;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
 }
 
-.suggestions ul li a:hover,
-.suggestions ul li a:focus {
+.suggestions ul li div:hover,
+.suggestions ul li div:focus {
   background: #81D4FA;
   color: #000000;
+}
+
+.tag-usage-count {
+  margin-left: 12px;
+  font-size: small;
+  font-style: italic;
 }
 
 @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
