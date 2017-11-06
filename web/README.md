@@ -1,8 +1,3 @@
-# ToDo's
-
-- add buttons for scroll up / first and down / last to search
-- move buttons into second row if mobile view
-
 ## Web
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.4.2.

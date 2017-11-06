@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, ViewChild } from "@angular/core";
+import { Component, Input, Output, EventEmitter, ViewChild, ElementRef } from "@angular/core";
 import { UrlService, NotifyService } from "../../../../core/services/index";
 import { Helper } from "../../../../../helper/index";
 import { Url, Tag } from "../../../../../models/index";
@@ -10,7 +10,7 @@ import { Url, Tag } from "../../../../../models/index";
 })
 export class YeahDialogEditComponent {
 
-  @ViewChild("taEditInput") taEditInput: any;
+  @ViewChild("taEditInput") taEditInput: ElementRef;
 
   @Input() showDialog: boolean;
   @Input() tagList: Array<Tag>;
@@ -36,7 +36,7 @@ export class YeahDialogEditComponent {
     this.selectedTags = this.selectedTags.filter((tag: Tag) => tag.id !== event);
   }
 
-  handleSubmittedAddSearchTagRequest (event): void {
+  handleSubmittedNewlyCreatedTagRequest (event): void {
     this.selectedTags = [...this.selectedTags, event];
   }
 

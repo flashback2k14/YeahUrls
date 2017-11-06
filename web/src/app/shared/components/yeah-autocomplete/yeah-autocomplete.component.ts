@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from "@angular/core";
+import { Component, Input, Output, EventEmitter, ViewChild, ElementRef } from "@angular/core";
 import { Tag } from "../../../../models/index";
 import {  } from "events";
 
@@ -9,22 +9,27 @@ import {  } from "events";
 })
 export class YeahAutocompleteComponent {
 
+  @ViewChild("txtKeywords") txtKeywords: ElementRef;
+
   @Input() placeholderText: string;
   @Input() tagList: Array<Tag>;
   @Input() shouldClearSearchTextAfterSubmitRequest: boolean;
-  @Output() addSearchedTagRequestSubmitted: EventEmitter<Tag>;
+  @Output() newlyCreatedTagRequestSubmitted: EventEmitter<Tag>;
+
   filteredTagList: Array<Tag>;
 
   constructor () {
     this.placeholderText = "Search keyword or create a new one...";
     this.tagList = new Array<Tag>();
     this.shouldClearSearchTextAfterSubmitRequest = true;
-    this.addSearchedTagRequestSubmitted = new EventEmitter<Tag>();
+    this.newlyCreatedTagRequestSubmitted = new EventEmitter<Tag>();
     this.filteredTagList = new Array<Tag>();
   }
 
-  filterTagList (txtKeywords: HTMLInputElement): void {
-    const searchQuery = txtKeywords.value;
+  // region input events
+
+  handleFilteringOnKeyUp (): void {
+    const searchQuery = this.txtKeywords.nativeElement.value.trim();
 
     if (searchQuery === "") {
       this.filteredTagList = new Array<Tag>();
@@ -41,25 +46,33 @@ export class YeahAutocompleteComponent {
     });
   }
 
-  handleNewCreatedTag (event: KeyboardEvent, txtKeywords: HTMLInputElement): void {
-    if (event.keyCode === 13 && txtKeywords.value !== "") {
-      const notFoundTag = new Tag();
-      notFoundTag.name = txtKeywords.value;
-      this.addSearchedTagRequestSubmitted.emit(notFoundTag);
-      txtKeywords.value = "";
+  handleTagCreationOnKeyDown (event: KeyboardEvent): void {
+    if (event.keyCode === 13 && this.txtKeywords.nativeElement.value !== "") {
+      const newTag = new Tag().setName(this.txtKeywords.nativeElement.value);
+      this.newlyCreatedTagRequestSubmitted.emit(newTag);
+      this.txtKeywords.nativeElement.value = "";
     }
   }
 
-  handleSelectedTagOnEnter (event: KeyboardEvent, tag: Tag, txtKeywords: HTMLInputElement): void {
+  clearInputText (): void {
+    this.txtKeywords.nativeElement.value = "";
+  }
+
+  // endregion
+
+  // region suggestion list events
+
+  handleSelectedTagOnEnter (event: KeyboardEvent, tag: Tag): void {
     if (event.keyCode === 13) {
-      this.handleSelectedTag(tag, txtKeywords);
+      this.handleSelectedTag(tag);
     }
   }
 
-  handleSelectedTag (tag: Tag, txtKeywords: HTMLInputElement): void {
-    this.addSearchedTagRequestSubmitted.emit(tag);
+  handleSelectedTag (tag: Tag): void {
+    this.newlyCreatedTagRequestSubmitted.emit(tag);
     this.filteredTagList = new Array<Tag>();
-    txtKeywords.value = this.shouldClearSearchTextAfterSubmitRequest ? "" : tag.name;
+    this.txtKeywords.nativeElement.value = this.shouldClearSearchTextAfterSubmitRequest ? "" : tag.name;
   }
 
+  // endregion
 }

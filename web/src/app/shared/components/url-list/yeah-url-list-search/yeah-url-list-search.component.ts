@@ -1,4 +1,5 @@
-import { Component, Output, EventEmitter, ViewChild, Input } from "@angular/core";
+import { Component, Output, EventEmitter, ViewChild, Input, ElementRef } from "@angular/core";
+import { YeahAutocompleteComponent } from "../../yeah-autocomplete/yeah-autocomplete.component";
 import { Tag } from "../../../../../models/index";
 
 @Component({
@@ -8,7 +9,9 @@ import { Tag } from "../../../../../models/index";
 })
 export class YeahUrlListSearchComponent {
 
-  @ViewChild("txtSearchTerm") txtSearchTerm: any;
+  @ViewChild("txtSearchTerm") txtSearchTerm: ElementRef;
+  @ViewChild("yeahAutocomplete") yeahAutocomplete: YeahAutocompleteComponent;
+
   @Input() tagList: Array<Tag>;
   @Output() searchRequestSubmitted: EventEmitter<string>;
   @Output() addRequestSubmitted: EventEmitter<void>;
@@ -24,20 +27,21 @@ export class YeahUrlListSearchComponent {
     this.showKeywordInput = false;
   }
 
-  sendSearchRequest (txtSearchTerm: HTMLInputElement): void {
-    if (txtSearchTerm && txtSearchTerm.value) {
-      this.searchRequestSubmitted.next(txtSearchTerm.value);
+  sendSearchRequest (): void {
+    if (this.txtSearchTerm && this.txtSearchTerm.nativeElement.value !== "") {
+      this.searchRequestSubmitted.next(this.txtSearchTerm.nativeElement.value);
     }
   }
 
-  clear (txtSearchTerm: HTMLInputElement): void {
-    if (txtSearchTerm && txtSearchTerm.value) {
-      this.searchRequestSubmitted.next(null);
-      txtSearchTerm.value = "";
+  clearSearchRequest (): void {
+    this.searchRequestSubmitted.next(null);
+
+    if (this.txtSearchTerm && this.txtSearchTerm.nativeElement.value) {
+      this.txtSearchTerm.nativeElement.value = "";
     }
+
     if (this.showKeywordInput) {
-      this.searchRequestSubmitted.next(null);
-      this.switchInput();
+      this.yeahAutocomplete.clearInputText();
     }
   }
 
@@ -45,13 +49,13 @@ export class YeahUrlListSearchComponent {
     this.addRequestSubmitted.emit();
   }
 
-  switchInput (): void {
+  switchInputRequest (): void {
     this.showTextInput = !this.showTextInput;
     this.showKeywordInput = !this.showKeywordInput;
   }
 
-  setSearchInputText (value: string): void {
+  setSearchInputTextAndFireSearchRequest (value: string): void {
     this.txtSearchTerm.nativeElement.value = value;
-    this.sendSearchRequest(this.txtSearchTerm.nativeElement);
+    this.sendSearchRequest();
   }
 }

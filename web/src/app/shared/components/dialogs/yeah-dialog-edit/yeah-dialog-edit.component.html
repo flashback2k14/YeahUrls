@@ -10,7 +10,7 @@
     </yeah-url-list-tag>
   </div>
   <yeah-autocomplete [tagList]="tagList"
-    (addSearchedTagRequestSubmitted)="handleSubmittedAddSearchTagRequest($event)">
+    (newlyCreatedTagRequestSubmitted)="handleSubmittedNewlyCreatedTagRequest($event)">
   </yeah-autocomplete>
   <div class="edit-action-container">
     <button class="custom-button custom-button_cancel"

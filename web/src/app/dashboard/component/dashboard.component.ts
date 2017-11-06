@@ -195,7 +195,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   // region yeah-url-list-tag
 
   handleSubmittedTagNameAsSearchRequest (requestedSearchTerm: string): void {
-    this.yeahUrlSearchElement.setSearchInputText(requestedSearchTerm);
+    this.yeahUrlSearchElement.setSearchInputTextAndFireSearchRequest(requestedSearchTerm);
   }
 
   // endregion

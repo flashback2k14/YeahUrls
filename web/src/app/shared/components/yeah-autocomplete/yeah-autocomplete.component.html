@@ -1,14 +1,14 @@
 <div class="container">
   <input #txtKeywords class="custom-input background-color text-color keyword-input"
     type="text" required placeholder="{{ placeholderText }}" tabindex="1"
-    (keyup)="filterTagList(txtKeywords)"
-    (keydown)="handleNewCreatedTag($event, txtKeywords)">
+    (keyup)="handleFilteringOnKeyUp()"
+    (keydown)="handleTagCreationOnKeyDown($event)">
   <div class="suggestions background-color text-color" *ngIf="filteredTagList.length > 0">
     <ul>
       <li *ngFor="let tag of filteredTagList">
         <div tabindex="2"
-          (click)="handleSelectedTag(tag, txtKeywords)"
-          (keydown)="handleSelectedTagOnEnter($event, tag, txtKeywords)">
+          (click)="handleSelectedTag(tag)"
+          (keydown)="handleSelectedTagOnEnter($event, tag)">
           <div>{{ tag.name }}</div>
           <div class="tag-usage-count">{{ tag.count }}</div>
         </div>
