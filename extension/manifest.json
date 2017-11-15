@@ -1,0 +1,23 @@
+{
+  "name": "yeah-urls-extension",
+  "description": "This extension allows you to collect all URLs from the open Tabs.",
+  "version": "0.0.1",
+  "manifest_version": 2,
+  "browser_action": {
+    "default_icon": {
+      "48": "app/icons/link-white-48.png"
+    },
+    "default_title": "Yeah! URLs",
+    "default_popup": "app/popup.html"
+  },
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "storage"
+  ],
+  "options_page": "app/options.html",
+  "options_ui": {
+    "page": "app/options.html",
+    "chrome_style": false
+  }
+}

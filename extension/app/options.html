@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head lang="en">
+    <meta charset="UTF-8">
+    <title>Yeah! Urls Options</title>
+    <link rel="stylesheet" href="./styles/options.css">
+  </head>
+  <body>
+    <div class="container">
+      <div class="headline">Authentication</div>
+      <div class="separator"></div>
+      <div class="container-auth">
+        <label for="txtUsername">Username</label>
+        <input id="txtUsername" class="opt-input" type="text" placeholder="Enter here..." required>
+        <label for="txtPassword">Password</label>
+        <input id="txtPassword" class="opt-input" type="password" placeholder="Enter here..." required>
+        <div class="container-auth_actions">
+          <button class="opt-button opt-button_cancel" id="btnClear">clear</button>
+          <button class="opt-button opt-button_ok" id="btnSend">Send</button>
+        </div>
+      </div>
+      <div class="headline">Extension Icon</div>
+      <div class="separator"></div>
+      <div class="container-icon">
+        <label for="slctIcon">Change Icon</label>
+        <select id="slctIcon" class="opt-select">
+          <option value="light">White</option>
+          <option value="dark">Black</option>
+        </select>
+        <div class="container-auth_actions">
+          <button class="opt-button opt-button_ok" id="btnChange">Change</button>
+        </div>
+      </div>
+      <div id="infoText" class="info"></div>
+    </div>
+    <script src="./scripts/options.js"></script>
+  </body>
+</html>
