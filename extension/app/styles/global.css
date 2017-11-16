@@ -1,0 +1,86 @@
+body {
+  margin: 8px;
+  background: #252C36;
+  color: #CFD6E0;
+}
+
+.opt-input {
+  margin: 4px 12px 12px 12px;
+  padding-bottom: 4px;
+  background: #252C36;
+  color: #CFD6E0;
+  border: 0;
+  border-bottom: 1px solid #141E2A;
+  font-size: small;
+  outline: none;
+}
+
+.opt-input::placeholder {
+  color: #414953;
+}
+.opt-input:hover,
+.opt-input:focus,
+.opt-input:valid {
+  border-bottom: 1px solid #81D4FA;
+}
+
+.opt-button {
+  width: 80px;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  font-size: smaller;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.4);
+  transition: 0.3s;
+  outline: none;
+}
+.opt-button:hover,
+.opt-button:focus {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.6);
+}
+
+.opt-button_ok {
+  color: #81D4FA;
+  border: 1px solid #81D4FA;
+}
+.opt-button_ok:hover,
+.opt-button_ok:hover  {
+  background: #81D4FA;
+  color: black;
+}
+
+.opt-button_cancel {
+  color: #E4676A;
+  border: 1px solid #E4676A;
+}
+.opt-button_cancel:hover,
+.opt-button_cancel:hover {
+  background: #E4676A;
+  color: black;
+}
+
+.opt-button_add {
+  color: #83FA81;
+  border: 1px solid #83FA81;
+}
+.opt-button_add:hover,
+.opt-button_add:hover {
+  background: #83FA81;
+  color: black;
+}
+
+.info {
+  padding: 5px;
+  font-size: small;
+  text-align: center;
+}
+
+.info-success {
+  color: #1DE9B6;
+}
+
+.info-error {
+  color: #FF1744;
+}

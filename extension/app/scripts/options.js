@@ -2,47 +2,6 @@ window.browser = (function () {
   return window.msBrowser || window.browser || window.chrome;
 })();
 
-function _showInfoText (el, text, isSuccess) {
-  el.innerHTML = text;
-  if (isSuccess) {
-    el.classList.remove("info-success", "info-error");
-    el.classList.add("info-success");
-  } else {
-    el.classList.remove("info-success", "info-error");
-    el.classList.add("info-error");
-  }
-  setTimeout(() => { el.innerHTML = "" }, 2000);
-};
-
-function _createRequest (url, username, password) {
-  const request = new Request(url, {
-    method: "POST",
-    body: JSON.stringify({ username, password }),
-    headers: new Headers({
-      "Content-Type": "application/json"
-    })
-  });
-  return request;
-};
-
-function _setIcon (slctIcon) {
-  const icon = localStorage.getItem("YEAH#URLS#EXTENSION#ICON");
-  if (icon === null) { return; }
-  
-  switch (icon) {
-    case "light":
-      browser.browserAction.setIcon({path: "icons/link-white-48.png"});
-      slctIcon.selectedIndex = "0";
-      break;
-    case "dark":
-      browser.browserAction.setIcon({path: "icons/link-black-48.png"});
-      slctIcon.selectedIndex = "1";
-      break;
-    default:
-      break;
-  }
-}
-
 window.addEventListener("DOMContentLoaded", () => {
 
   const SIGNINURL = "https://yeah-urls.herokuapp.com/api/v1/signin";
@@ -54,7 +13,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const btnChange = document.querySelector("#btnChange");
   const infoText = document.querySelector("#infoText");
 
-  _setIcon(slctIcon);
+  Util.get().setIcon(slctIcon);
   
   btnClear.addEventListener("click", () => {
     txtUsername.value = "";
@@ -66,23 +25,25 @@ window.addEventListener("DOMContentLoaded", () => {
     const password = txtPassword.value;
 
     if (!username && !password) {
-      _showInfoText(infoText, "Username and / or password must be entered before authentication.", false);
+      const msg = "Username and / or password must be entered before authentication.";
+      Util.get().showInfoText(infoText, msg, false, 3000);
       return;
     }
 
-    window.fetch(_createRequest(SIGNINURL, username, password))
+    window.fetch(Util.get().createRequest(SIGNINURL, { username, password }))
       .then(response => {
         if (!response.ok) { throw new Error(response.statusText); }
         return response.json();
       })
       .then(data => {
         localStorage.setItem("YEAH#URLS#EXTENSION#TOKEN", data.token)
+        localStorage.setItem("YEAH#URLS#EXTENSION#USERID", data.user.id);
         txtUsername.value = "";
         txtPassword.value = "";
-        _showInfoText(infoText, `User ${data.user.name} is successfully authenticated!`, true);
+        Util.get().showInfoText(infoText, `User ${data.user.name} is successfully authenticated!`, true);
       })
       .catch(error => {
-        _showInfoText(infoText, error, false);
+        Util.get().showInfoText(infoText, error, false, 3000);
       });
   });
 
