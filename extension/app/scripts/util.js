@@ -56,11 +56,11 @@ const Util = (() => {
     showInfoText = (el, text, isSuccess, duration = 2000) => {
       el.innerHTML = text;
       if (isSuccess) {
-        el.classList.remove("info-success", "info-error");
-        el.classList.add("info-success");
+        el.classList.remove("yeah-info_success", "yeah-info_error");
+        el.classList.add("yeah-info_success");
       } else {
-        el.classList.remove("info-success", "info-error");
-        el.classList.add("info-error");
+        el.classList.remove("yeah-info_success", "yeah-info_error");
+        el.classList.add("yeah-info_error");
       }
       setTimeout(() => { el.innerHTML = "" }, duration);
     }

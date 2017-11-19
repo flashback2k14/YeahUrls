@@ -11,6 +11,7 @@
 
 .container-auth_actions {
   margin-right: 12px;
+  margin-bottom: 8px;
   text-align: right;
 }
 
@@ -24,25 +25,4 @@
   margin-top: 4px;
   margin-bottom: 8px;
   background: #141E2A;
-}
-
-.opt-select {
-  margin: 4px 12px 12px 12px;
-  padding: 4px 0 4px 4px;
-  background: #252C36 url("./../icons/down.svg") no-repeat 98% 50%;
-  color: #CFD6E0;
-  font-size: small;
-  border: 0 solid white;
-  border-bottom: 1px solid #141E2A;
-  border-radius: 0;
-  cursor: pointer;
-  overflow: hidden;
-  box-shadow: none;
-  -webkit-appearance: none;
-  outline: none;
-}
-
-.opt-select:hover,
-.opt-select:focus {
-  border-bottom: 1px solid #81D4FA;
 }

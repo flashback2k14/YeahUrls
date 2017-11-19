@@ -7,6 +7,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const SIGNINURL = "https://yeah-urls.herokuapp.com/api/v1/signin";
   const txtUsername = document.querySelector("#txtUsername");
   const txtPassword = document.querySelector("#txtPassword");
+  const btnReset = document.querySelector("#btnReset");
   const btnClear = document.querySelector("#btnClear");
   const btnSend = document.querySelector("#btnSend");
   const slctIcon = document.querySelector("#slctIcon");
@@ -14,7 +15,13 @@ window.addEventListener("DOMContentLoaded", () => {
   const infoText = document.querySelector("#infoText");
 
   Util.get().setIcon(slctIcon);
-  
+
+  btnReset.addEventListener("click", () => {
+    localStorage.removeItem("YEAH#URLS#EXTENSION#TOKEN");
+    localStorage.removeItem("YEAH#URLS#EXTENSION#USERID");
+    Util.get().showInfoText(infoText, "Successfully resetted!", true);
+  });
+
   btnClear.addEventListener("click", () => {
     txtUsername.value = "";
     txtPassword.value = "";
@@ -36,7 +43,7 @@ window.addEventListener("DOMContentLoaded", () => {
         return response.json();
       })
       .then(data => {
-        localStorage.setItem("YEAH#URLS#EXTENSION#TOKEN", data.token)
+        localStorage.setItem("YEAH#URLS#EXTENSION#TOKEN", data.token);
         localStorage.setItem("YEAH#URLS#EXTENSION#USERID", data.user.id);
         txtUsername.value = "";
         txtPassword.value = "";

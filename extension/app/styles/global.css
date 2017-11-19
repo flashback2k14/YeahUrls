@@ -4,7 +4,7 @@ body {
   color: #CFD6E0;
 }
 
-.opt-input {
+.yeah-input {
   margin: 4px 12px 12px 12px;
   padding-bottom: 4px;
   background: #252C36;
@@ -15,16 +15,16 @@ body {
   outline: none;
 }
 
-.opt-input::placeholder {
+.yeah-input::placeholder {
   color: #414953;
 }
-.opt-input:hover,
-.opt-input:focus,
-.opt-input:valid {
+.yeah-input:hover,
+.yeah-input:focus,
+.yeah-input:valid {
   border-bottom: 1px solid #81D4FA;
 }
 
-.opt-button {
+.yeah-button {
   width: 80px;
   border: 0;
   border-radius: 4px;
@@ -36,51 +36,77 @@ body {
   transition: 0.3s;
   outline: none;
 }
-.opt-button:hover,
-.opt-button:focus {
+
+.yeah-button:hover,
+.yeah-button:focus {
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.6);
 }
 
-.opt-button_ok {
+.yeah-button_ok {
   color: #81D4FA;
   border: 1px solid #81D4FA;
 }
-.opt-button_ok:hover,
-.opt-button_ok:hover  {
+.yeah-button_ok:hover,
+.yeah-button_ok:focus  {
   background: #81D4FA;
   color: black;
 }
 
-.opt-button_cancel {
+.yeah-button_cancel {
   color: #E4676A;
   border: 1px solid #E4676A;
 }
-.opt-button_cancel:hover,
-.opt-button_cancel:hover {
+.yeah-button_cancel:hover,
+.yeah-button_cancel:focus {
   background: #E4676A;
   color: black;
 }
 
-.opt-button_add {
+.yeah-button_add {
   color: #83FA81;
   border: 1px solid #83FA81;
 }
-.opt-button_add:hover,
-.opt-button_add:hover {
+.yeah-button_add:hover,
+.yeah-button_add:focus {
   background: #83FA81;
   color: black;
 }
 
-.info {
+.yeah-button_offset {
+  margin-right: 115px;
+}
+
+.yeah-select {
+  margin: 4px 12px 12px 12px;
+  padding: 4px 0 4px 4px;
+  background: #252C36 url("./../icons/down.svg") no-repeat 98% 50%;
+  color: #CFD6E0;
+  font-size: small;
+  border: 0 solid white;
+  border-bottom: 1px solid #141E2A;
+  border-radius: 0;
+  cursor: pointer;
+  overflow: hidden;
+  box-shadow: none;
+  -webkit-appearance: none;
+  outline: none;
+}
+
+.yeah-select:hover,
+.yeah-select:focus {
+  border-bottom: 1px solid #81D4FA;
+}
+
+.yeah-info {
   padding: 5px;
   font-size: small;
   text-align: center;
 }
 
-.info-success {
+.yeah-info_success {
   color: #1DE9B6;
 }
 
-.info-error {
+.yeah-info_error {
   color: #FF1744;
 }
