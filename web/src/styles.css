@@ -115,7 +115,8 @@ body {
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.6);
 }
 
-.custom-button-small:hover .svg-icon {
+.custom-button-small:hover .svg-icon,
+.custom-button-small:focus .svg-icon {
   fill: black;
 }
 
@@ -128,7 +129,7 @@ svg {
   border: 1px solid #81D4FA;
 }
 .custom-button_ok:hover,
-.custom-button_ok:hover  {
+.custom-button_ok:focus  {
   background: #81D4FA;
   color: black;
 }
@@ -138,7 +139,7 @@ svg {
   border: 1px solid #E4676A;
 }
 .custom-button_cancel:hover,
-.custom-button_cancel:hover {
+.custom-button_cancel:focus {
   background: #E4676A;
   color: black;
 }
@@ -148,7 +149,7 @@ svg {
   border: 1px solid #83FA81;
 }
 .custom-button_add:hover,
-.custom-button_add:hover {
+.custom-button_add:focus {
   background: #83FA81;
   color: black;
 }

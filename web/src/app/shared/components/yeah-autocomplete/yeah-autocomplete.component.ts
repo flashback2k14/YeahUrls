@@ -58,6 +58,14 @@ export class YeahAutocompleteComponent {
     this.txtKeywords.nativeElement.value = "";
   }
 
+  setInputText (value: string): void {
+    this.txtKeywords.nativeElement.value = value;
+  }
+
+  getInputText (): string {
+    return this.txtKeywords.nativeElement.value;
+  }
+
   // endregion
 
   // region suggestion list events

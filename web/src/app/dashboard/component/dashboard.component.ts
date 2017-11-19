@@ -5,7 +5,7 @@ import {
 } from "../../shared/components/index";
 import { UrlService, NotifyService, TagService, SocketService } from "../../core/services/index";
 import { Helper } from "../../../helper/index";
-import { Url, Tag, SocketEvents } from "../../../models/index";
+import { Url, SocketEvents, Tag, TagUsage, TagExt } from "../../../models/index";
 import { VirtualScrollComponent } from "angular2-virtual-scroll";
 
 @Component({
@@ -15,8 +15,8 @@ import { VirtualScrollComponent } from "angular2-virtual-scroll";
 })
 export class DashboardComponent implements OnInit, OnDestroy {
 
-  @ViewChild("yeahUrlSearchElement") yeahUrlSearchElement: YeahUrlListSearchComponent;
   @ViewChild("urlVirtualScroll") virtualScroll: VirtualScrollComponent;
+  @ViewChild("yeahUrlSearchElement") yeahUrlSearchElement: YeahUrlListSearchComponent;
   @ViewChild("yeahUrlEditDialog") yeahUrlEditDialog: YeahDialogEditComponent;
   @ViewChild("yeahUrlDeleteDialog") yeahUrlDeleteDialog: YeahDialogDeleteComponent;
   @ViewChild("yeahUrlAddDialog") yeahUrlAddDialog: YeahDialogAddComponent;
@@ -67,34 +67,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
   }
 
-  private _countTagUsage (urls: Array<Url>, tags: Array<Tag>): Array<any> {
-    const result = new Array<any>();
-
-    tags.forEach((tag: Tag) => {
-      let found = 0;
-      urls.forEach((url: Url) => {
-        url.tags.forEach((urlTag: Tag) => {
-          if (urlTag.id === tag.id) {
-            found++;
-          }
-        });
-      });
-      result.push({ id: tag.id, count: found });
-    });
-
-    return result;
-  }
-
-  private _patchTags(unsortedTags: Tag[], tagUsage: any[]): Array<any> {
-    const result = unsortedTags.map((tag: Tag) => {
-      return {
-        ...tag,
-        count: tagUsage.find((obj: any) => obj.id === tag.id).count
-      };
-    });
-    return result;
-  }
-
   ngOnDestroy (): void {
     this._removeSocketListener();
   }
@@ -102,6 +74,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
   // region socket.io
 
   private _initSocketListener (): void {
+    /**
+     * URLS
+     */
     this._socketService.getSocket().on(SocketEvents.URLADDED, (addedUrl: Url) => {
       const tmpList = [addedUrl, ...this._urlList];
       this._urlList = tmpList;
@@ -117,7 +92,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this._urlList = tmpList;
       this.filteredUrlList = tmpList;
     });
-
+    /**
+     * TAGS
+     */
     this._socketService.getSocket().on(SocketEvents.TAGADDED, (addedTag: Tag) => {
       const tmpList = [...this.tagList, addedTag];
       const tagUsage = this._countTagUsage(this._urlList, tmpList);
@@ -201,6 +178,37 @@ export class DashboardComponent implements OnInit, OnDestroy {
   // endregion
 
   // region helper
+
+  private _countTagUsage (urls: Array<Url>, tags: Array<Tag>): Array<TagUsage> {
+    const result = new Array<TagUsage>();
+
+    tags.forEach((tag: Tag) => {
+      let found = 0;
+      urls.forEach((url: Url) => {
+        url.tags.forEach((urlTag: Tag) => {
+          if (urlTag.id === tag.id) {
+            found++;
+          }
+        });
+      });
+      result.push(new TagUsage(tag.id, found));
+    });
+
+    return result;
+  }
+
+  private _patchTags(unsortedTags: Array<Tag>, tagUsage: Array<TagUsage>): Array<TagExt> {
+    const result = unsortedTags.map((tag: Tag) => {
+      const patchedTag = new TagExt();
+      patchedTag.id = tag.id;
+      patchedTag.name = tag.name;
+      patchedTag.created = tag.created;
+      patchedTag.updated = tag.updated;
+      patchedTag.count = tagUsage.find((usage: TagUsage) => usage.referenceId === tag.id).count;
+      return patchedTag;
+    });
+    return result;
+  }
 
   private _compareUrls (a: Url, b: Url): number {
     return a.updated > b.updated ? -1 : a.updated < b.updated ? 1 : 0;

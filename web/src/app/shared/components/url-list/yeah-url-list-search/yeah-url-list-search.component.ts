@@ -28,8 +28,15 @@ export class YeahUrlListSearchComponent {
   }
 
   sendSearchRequest (): void {
-    if (this.txtSearchTerm && this.txtSearchTerm.nativeElement.value !== "") {
-      this.searchRequestSubmitted.next(this.txtSearchTerm.nativeElement.value);
+    if (this.showTextInput) {
+      if (this.txtSearchTerm && this.txtSearchTerm.nativeElement.value !== "") {
+        this.searchRequestSubmitted.next(this.txtSearchTerm.nativeElement.value);
+      }
+    }
+    if (this.showKeywordInput) {
+      if (this.yeahAutocomplete.getInputText() !== "") {
+        this.searchRequestSubmitted.next(this.yeahAutocomplete.getInputText());
+      }
     }
   }
 
@@ -55,7 +62,12 @@ export class YeahUrlListSearchComponent {
   }
 
   setSearchInputTextAndFireSearchRequest (value: string): void {
-    this.txtSearchTerm.nativeElement.value = value;
+    if (this.showTextInput) {
+      this.txtSearchTerm.nativeElement.value = value;
+    }
+    if (this.showKeywordInput) {
+      this.yeahAutocomplete.setInputText(value);
+    }
     this.sendSearchRequest();
   }
 }

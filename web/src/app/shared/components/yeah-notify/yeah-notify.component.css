@@ -10,7 +10,7 @@
   text-align: left;
   font-size: medium;
   border-radius: 4px;
-  z-index: 1;
+  z-index: 10;
 }
 
 .notify-container_text {
@@ -26,27 +26,23 @@
 }
 
 .notify-color_success {
-  color: #155724;
-  background: #d4edda;
-  border-color: #c3e6cb;
+  color: #83FA81;
+  background: #29313d;
 }
 
 .notify-color_error {
-  color: #721c24;
-  background: #f8d7da;
-  border-color: #f5c6cb;
+  color: #E4676A;
+  background: #29313d;
 }
 
 .notify-color_info {
-  color: #0c5460;
-  background: #d1ecf1;
-  border-color: #bee5eb;
+  color: #81D4FA;
+  background: #29313d;
 }
 
 .notify-color_warning {
-  color: #856404;
-  background: #fff3cd;
-  border-color: #ffeeba;
+  color: #FFEB3B;
+  background: #29313d;
 }
 
 .notify-close {
@@ -60,7 +56,7 @@
 
 .notify-close:focus,
 .notify-close:hover {
-  color: #000;
+  color: #FFFFFF;
   text-decoration: none;
   opacity: .75;
 }

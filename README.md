@@ -585,17 +585,11 @@
 ## ToDo's
 
 * Frontend
-  * [router strategy](https://www.google.de/search?client=ms-unknown&ei=AzrzWd_pKsLYafHyhbgD&q=angular+router+strategy+&oq=angular+router+strategy+&gs_l=mobile-gws-serp.3..33i160k1.2936.7884.0.9377.17.14.0.0.0.0.221.1978.2j10j2.14.7895....0...1.1j4j5.64.mobile-gws-serp..8.9.1225...0j41j0i19k1j0i22i30i19k1j0i22i30k1j0i10k1j33i21k1.0.nAtuizkji78#xxri=4)
   * [google analytics #1](https://blog.thecodecampus.de/angular-2-include-google-analytics-event-tracking/)
   * [google analytics #2](https://developers.google.com/analytics/devguides/collection/analyticsjs/)
   * [google analytics #3](https://www.google.de/search?client=ms-unknown&ei=4FrzWY3tH4KxafaHnogE&q=google+analytics+&oq=google+analytics+&gs_l=mobile-gws-serp.3..41l2j0l3.891.4469.0.5792.10.10.0.6.6.0.137.1153.1j9.10.4475....0...1.1j4j5.64.mobile-gws-serp..0.10.598...0i67k1j0i10i67k1j0i131k1.0.4kykZtLMENw)
   * [Angular 5 #1](https://blog.angular.io/version-5-0-0-of-angular-now-available-37e414935ced)
   * [Angular 5 #2](https://angular-update-guide.firebaseapp.com/)
-* Extension
-  * [link #1](https://www.google.de/search?q=create+browser+extension+for+chrome+and+firefox&oq=create+browser+extension+for+chrome+and+firefox&aqs=chrome..69i57j33.32928j0j7&client=ms-unknown&sourceid=chrome-mobile&ie=UTF-8#xxri=1)
-  * [link #2](https://www.smashingmagazine.com/2017/04/browser-extension-edge-chrome-firefox-opera-brave-vivaldi/) --> tutorial
-  * [link #3](https://robots.thoughtbot.com/how-to-make-a-chrome-extension) --> inspiration
-  * [Redux for Extension](https://robots.thoughtbot.com/redux-for-chrome-extensions) --> inspiration
 * Backend
   * [Mailgun #1](https://documentation.mailgun.com/en/latest/libraries.html#libraries)
   * [Mailgun #2](http://blog.mailgun.com/how-to-send-transactional-emails-in-a-nodejs-app-using-the-mailgun-api/)
