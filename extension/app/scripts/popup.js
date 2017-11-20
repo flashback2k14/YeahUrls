@@ -2,16 +2,58 @@ window.browser = (function () {
   return window.msBrowser || window.browser || window.chrome;
 })();
 
+_getTagsAndFillSelect = (selectElement, infoTextElement, url) => {
+
+  const token = localStorage.getItem("YEAH#URLS#EXTENSION#TOKEN")
+  if (!token) {
+    Util.get().showInfoText(infoText, "Not authenticated. Please go to the settings.", false, 3000);
+    return;
+  }
+
+  window.fetch(Util.get().createGetRequest(url, token))
+    .then(response => {
+      if (!response.ok) { throw new Error(response.statusText); }
+      return response.json();
+    })
+    .then(data => {
+      const sortedTags = Util.get().sortTags(data);
+      sortedTags.forEach(tag => {
+        const option = Util.get().createOptionItem(tag.name);
+        selectElement.add(option);
+      });
+    })
+    .catch(error => {
+      Util.get().showInfoText(infoTextElement, error, false, 3000);
+    });
+}
+
 window.addEventListener("DOMContentLoaded", () => {
 
   const URL = "https://yeah-urls.herokuapp.com/api/v1/url";
+  const TAG = "https://yeah-urls.herokuapp.com/api/v1/tag";
+
   const urlList = document.querySelector("#urlList");
   const txtKeywords = document.querySelector("#txtKeywords");
+  const slctKeywords = document.querySelector("#slctKeywords");
+
   const btnCurrentUrl = document.querySelector("#btnCurrentUrl");
   const btnAllUrl = document.querySelector("#btnAllUrl");
   const btnClear = document.querySelector("#btnClear");
   const btnSave = document.querySelector("#btnSave");
+
   const infoText = document.querySelector("#infoText");
+
+  slctKeywords.addEventListener("change", (e) => {
+    if (txtKeywords.value) {
+      txtKeywords.value += " - " + e.target.selectedOptions[0].value;
+    } else {
+      txtKeywords.value = e.target.selectedOptions[0].value;
+    }
+  });
+  
+  slctKeywords.addEventListener("blur", () => {
+    slctKeywords.selectedIndex = 0;
+  });
 
   btnCurrentUrl.addEventListener("click", () => {
     browser.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
@@ -52,15 +94,15 @@ window.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    const promHolder = [];
+    const urlSaveRequests = [];
 
     urls.forEach(url => {
       const data = { url: url, tags: keywords };
       const request = window.fetch(Util.get().createRequest(`${URL}/${userId}`, data, userToken));
-      promHolder.push(request);
+      urlSaveRequests.push(request);
     });
 
-    Promise.all(promHolder)
+    Promise.all(urlSaveRequests)
       .then(result => {
         Util.get().showInfoText(infoText, `Successfully added ${result.length} URLs.`, true);
         urlList.innerHTML = "";
@@ -71,4 +113,6 @@ window.addEventListener("DOMContentLoaded", () => {
         Util.get().showInfoText(infoText, `Save request failed. Please open the console for more details.`, false, 3000);
       });
   });
+
+  _getTagsAndFillSelect(slctKeywords, infoText, TAG);  
 });

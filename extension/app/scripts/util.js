@@ -10,6 +10,13 @@ const Util = (() => {
       return li;
     }
 
+    createOptionItem = (text) => {
+      const option = document.createElement("option");
+      option.text = text;
+      option.value = text;
+      return option;
+    }
+
     createRequest = (url, data, token = "") => {
 
       const headers = new Headers();
@@ -27,18 +34,35 @@ const Util = (() => {
       return request;
     }
 
+    createGetRequest = (url, token) => {
+      const headers = new Headers();
+      headers.set("Content-Type", "application/json");
+      headers.set("x-access-token", token);
+
+      const request = new Request(url, {
+        method: "GET",
+        headers: headers
+      });
+
+      return request;
+    }
+
     getKeywords = (txtKeywords) => {
-      return (txtKeywords.value) ? txtKeywords.value.split(" - ").map(keyword => keyword.trim()) : [];
+      return (txtKeywords.value) 
+        ? txtKeywords.value.split(" - ").map(keyword => keyword.trim()) 
+        : [];
     }
     
     getUrls = (urlList) => {
-      return (urlList.childElementCount > 0) ? [...urlList.children].map(item => item.innerHTML) : [];
+      return (urlList.childElementCount > 0) 
+        ? [...urlList.children].map(item => item.innerHTML) 
+        : [];
     }
 
     setIcon = (slctIcon) => {
       const icon = localStorage.getItem("YEAH#URLS#EXTENSION#ICON");
       if (icon === null) { return; }
-      
+
       switch (icon) {
         case "light":
           browser.browserAction.setIcon({path: "icons/link-white-48.png"});
@@ -65,13 +89,23 @@ const Util = (() => {
       setTimeout(() => { el.innerHTML = "" }, duration);
     }
 
+    sortTags = (data) => {
+      const unsortedTags = [...data];
+      return [...unsortedTags.sort((a, b) => {
+        return a.name.toUpperCase().localeCompare(b.name.toLocaleUpperCase());
+      })];
+    }
+
     return {
       createListItem,
+      createOptionItem,
       createRequest,
+      createGetRequest,
       getKeywords,
       getUrls,
       setIcon,
-      showInfoText
+      showInfoText,
+      sortTags
     }
   }
 

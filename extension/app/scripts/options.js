@@ -14,8 +14,6 @@ window.addEventListener("DOMContentLoaded", () => {
   const btnChange = document.querySelector("#btnChange");
   const infoText = document.querySelector("#infoText");
 
-  Util.get().setIcon(slctIcon);
-
   btnReset.addEventListener("click", () => {
     localStorage.removeItem("YEAH#URLS#EXTENSION#TOKEN");
     localStorage.removeItem("YEAH#URLS#EXTENSION#USERID");
@@ -69,4 +67,6 @@ window.addEventListener("DOMContentLoaded", () => {
         break;
     }
   });
+
+  Util.get().setIcon(slctIcon);  
 });

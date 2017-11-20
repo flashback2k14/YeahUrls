@@ -19,6 +19,7 @@ body {
 
 .container-keywords {
   display: flex;
+  flex-direction: column;
   margin-top: 8px;
 }
 
@@ -34,7 +35,11 @@ body {
 }
 
 .ppp-input {
-  width: 100%;
+  padding: 4px 0 4px 4px;
+}
+
+.ppp-select {
+  margin-top: 0;
 }
 
 .ppp-button {
