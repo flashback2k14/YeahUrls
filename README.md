@@ -588,8 +588,6 @@
   * [google analytics #1](https://blog.thecodecampus.de/angular-2-include-google-analytics-event-tracking/)
   * [google analytics #2](https://developers.google.com/analytics/devguides/collection/analyticsjs/)
   * [google analytics #3](https://www.google.de/search?client=ms-unknown&ei=4FrzWY3tH4KxafaHnogE&q=google+analytics+&oq=google+analytics+&gs_l=mobile-gws-serp.3..41l2j0l3.891.4469.0.5792.10.10.0.6.6.0.137.1153.1j9.10.4475....0...1.1j4j5.64.mobile-gws-serp..0.10.598...0i67k1j0i10i67k1j0i131k1.0.4kykZtLMENw)
-  * [Angular 5 #1](https://blog.angular.io/version-5-0-0-of-angular-now-available-37e414935ced)
-  * [Angular 5 #2](https://angular-update-guide.firebaseapp.com/)
 * Backend
   * [Mailgun #1](https://documentation.mailgun.com/en/latest/libraries.html#libraries)
   * [Mailgun #2](http://blog.mailgun.com/how-to-send-transactional-emails-in-a-nodejs-app-using-the-mailgun-api/)
