@@ -43,6 +43,15 @@ window.addEventListener("DOMContentLoaded", () => {
 
   const infoText = document.querySelector("#infoText");
 
+  urlList.addEventListener("dblclick", (e) => {
+    const urls = [...urlList.childNodes];
+    urls.forEach(url => {
+      if (url === e.target) {
+        urlList.removeChild(e.target);
+      }
+    });
+  });
+
   slctKeywords.addEventListener("change", (e) => {
     if (txtKeywords.value) {
       txtKeywords.value += " - " + e.target.selectedOptions[0].value;
