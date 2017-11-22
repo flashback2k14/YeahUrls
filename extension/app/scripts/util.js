@@ -6,7 +6,8 @@ const Util = (() => {
 
     createListItem = (text) => {
       const li = document.createElement("li");
-      li.innerHTML = text;
+      const content = document.createTextNode(text);
+      li.appendChild(content);
       return li;
     }
 
@@ -78,7 +79,9 @@ const Util = (() => {
     }
 
     showInfoText = (el, text, isSuccess, duration = 2000) => {
-      el.innerHTML = text;
+      const content = document.createTextNode(text);
+      el.appendChild(content);
+
       if (isSuccess) {
         el.classList.remove("yeah-info_success", "yeah-info_error");
         el.classList.add("yeah-info_success");
