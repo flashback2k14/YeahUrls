@@ -1,4 +1,4 @@
-const nodemailer = require("nodemailer");
+// const nodemailer = require("nodemailer");
 const { writeFile, readFile, unlink } = require("fs");
 const { promisify } = require('util');
 
@@ -21,33 +21,26 @@ module.exports = (Config, UrlRepository, TagRepository) => {
     const combinedFilePath = `${filePath}/${fileName}`;
 
     await writeFileAsync(combinedFilePath, JSON.stringify(combinedData));
-    const fileData = await readFileAsync(combinedFilePath, "utf8");
 
-    return { combinedFilePath, fileName, fileData };
+    return { combinedFilePath };
   }
 
   async function _sendMail (options) {
-    const transporter = nodemailer.createTransport({
-      host: Config.emailProviderHost,
-      port: Config.emailProviderPort,
-      secure: Config.emailProviderUseSsl,
-      auth: {
-        user: Config.emailAddressFrom,
-        pass: Config.emailPasswordFrom
-      }
+
+    const mailGun = require("mailgun-js")({
+      apiKey: Config.mailGunApiKey,
+      domain: Config.mailGunDomain
     });
 
     const message = {
       from: Config.emailAddressFrom,
       to: Config.emailAddressTo,
       subject: "Yeah! URLs Backup from " + new Date(),
-      attachments: [{
-        filename: options.fileName,
-        content: options.fileData
-      }]
+      text: "This is an auto generated Backup file from the Database.",
+      attachment: options.combinedFilePath
     };
 
-    return await transporter.sendMail(message);
+    return await mailGun.messages().send(message);
   }
 
   async function create () {
@@ -63,15 +56,11 @@ module.exports = (Config, UrlRepository, TagRepository) => {
     scheduleRule.minute = Number(Config.scheduleJobMinute);
 
     const job = schedule.scheduleJob("Backup", scheduleRule, async () => {
-
       console.log("SCHEDULE: begin execute backup job");
-
       const options = await this._fetchData();
       await this._sendMail(options);
       await unlinkAsync(options.combinedFilePath);
-      
       console.log("SCHEDULE: end execute backup job");
-
     });
   }
 

@@ -1,3 +1,4 @@
 .vscode/cred.txt
 backend/node_modules
+backend/tmp
 extension.zip

@@ -8,10 +8,8 @@ module.exports = {
   port: process.env.PORT || "6006",
   scheduleJobHour: process.env.SCHEDULE_JOB_HOUR || 18,
   scheduleJobMinute: process.env.SCHEDULE_JOB_MINUTE || 0,
-  emailProviderHost: process.env.EMAIL_PROVIDER_HOST || "",
-  emailProviderPort: process.env.EMAIL_PROVIDER_PORT || "",
-  emailProviderUseSsl: process.env.EMAIL_PROVIDER_USE_SSL || true,
   emailAddressFrom: process.env.EMAIL_ADDRESS_FROM || "",
-  emailPasswordFrom: process.env.EMAIL_PASSWORD_FROM || "",
-  emailAddressTo: process.env.EMAIL_ADDRESS_TO || ""
+  emailAddressTo: process.env.EMAIL_ADDRESS_TO || "",
+  mailGunApiKey: process.env.MAIL_GUN_API_KEY || "",
+  mailGunDomain: process.env.MAIL_GUN_DOMAIN || ""
 };
