@@ -589,6 +589,4 @@
   * [google analytics #2](https://developers.google.com/analytics/devguides/collection/analyticsjs/)
   * [google analytics #3](https://www.google.de/search?client=ms-unknown&ei=4FrzWY3tH4KxafaHnogE&q=google+analytics+&oq=google+analytics+&gs_l=mobile-gws-serp.3..41l2j0l3.891.4469.0.5792.10.10.0.6.6.0.137.1153.1j9.10.4475....0...1.1j4j5.64.mobile-gws-serp..0.10.598...0i67k1j0i10i67k1j0i131k1.0.4kykZtLMENw)
 * Backend
-  * [Mailgun #1](https://documentation.mailgun.com/en/latest/libraries.html#libraries)
-  * [Mailgun #2](http://blog.mailgun.com/how-to-send-transactional-emails-in-a-nodejs-app-using-the-mailgun-api/)
-  * [Mailgun #3](https://www.google.de/search?client=ms-unknown&ei=M5n3WfrQNsbeat-dt8AK&q=nodejs+mailgun+attachment+&oq=nodejs+mailgun+attachment+&gs_l=mobile-gws-serp.3...3872.6735.0.8086.4.4.0.0.0.0.352.865.1j0j2j1.4.6746....0...1.1j4j5.64.mobile-gws-serp..0.3.763...0i19k1j0i22i10i30i19k1j0i22i30i19k1j33i21k1j33i160k1.0.kmgxFoR6yKM#xxri=1) --> attachments
+  * [helmet](https://www.twilio.com/blog/2017/11/securing-your-express-app.html)

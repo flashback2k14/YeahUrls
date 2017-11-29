@@ -68,5 +68,5 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  Util.get().setIcon(slctIcon);  
+  Util.get().setExtensionIcon(slctIcon);  
 });

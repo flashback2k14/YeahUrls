@@ -2,31 +2,6 @@ window.browser = (function () {
   return window.msBrowser || window.browser || window.chrome;
 })();
 
-_getTagsAndFillSelect = (selectElement, infoTextElement, url) => {
-
-  const token = localStorage.getItem("YEAH#URLS#EXTENSION#TOKEN")
-  if (!token) {
-    Util.get().showInfoText(infoText, "Not authenticated. Please go to the settings.", false, 3000);
-    return;
-  }
-
-  window.fetch(Util.get().createGetRequest(url, token))
-    .then(response => {
-      if (!response.ok) { throw new Error(response.statusText); }
-      return response.json();
-    })
-    .then(data => {
-      const sortedTags = Util.get().sortTags(data);
-      sortedTags.forEach(tag => {
-        const option = Util.get().createOptionItem(tag.name);
-        selectElement.add(option);
-      });
-    })
-    .catch(error => {
-      Util.get().showInfoText(infoTextElement, error, false, 3000);
-    });
-}
-
 window.addEventListener("DOMContentLoaded", () => {
 
   const URL = "https://yeah-urls.herokuapp.com/api/v1/url";
@@ -123,5 +98,6 @@ window.addEventListener("DOMContentLoaded", () => {
       });
   });
 
-  _getTagsAndFillSelect(slctKeywords, infoText, TAG);  
+  Util.get().setExtensionIcon();
+  Util.get().getTagsAndFillSelect(slctKeywords, infoText, TAG);  
 });

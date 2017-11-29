@@ -2,23 +2,23 @@ const Util = (() => {
 
   let instance;
 
-  _setup = () => {
+  const _setup = () => {
 
-    createListItem = (text) => {
+    const createListItem = (text) => {
       const li = document.createElement("li");
       const content = document.createTextNode(text);
       li.appendChild(content);
       return li;
     }
 
-    createOptionItem = (text) => {
+    const createOptionItem = (text) => {
       const option = document.createElement("option");
       option.text = text;
       option.value = text;
       return option;
     }
 
-    createRequest = (url, data, token = "") => {
+    const createRequest = (url, data, token = "") => {
 
       const headers = new Headers();
       headers.set("Content-Type", "application/json");
@@ -35,7 +35,7 @@ const Util = (() => {
       return request;
     }
 
-    createGetRequest = (url, token) => {
+    const createGetRequest = (url, token) => {
       const headers = new Headers();
       headers.set("Content-Type", "application/json");
       headers.set("x-access-token", token);
@@ -48,51 +48,78 @@ const Util = (() => {
       return request;
     }
 
-    getKeywords = (txtKeywords) => {
+    const getKeywords = (txtKeywords) => {
       return (txtKeywords.value) 
         ? txtKeywords.value.split(" - ").map(keyword => keyword.trim()) 
         : [];
     }
-    
-    getUrls = (urlList) => {
+
+    const getTagsAndFillSelect = (selectElement, infoTextElement, url) => {
+      
+      const token = localStorage.getItem("YEAH#URLS#EXTENSION#TOKEN")
+      if (!token) {
+        showInfoText(infoTextElement, "Not authenticated. Please go to the settings.", false, 3000);
+        return;
+      }
+
+      window.fetch(createGetRequest(url, token))
+        .then(response => {
+          if (!response.ok) { throw new Error(response.statusText); }
+          return response.json();
+        })
+        .then(data => {
+          const sortedTags = sortTags(data);
+          sortedTags.forEach(tag => {
+            const option = createOptionItem(tag.name);
+            selectElement.add(option);
+          });
+        })
+        .catch(error => {
+          showInfoText(infoTextElement, error, false, 3000);
+        });
+    }
+
+    const getUrls = (urlList) => {
       return (urlList.childElementCount > 0) 
         ? [...urlList.children].map(item => item.innerHTML) 
         : [];
     }
 
-    setIcon = (slctIcon) => {
+    const setExtensionIcon = (slctIcon) => {
       const icon = localStorage.getItem("YEAH#URLS#EXTENSION#ICON");
-      if (icon === null) { return; }
+      if (!icon) { 
+        return;
+      }
 
       switch (icon) {
         case "light":
           browser.browserAction.setIcon({path: "icons/link-white-48.png"});
-          slctIcon.selectedIndex = "0";
+          if (slctIcon) {
+            slctIcon.selectedIndex = "0";
+          }
           break;
         case "dark":
           browser.browserAction.setIcon({path: "icons/link-black-48.png"});
-          slctIcon.selectedIndex = "1";
+          if (slctIcon) {
+            slctIcon.selectedIndex = "1";
+          }
           break;
         default:
           break;
       }
     }
 
-    showInfoText = (el, text, isSuccess, duration = 2000) => {
+    const showInfoText = (el, text, isSuccess, duration = 2000) => {
       const content = document.createTextNode(text);
       el.appendChild(content);
-
-      if (isSuccess) {
+      el.classList.add(isSuccess ? "yeah-info_success" : "yeah-info_error");
+      setTimeout(() => {
         el.classList.remove("yeah-info_success", "yeah-info_error");
-        el.classList.add("yeah-info_success");
-      } else {
-        el.classList.remove("yeah-info_success", "yeah-info_error");
-        el.classList.add("yeah-info_error");
-      }
-      setTimeout(() => { el.innerHTML = "" }, duration);
+        el.innerHTML = "";
+      }, duration);
     }
 
-    sortTags = (data) => {
+    const sortTags = (data) => {
       const unsortedTags = [...data];
       return [...unsortedTags.sort((a, b) => {
         return a.name.toUpperCase().localeCompare(b.name.toLocaleUpperCase());
@@ -105,8 +132,9 @@ const Util = (() => {
       createRequest,
       createGetRequest,
       getKeywords,
+      getTagsAndFillSelect,
       getUrls,
-      setIcon,
+      setExtensionIcon,
       showInfoText,
       sortTags
     }
