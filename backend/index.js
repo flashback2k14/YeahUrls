@@ -2,6 +2,7 @@
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const express = require("express");
+const helmet = require("helmet");
 const http = require("http");
 const mongoose = require("mongoose");
 
@@ -24,6 +25,10 @@ mongoose.connect(Config.database, { useMongoClient: true }, (err) => {
 });
 
 // config app
+app.use(helmet({
+  dnsPrefetchControl: { allow: true },
+  frameguard: { action: "deny" }
+}));
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
