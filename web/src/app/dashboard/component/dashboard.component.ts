@@ -26,7 +26,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   scrollUrlItems: Array<Url>;
   urlChildHeight: number;
 
-  tagList: Array<Tag>;
+  tagList: Array<TagExt>;
 
   showLoading: boolean;
   showNoData: boolean;
@@ -40,7 +40,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this._urlList = new Array<Url>();
     this.filteredUrlList = new Array<Url>();
     this.scrollUrlItems = new Array<Url>();
-    this.tagList = new Array<Tag>();
+    this.tagList = new Array<TagExt>();
     this.showLoading = true;
     this.showNoData = true;
   }
@@ -49,12 +49,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
     try {
       const unsortedUrls = await this._urlService.getUrlsByUser(Helper.getUserId());
       const unsortedTags = await this._tagService.getTags();
-      const tagUsage = this._countTagUsage(unsortedUrls, unsortedTags);
-      const unsortedPatchedTags = this._patchTags(unsortedTags, tagUsage);
 
       this._urlList = [...unsortedUrls.sort(this._compareUrls)];
-      this.tagList = [...unsortedPatchedTags.sort(this._compareTags)];
       this.filteredUrlList = [...this._urlList];
+      this.tagList = this._getSortedTagListWithUsage(unsortedUrls, unsortedTags);
 
       this._initSocketListener();
 
@@ -78,36 +76,39 @@ export class DashboardComponent implements OnInit, OnDestroy {
      * URLS
      */
     this._socketService.getSocket().on(SocketEvents.URLADDED, (addedUrl: Url) => {
-      const tmpList = [addedUrl, ...this._urlList];
-      this._urlList = tmpList;
-      this.filteredUrlList = tmpList;
+      const tmpUrlList = [addedUrl, ...this._urlList];
+      this._urlList = tmpUrlList;
+      this.filteredUrlList = tmpUrlList;
+      this.tagList = this._getSortedTagListWithUsage(this._urlList, this.tagList);
     });
     this._socketService.getSocket().on(SocketEvents.URLUPDATED, (modifiedUrl: Url) => {
       const foundIndex = this._urlList.findIndex((url: Url) => url.id === modifiedUrl.id);
       this._urlList.splice(foundIndex, 1, modifiedUrl);
       this.filteredUrlList = [...this._urlList];
+      this.tagList = this._getSortedTagListWithUsage(this._urlList, this.tagList);
     });
     this._socketService.getSocket().on(SocketEvents.URLDELETED, (removedUrl: any) => {
-      const tmpList = this._urlList.filter((url: Url) => url.id !== removedUrl.urlId);
-      this._urlList = tmpList;
-      this.filteredUrlList = tmpList;
+      const tmpUrlList = this._urlList.filter((url: Url) => url.id !== removedUrl.urlId);
+      this._urlList = tmpUrlList;
+      this.filteredUrlList = tmpUrlList;
+      this.tagList = this._getSortedTagListWithUsage(this._urlList, this.tagList);
     });
     /**
      * TAGS
      */
     this._socketService.getSocket().on(SocketEvents.TAGADDED, (addedTag: Tag) => {
-      const tmpList = [...this.tagList, addedTag];
-      const tagUsage = this._countTagUsage(this._urlList, tmpList);
-      const unsortedPatchedTags = this._patchTags(tmpList, tagUsage);
-      this.tagList = [...unsortedPatchedTags.sort(this._compareTags)];
+      const tmpTagList = [...this.tagList, addedTag];
+      this.tagList = this._getSortedTagListWithUsage(this._urlList, tmpTagList);
     });
     this._socketService.getSocket().on(SocketEvents.TAGUPDATED, (modifiedTag: Tag) => {
       const foundIndex = this.tagList.findIndex((tag: Tag) => tag.id === modifiedTag.id);
-      this.tagList.splice(foundIndex, 1, modifiedTag);
+      this.tagList.splice(foundIndex, 1, modifiedTag as TagExt);
+      this.tagList = this._getSortedTagListWithUsage(this._urlList, this.tagList);
     });
     this._socketService.getSocket().on(SocketEvents.TAGDELETED, (removedTag: any) => {
       const foundIndex = this.tagList.findIndex((tag: Tag) => tag.id === removedTag.urlId);
       this.tagList.splice(foundIndex, 1);
+      this.tagList = this._getSortedTagListWithUsage(this._urlList, this.tagList);
     });
   }
 
@@ -179,7 +180,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   // region helper
 
-  private _countTagUsage (urls: Array<Url>, tags: Array<Tag>): Array<TagUsage> {
+  private _calculateTagUsage (urls: Array<Url>, tags: Array<Tag>): Array<TagUsage> {
     const result = new Array<TagUsage>();
 
     tags.forEach((tag: Tag) => {
@@ -197,17 +198,28 @@ export class DashboardComponent implements OnInit, OnDestroy {
     return result;
   }
 
-  private _patchTags(unsortedTags: Array<Tag>, tagUsage: Array<TagUsage>): Array<TagExt> {
-    const result = unsortedTags.map((tag: Tag) => {
+  private _extendTags(tags: Array<Tag>, tagUsage: Array<TagUsage>): Array<TagExt> {
+    const result = tags.map((tag: Tag) => {
+      const count = tagUsage.find((usage: TagUsage) => {
+        return usage.referenceId === tag.id;
+      }).count;
+
       const patchedTag = new TagExt();
       patchedTag.id = tag.id;
       patchedTag.name = tag.name;
       patchedTag.created = tag.created;
       patchedTag.updated = tag.updated;
-      patchedTag.count = tagUsage.find((usage: TagUsage) => usage.referenceId === tag.id).count;
+      patchedTag.count = count;
+
       return patchedTag;
     });
     return result;
+  }
+
+  private _getSortedTagListWithUsage (urls: Array<Url>, tags: Array<Tag>): Array<TagExt> {
+    const tagUsage = this._calculateTagUsage(urls, tags);
+    const unsortedPatchedTags = this._extendTags(tags, tagUsage);
+    return [...unsortedPatchedTags.sort(this._compareTags)];
   }
 
   private _compareUrls (a: Url, b: Url): number {

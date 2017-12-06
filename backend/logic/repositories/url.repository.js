@@ -38,12 +38,12 @@ module.exports = (UrlModel, TagModel, UserModel, SocketHelper) => {
 
   async function _createNewTags (tags) {
     return await Promise.all(tags.map(async tag => {
-      let foundTag = await TagModel.findOne({ name: tag }).lean();
-      if (!foundTag) {
-        foundTag = await new TagModel({ name: tag }).save();
-        SocketHelper.publishChanges(SocketHelper.EVENTNAME.TAGADDED, foundTag);
+      let foundOrCreatedTag = await TagModel.findOne({ name: tag }).lean();
+      if (!foundOrCreatedTag) {
+        foundOrCreatedTag = await new TagModel({ name: tag }).save();
+        SocketHelper.publishChanges(SocketHelper.EVENTNAME.TAGADDED, this._transformTag(foundOrCreatedTag));
       };
-      return foundTag._id;
+      return foundOrCreatedTag._id;
     }));
   }
 

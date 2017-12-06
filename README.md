@@ -588,5 +588,3 @@
   * [google analytics #1](https://blog.thecodecampus.de/angular-2-include-google-analytics-event-tracking/)
   * [google analytics #2](https://developers.google.com/analytics/devguides/collection/analyticsjs/)
   * [google analytics #3](https://www.google.de/search?client=ms-unknown&ei=4FrzWY3tH4KxafaHnogE&q=google+analytics+&oq=google+analytics+&gs_l=mobile-gws-serp.3..41l2j0l3.891.4469.0.5792.10.10.0.6.6.0.137.1153.1j9.10.4475....0...1.1j4j5.64.mobile-gws-serp..0.10.598...0i67k1j0i10i67k1j0i131k1.0.4kykZtLMENw)
-* Backend
-  * [helmet](https://www.twilio.com/blog/2017/11/securing-your-express-app.html)

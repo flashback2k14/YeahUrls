@@ -1,12 +1,10 @@
-// const nodemailer = require("nodemailer");
+const schedule = require("node-schedule");
 const { writeFile, readFile, unlink } = require("fs");
 const { promisify } = require('util');
 
 const writeFileAsync = promisify(writeFile);
 const readFileAsync = promisify(readFile);
 const unlinkAsync = promisify(unlink);
-
-const schedule = require("node-schedule");
 
 module.exports = (Config, UrlRepository, TagRepository) => {
 
