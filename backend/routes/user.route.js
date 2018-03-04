@@ -28,6 +28,15 @@ module.exports = (express, UserRepository) => {
     }
   });
 
+  user.put("/:id/changepassword", async (req, res) => {
+    try {
+      const data = await UserRepository.changePasswordById(req.params.id, req.body);
+      res.status(200).json(data);
+    } catch (error) {
+      res.status(400).json({ message: error.message });
+    }
+  });
+
   user.delete("/:id", async (req, res) => {
     try {
       const data = await UserRepository.deleteById(req.params.id);

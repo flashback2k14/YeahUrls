@@ -42,7 +42,7 @@ const authMiddleware = require("./logic/middleware/auth.middleware")(Config.toke
 
 // const repositories
 const authRepository = require("./logic/repositories/auth.repository")(UserModel, Config, CryptoHelper);
-const userRepository = require("./logic/repositories/user.repository")(UserModel);
+const userRepository = require("./logic/repositories/user.repository")(UserModel, CryptoHelper);
 const tagRepository = require("./logic/repositories/tag.repository")(TagModel, SocketHelper);
 const urlRepository = require("./logic/repositories/url.repository")(UrlModel, TagModel, UserModel, SocketHelper);
 

@@ -1,4 +1,4 @@
-module.exports = (UserModel) => {
+module.exports = (UserModel, CryptoHelper) => {
   function _transformUser (user) {
     return {
       "id": user._id,
@@ -25,6 +25,18 @@ module.exports = (UserModel) => {
     return this._transformUser(updatedUser);
   }
 
+  async function changePasswordById (id, body) {
+    const { oldPassword, newPassword } = body;
+    const foundUser = await UserModel.findById(id).lean();
+    if (!foundUser) throw new Error(`No User found for ID: ${id}`);
+    if (oldPassword !== CryptoHelper.decrypt(foundUser.passwordHash)) throw new Error("Old Password mismatch.");
+    const updateBody = {
+      passwordHash: CryptoHelper.encrypt(newPassword)
+    };
+    const updatedUser = await UserModel.findByIdAndUpdate({ _id: id, }, { $set: updateBody }, { new: true }).lean();
+    return this._transformUser(updatedUser);
+  }
+
   async function deleteById (id) {
     await UserModel.findByIdAndRemove({ _id: id });
     return { id };
@@ -35,6 +47,7 @@ module.exports = (UserModel) => {
     getAll,
     getById,
     updateById,
+    changePasswordById,
     deleteById
   }
 }

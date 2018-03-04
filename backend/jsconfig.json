@@ -1,11 +1,18 @@
 {
   "compilerOptions": {
+    "moduleResolution": "node",
     "checkJs": true,
+    "noEmit": true,
     "lib": [
       "es2015"
     ]
   },
   "exclude": [
     "node_modules"
+  ],
+  "include": [
+    "./logic",
+    "./models",
+    "./routes"
   ]
 }
