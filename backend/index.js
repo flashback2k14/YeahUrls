@@ -18,10 +18,15 @@ const server = http.createServer(app);
 const sio = require("socket.io").listen(server);
 
 // config mongoose
-mongoose.Promise = global.Promise;
-mongoose.connect(Config.database, { useMongoClient: true }, (err) => {
-  if (err) console.error(err);
-  else console.log(`MONGODB SERVER: successfully connected under ${Config.database}`);
+mongoose.connect(Config.database, {
+  promiseLibrary: global.Promise,
+  useNewUrlParser: true,
+}, (err) => {
+  if (err) {
+    console.error(err);
+  } else {
+    console.log(`MONGODB SERVER: successfully connected under ${Config.database}`);
+  }
 });
 
 // config app
