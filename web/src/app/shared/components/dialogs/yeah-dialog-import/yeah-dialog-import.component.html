@@ -1,4 +1,4 @@
-<yeah-dialog-base [(visible)]="showDialog">
+<yeah-dialog-base [(visible)]="showDialog" (visibleChange)="close($event)">
   <div>
     <h3>Import Firebase Data</h3>
   </div>

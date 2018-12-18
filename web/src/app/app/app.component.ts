@@ -34,4 +34,8 @@ export class AppComponent implements OnInit {
   handleSubmittedOpenImportRequest (): void {
     this.showImportDialog = true;
   }
+
+  handleSubmittedCloseImportRequest (e: boolean): void {
+    this.showImportDialog = e;
+  }
 }

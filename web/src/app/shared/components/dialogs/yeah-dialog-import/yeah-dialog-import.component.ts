@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, Input, Output, EventEmitter } from "@angular/core";
 import { UrlService, NotifyService } from "../../../../core/services";
 import { Helper } from "../../../../../helper";
 
@@ -10,12 +10,14 @@ import { Helper } from "../../../../../helper";
 export class YeahDialogImportComponent {
 
   @Input() showDialog: boolean;
+  @Output() closeImportRequestSubmitted: EventEmitter<boolean>;
 
   constructor (
     private _urlService: UrlService,
     private _notifyService: NotifyService
   ) {
     this.showDialog = false;
+    this.closeImportRequestSubmitted = new EventEmitter<boolean>();
   }
 
   clear (ta: HTMLTextAreaElement): void {
@@ -54,5 +56,9 @@ export class YeahDialogImportComponent {
     } catch (error) {
       this._notifyService.onError(Helper.extractBackendError(error));
     }
+  }
+
+  close(e: boolean): void {
+    this.closeImportRequestSubmitted.emit(e);
   }
 }

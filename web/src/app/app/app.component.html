@@ -4,6 +4,6 @@
     <router-outlet></router-outlet>
   </yeah-main>
   <yeah-footer (openImportRequestSubmitted)="handleSubmittedOpenImportRequest()"></yeah-footer>
-  <yeah-dialog-import [(showDialog)]="showImportDialog"></yeah-dialog-import>
+  <yeah-dialog-import [(showDialog)]="showImportDialog" (closeImportRequestSubmitted)="handleSubmittedCloseImportRequest($event)"></yeah-dialog-import>
   <yeah-notify></yeah-notify>
 </div>
