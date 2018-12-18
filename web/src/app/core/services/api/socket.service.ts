@@ -7,7 +7,7 @@ import { ConfigService } from "./config.service";
 export class SocketService {
   private socket: io.SocketIOClient.Socket;
 
-  constructor (private _configService: ConfigService) {
+  constructor (_configService: ConfigService) {
     this.socket = io(_configService.config.baseUrl);
   }
 

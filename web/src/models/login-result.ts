@@ -12,12 +12,12 @@ export class LoginResult {
     return this._user;
   }
 
-  setToken (token): this {
+  setToken (token: string): this {
     this._token = token;
     return this;
   }
 
-  setUser (user): this {
+  setUser (user: User): this {
     this._user = user;
     return this;
   }

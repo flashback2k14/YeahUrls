@@ -1,6 +1,6 @@
 import { Component, Output, EventEmitter, OnDestroy } from "@angular/core";
-import { Subscription } from "rxjs/Subscription";
-import { UiService } from "../../core/services/index";
+import { Subscription } from "rxjs";
+import { UiService } from "../../core/services";
 
 @Component({
   selector: "yeah-footer",

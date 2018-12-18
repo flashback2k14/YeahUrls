@@ -1,6 +1,6 @@
 import { Component, Input } from "@angular/core";
-import { UrlService, NotifyService } from "../../../../core/services/index";
-import { Helper } from "../../../../../helper/index";
+import { UrlService, NotifyService } from "../../../../core/services";
+import { Helper } from "../../../../../helper";
 
 @Component({
   selector: "yeah-dialog-import",
@@ -27,9 +27,11 @@ export class YeahDialogImportComponent {
 
     const urlObjects = JSON.parse(ta.value);
 
-    const parsedUrls = Object.values(urlObjects).map(urlArray => {
-      return urlArray.map(url => {
-        if (!url) { return {}; }
+    const parsedUrls = Object.values(urlObjects).map((urlArray: Array<any>) => {
+      return urlArray.map((url: any) => {
+        if (!url) {
+          return {};
+        }
         return { url: url.value, tags: url.keywords.split(" - ") };
       }).filter(result => Object.keys(result).length > 0);
     });
@@ -45,7 +47,7 @@ export class YeahDialogImportComponent {
       const urlArrays = JSON.parse(ta.value);
       await urlArrays.forEach(async urls => {
         await urls.forEach(async url => {
-          await this._urlService.postUrlByUser(userId, url);
+          await this._urlService.postUrlByUser(userId, url); // TODO: check method
         });
       });
       ta.value = "import finished - please reload";

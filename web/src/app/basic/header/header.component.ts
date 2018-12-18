@@ -1,7 +1,7 @@
 import { Component, OnDestroy } from "@angular/core";
 import { Router } from "@angular/router";
-import { Subscription } from "rxjs/Subscription";
-import { AuthService, UiService, NotifyService } from "../../core/services/index";
+import { Subscription } from "rxjs";
+import { AuthService, UiService, NotifyService } from "../../core/services";
 
 @Component({
   selector: "yeah-header",
@@ -34,9 +34,9 @@ export class HeaderComponent implements OnDestroy {
     this._changeUsernameAtHeaderAreaSubscription.unsubscribe();
   }
 
-  async logout (): Promise<void> {
+  logout (): void {
     this._notifyService.onInfo("Logging out...", true, true);
-    await this._authService.logout();
+    this._authService.logout();
     this._uiService.toggleHeaderAreaForUserinformation();
     this._uiService.toggleFooterAreaForImportFunction();
     this._router.navigate(["/login"]);

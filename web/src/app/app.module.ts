@@ -1,6 +1,6 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { HttpModule } from "@angular/http";
+import { HttpClientModule } from "@angular/common/http";
 import { NgModule, APP_INITIALIZER } from "@angular/core";
 
 import { ConfigService } from "./core/services/index";
@@ -10,8 +10,6 @@ import { AppRoutingModule } from "./app-routing.module";
 import { CoreModule } from "./core/core.module";
 import { BasicModule } from "./basic/basic.module";
 import { SharedModule } from "./shared/shared.module";
-import { LoginModule } from "./login/login.module";
-import { DashboardModule } from "./dashboard/dashboard.module";
 
 import { AppComponent } from "./app/app.component";
 
@@ -23,13 +21,11 @@ export function ConfigLoader (configService: ConfigService) {
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    HttpModule,
+    HttpClientModule,
     AppRoutingModule,
     CoreModule,
     BasicModule,
-    SharedModule,
-    LoginModule,
-    DashboardModule
+    SharedModule
   ],
   declarations: [AppComponent],
   providers: [

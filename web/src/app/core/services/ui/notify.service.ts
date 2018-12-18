@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Router, NavigationStart } from "@angular/router";
-import { Subject } from "rxjs/Subject";
-import { Observable } from "rxjs/Observable";
+import { Subject, Observable } from "rxjs";
 import { Notification, NotificationType } from "../../../../models/index";
 
 @Injectable()
@@ -10,10 +9,9 @@ export class NotifyService {
   private _notifySubject = new Subject<Notification>();
   private _keepNotificationAfterRouteChange = false;
 
-  constructor (private _router: Router) {
+  constructor (_router: Router) {
     _router.events.subscribe(event => {
-      if ((event instanceof NavigationStart) &&
-          (!this._keepNotificationAfterRouteChange)) {
+      if ((event instanceof NavigationStart) && (!this._keepNotificationAfterRouteChange)) {
         this._clearNotifications();
       }
     });

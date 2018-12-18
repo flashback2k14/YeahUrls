@@ -7,7 +7,7 @@
     "ng": "ng",
     "clean": "rm -rf dist",
     "clean:n": "rm -rf node_modules",
-    "start": "ng serve",
+    "start": "ng serve --aot",
     "start:p": "ng serve -prod --named-chunks --port 4202",
     "start:o": "ng serve --aot --build-optimizer --named-chunks --port 4201",
     "build": "ng build",

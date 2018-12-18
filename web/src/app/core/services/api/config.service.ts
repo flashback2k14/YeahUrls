@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Http } from "@angular/http";
-import "rxjs/add/operator/map";
+import { HttpClient } from "@angular/common/http";
 import { Config } from "../../../../models/index";
 
 @Injectable()
@@ -8,12 +7,11 @@ export class ConfigService {
 
   private _config: Config;
 
-  constructor (private _http: Http) { }
+  constructor (private _http: HttpClient) { }
 
   load (url: string): Promise<void> {
-    return new Promise((resolve) => {
-      this._http.get(url)
-        .map(res => res.json())
+    return new Promise(resolve => {
+      this._http.get<Config>(url)
         .subscribe(config => {
           this._config = config;
           resolve();
