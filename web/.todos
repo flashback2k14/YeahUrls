@@ -1,0 +1,4 @@
+- update angular version to latest - check
+- update scripts
+- update angular2-virtual-scroll to https://github.com/rintoj/ngx-virtual-scroller
+- test application
