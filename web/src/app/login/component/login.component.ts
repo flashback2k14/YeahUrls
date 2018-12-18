@@ -18,7 +18,6 @@ export class LoginComponent {
     private _router: Router
   ) { }
 
-  // TODO: check method
   async login (value: any): Promise<void> {
     this._notifyService.onInfo("Logging in...");
     try {

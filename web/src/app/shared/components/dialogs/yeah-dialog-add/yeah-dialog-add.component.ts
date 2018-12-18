@@ -69,7 +69,7 @@ export class YeahDialogAddComponent {
         url: taAddInput.value,
         tags: this._getTags()
       };
-      const addeddUrl = await this._urlService.postUrlByUser(Helper.getUserId(), urlData); // TODO: check method
+      const addeddUrl = await this._urlService.postUrlByUser(Helper.getUserId(), urlData);
       this._notifyService.onSuccess("Successfully added Url!");
       this.addUrlCompleted.emit(addeddUrl);
       this._clearDialog();

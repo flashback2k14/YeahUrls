@@ -13,9 +13,9 @@ export class AuthService {
 
   constructor (private _configService: ConfigService, private _http: HttpClient) {
     this._baseUrl = _configService.config.baseUrl + _configService.config.apiVersion;
-    this._headers = new HttpHeaders();
-    this._headers.append("accept", "application/json");
-    this._headers.append("content-type", "application/json");
+    this._headers = new HttpHeaders()
+      .append("accept", "application/json")
+      .append("content-type", "application/json");
     this._isLoggedIn = false;
   }
 
@@ -27,21 +27,16 @@ export class AuthService {
     return this._isLoggedIn;
   }
 
-  // TODO: check method
   signIn (username: string, password: string): Promise<LoginResult> {
-    // const data: HttpResponse = await this._http.post(url, body, { headers: this._headers });
-    // const result = await data.json();
-    // this._isLoggedIn = true;
-    // return new LoginResult().setToken(result.token).setUser(result.user);
-
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
       const url = this._baseUrl + this._configService.config.signInRoute;
-      const body = JSON.stringify({ username, password });
+      const body = { username, password };
       this._http.post<LoginResult>(url, body, { headers: this._headers })
         .subscribe(result => {
           this._isLoggedIn = true;
           resolve(new LoginResult().setToken(result.token).setUser(result.user));
-        });
+        },
+        error => reject(error));
     });
   }
 

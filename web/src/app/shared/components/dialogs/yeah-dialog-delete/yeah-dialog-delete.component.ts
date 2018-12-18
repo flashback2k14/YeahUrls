@@ -34,7 +34,7 @@ export class YeahDialogDeleteComponent {
 
   async ok (): Promise<void> {
     try {
-      const removedUrlId = await this._urlService.deleteUrlByUserAndId(Helper.getUserId(), this._url.id); // TODO: check method
+      const removedUrlId = await this._urlService.deleteUrlByUserAndId(Helper.getUserId(), this._url.id);
       this._notifyService.onSuccess("Successfully deleted Url!");
       this.deleteUrlCompleted.emit(removedUrlId);
       this.showDialog = false;

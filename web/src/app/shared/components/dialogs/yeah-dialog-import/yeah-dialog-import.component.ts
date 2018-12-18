@@ -47,7 +47,7 @@ export class YeahDialogImportComponent {
       const urlArrays = JSON.parse(ta.value);
       await urlArrays.forEach(async urls => {
         await urls.forEach(async url => {
-          await this._urlService.postUrlByUser(userId, url); // TODO: check method
+          await this._urlService.postUrlByUser(userId, url);
         });
       });
       ta.value = "import finished - please reload";

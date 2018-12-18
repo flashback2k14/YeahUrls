@@ -45,7 +45,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.showNoData = true;
   }
 
-  // TODO: check method
   async ngOnInit () {
     try {
       const unsortedUrls = await this._urlService.getUrlsByUser(Helper.getUserId());

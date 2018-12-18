@@ -66,7 +66,6 @@ export class YeahDialogEditComponent {
         url: taEditInput.value,
         tags: this._getTags()
       };
-      // TODO: check method
       const modifiedUrl = await this._urlService.putUrlByUserAndId(Helper.getUserId(), this._url.id, urlData);
       this._notifyService.onSuccess("Successfully modified Url!");
       this.editUrlCompleted.emit(modifiedUrl);
