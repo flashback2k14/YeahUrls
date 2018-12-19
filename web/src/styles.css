@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Zilla+Slab');
+@import url("https://fonts.googleapis.com/css?family=Zilla+Slab");
 
 html {
   height: 100%;
@@ -8,9 +8,9 @@ html {
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Zilla Slab', serif;
-  background: #252C36;
-  color: #CFD6E0;
+  font-family: "Zilla Slab", serif;
+  background: #252c36;
+  color: #cfd6e0;
   overflow: auto;
 }
 
@@ -19,35 +19,35 @@ body {
 */
 
 .background-color {
-  background: #252C36;
+  background: #252c36;
 }
 
 .background-color_accent-1 {
-  background: #81D4FA;
+  background: #81d4fa;
 }
 
 .background-color_accent-2 {
-  background: #E4676A;
+  background: #e4676a;
 }
 
 .background-color_accent-3 {
-  background: #83FA81;
+  background: #83fa81;
 }
 
 .text-color {
-  color: #CFD6E0;
+  color: #cfd6e0;
 }
 
 .text-color_accent-1 {
-  color: #81D4FA;
+  color: #81d4fa;
 }
 
 .text-color_accent-2 {
-  color: #E4676A;
+  color: #e4676a;
 }
 
 .text-color_accent-3 {
-  color: #83FA81;
+  color: #83fa81;
 }
 
 /*
@@ -58,7 +58,7 @@ body {
   margin: 12px;
   padding-bottom: 4px;
   border: 0;
-  border-bottom: 1px solid #141E2A;
+  border-bottom: 1px solid #141e2a;
   font-size: medium;
   outline: none;
 }
@@ -68,7 +68,7 @@ body {
 .custom-input:hover,
 .custom-input:focus,
 .custom-input:valid {
-  border-bottom: 1px solid #81D4FA;
+  border-bottom: 1px solid #81d4fa;
 }
 
 /*
@@ -85,18 +85,18 @@ body {
   font-size: small;
   text-transform: uppercase;
   cursor: pointer;
-  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.4);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.4);
   transition: 0.3s;
   outline: none;
 }
 .custom-button:hover,
 .custom-button:focus {
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.6);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.6);
 }
 
 .custom-button-small {
   display: inline-block;
-  margin-top: 6px;
+  margin: 6px 6px 0 0;
   width: 36px;
   height: 36px;
   border: 0;
@@ -105,14 +105,14 @@ body {
   font-size: smaller;
   text-align: center;
   cursor: pointer;
-  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.4);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.4);
   transition: 0.3s;
   outline: none;
 }
 
 .custom-button-small:hover,
 .custom-button-small:focus {
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.6);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.6);
 }
 
 .custom-button-small:hover .svg-icon,
@@ -125,32 +125,32 @@ svg {
 }
 
 .custom-button_ok {
-  color: #81D4FA;
-  border: 1px solid #81D4FA;
+  color: #81d4fa;
+  border: 1px solid #81d4fa;
 }
 .custom-button_ok:hover,
-.custom-button_ok:focus  {
-  background: #81D4FA;
+.custom-button_ok:focus {
+  background: #81d4fa;
   color: black;
 }
 
 .custom-button_cancel {
-  color: #E4676A;
-  border: 1px solid #E4676A;
+  color: #e4676a;
+  border: 1px solid #e4676a;
 }
 .custom-button_cancel:hover,
 .custom-button_cancel:focus {
-  background: #E4676A;
+  background: #e4676a;
   color: black;
 }
 
 .custom-button_add {
-  color: #83FA81;
-  border: 1px solid #83FA81;
+  color: #83fa81;
+  border: 1px solid #83fa81;
 }
 .custom-button_add:hover,
 .custom-button_add:focus {
-  background: #83FA81;
+  background: #83fa81;
   color: black;
 }
 
@@ -165,7 +165,7 @@ svg {
 ::-webkit-scrollbar-track {
   -webkit-border-radius: 0px;
   border-radius: 0px;
-  background: #252C36; /*rgb(26, 40, 56);*/
+  background: #252c36; /*rgb(26, 40, 56);*/
   cursor: pointer;
 }
 
@@ -173,13 +173,13 @@ svg {
 ::-webkit-scrollbar-thumb {
   -webkit-border-radius: 0px;
   border-radius: 0px;
-  background: #81D4FA;
+  background: #81d4fa;
 }
 ::-webkit-scrollbar-thumb:window-inactive {
   background: transparent;
 }
 
-@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
   .custom-button {
     width: 60px;
     padding: 0;
