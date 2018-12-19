@@ -47,4 +47,4 @@ module.exports = (express, UserRepository) => {
   });
 
   return user;
-}
+};
