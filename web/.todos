@@ -3,5 +3,6 @@
 - add new profile page - check
 -- update name
 -- update password
-- update scripts
+- update scripts - check
 - update angular2-virtual-scroll to https://github.com/rintoj/ngx-virtual-scroller
+- implement "add to share menu" - https://glitch.com/edit/#!/web-share
