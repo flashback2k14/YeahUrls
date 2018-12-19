@@ -3,6 +3,7 @@ export * from "./api/config.service";
 export * from "./api/socket.service";
 export * from "./api/tag.service";
 export * from "./api/url.service";
+export * from "./api/user.service";
 export * from "./ui/authguard.service";
 export * from "./ui/notify.service";
 export * from "./ui/ui.service";

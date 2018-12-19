@@ -1,10 +1,22 @@
 <div class="login-container">
   <div class="login-container_form">
     <form #form="ngForm" (ngSubmit)="login(form.value)">
-      <input name="username" ngModel type="text" class="login-container_input background-color text-color"
-        required placeholder="Enter your Username...">
-      <input name="password" ngModel type="password" class="login-container_input background-color text-color"
-        required placeholder="Enter your Password...">
+      <input
+        name="username"
+        ngModel
+        type="text"
+        class="login-container_input background-color text-color"
+        required
+        placeholder="Enter your Username..."
+      />
+      <input
+        name="password"
+        ngModel
+        type="password"
+        class="login-container_input background-color text-color"
+        required
+        placeholder="Enter your Password..."
+      />
       <div class="login-container-buttons">
         <button type="submit" class="login-container_button background-color_accent-1">Login</button>
       </div>

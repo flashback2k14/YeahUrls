@@ -1,27 +1,41 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Tag, StorageKeys } from "../../../../models/index";
+import { HttpHeaders, HttpClient } from "@angular/common/http";
 import { ConfigService } from "./config.service";
+import { User, StorageKeys } from "../../../../models";
 
 @Injectable()
-export class TagService {
+export class UserService {
   private _baseUrl: string;
+
   private _headers: HttpHeaders;
 
   constructor(_configService: ConfigService, private _http: HttpClient) {
     this._baseUrl =
       _configService.config.baseUrl +
       _configService.config.apiVersion +
-      _configService.config.tagRoute;
+      _configService.config.userRoute;
     this._headers = new HttpHeaders()
       .append("accept", "application/json")
       .append("content-type", "application/json");
   }
 
-  getTags(): Promise<Array<Tag>> {
+  putNameByUser(userId: string, data: object): Promise<User> {
     return new Promise((resolve, reject) => {
       this._http
-        .get<Array<Tag>>(this._baseUrl, {
+        .put<User>(`${this._baseUrl}/${userId}`, data, {
+          headers: this._headers.append(
+            "X-Access-Token",
+            localStorage.getItem(StorageKeys.USERTOKEN)
+          )
+        })
+        .subscribe(result => resolve(result), error => reject(error));
+    });
+  }
+
+  putPasswordByUser(userId: string, data: object): Promise<User> {
+    return new Promise((resolve, reject) => {
+      this._http
+        .put<User>(`${this._baseUrl}/${userId}/changepassword`, data, {
           headers: this._headers.append(
             "X-Access-Token",
             localStorage.getItem(StorageKeys.USERTOKEN)

@@ -9,13 +9,12 @@ import { AuthService, UiService, NotifyService } from "../../core/services";
   styleUrls: ["./header.component.css"]
 })
 export class HeaderComponent implements OnDestroy {
-
   private _toggleHeaderAreaForUserinformationSubscription: Subscription;
   private _changeUsernameAtHeaderAreaSubscription: Subscription;
   showHeaderAreaForUserinformation: boolean;
   username: string;
 
-  constructor (
+  constructor(
     private _authService: AuthService,
     private _uiService: UiService,
     private _notifyService: NotifyService,
@@ -23,10 +22,14 @@ export class HeaderComponent implements OnDestroy {
   ) {
     this.showHeaderAreaForUserinformation = false;
     this.username = "Unknown User";
-    this._toggleHeaderAreaForUserinformationSubscription = this._uiService.toggleHeaderAreaForUserinformation$
-      .subscribe(() => this.showHeaderAreaForUserinformation = !this.showHeaderAreaForUserinformation);
-    this._changeUsernameAtHeaderAreaSubscription = this._uiService.changeUsernameAtHeaderArea$
-      .subscribe(username => this.username = username);
+    this._toggleHeaderAreaForUserinformationSubscription = this._uiService.toggleHeaderAreaForUserinformation$.subscribe(
+      () =>
+        (this.showHeaderAreaForUserinformation = !this
+          .showHeaderAreaForUserinformation)
+    );
+    this._changeUsernameAtHeaderAreaSubscription = this._uiService.changeUsernameAtHeaderArea$.subscribe(
+      username => (this.username = username)
+    );
   }
 
   ngOnDestroy(): void {
@@ -34,7 +37,15 @@ export class HeaderComponent implements OnDestroy {
     this._changeUsernameAtHeaderAreaSubscription.unsubscribe();
   }
 
-  logout (): void {
+  goToDashboard(): void {
+    this._router.navigate(["/dashboard"]);
+  }
+
+  goToProfile(): void {
+    this._router.navigate(["/profile"]);
+  }
+
+  logout(): void {
     this._notifyService.onInfo("Logging out...", true, true);
     this._authService.logout();
     this._uiService.toggleHeaderAreaForUserinformation();

@@ -1,0 +1,18 @@
+<div class="profile-container">
+  <div>
+    <div>Change Username</div>
+    <form #form="ngForm" (ngSubmit)="changeUsername(form.value)">
+      <input name="newUsername" ngModel type="text" required placeholder="Enter new Username..." />
+      <div><button type="submit">Change</button></div>
+    </form>
+  </div>
+
+  <div>
+    <div>Change Password</div>
+    <form #form="ngForm" (ngSubmit)="changeUserpassword(form.value)">
+      <input name="oldPassword" ngModel type="password" required placeholder="Enter your old Password..." />
+      <input name="newPassword" ngModel type="password" required placeholder="Enter your new Password..." />
+      <div><button type="submit">Change</button></div>
+    </form>
+  </div>
+</div>

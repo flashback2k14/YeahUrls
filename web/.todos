@@ -1,4 +1,7 @@
 - update angular version to latest - check
+- test application - check
 - update scripts
 - update angular2-virtual-scroll to https://github.com/rintoj/ngx-virtual-scroller
-- test application
+- add new profile page
+-- update name
+-- update password

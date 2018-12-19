@@ -4,4 +4,5 @@ export class Config {
   public signInRoute: string;
   public urlRoute: string;
   public tagRoute: string;
+  public userRoute: string;
 }

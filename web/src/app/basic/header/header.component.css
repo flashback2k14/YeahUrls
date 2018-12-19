@@ -14,6 +14,10 @@ header {
   display: flex;
   font-size: xx-large;
 }
+.header-title:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
 
 .header-user {
   display: flex;
@@ -22,6 +26,10 @@ header {
 
 .header-user_text {
   font-size: medium;
+}
+.header-user_text:hover {
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 .header-user_separator {
@@ -38,7 +46,7 @@ header {
   cursor: pointer;
 }
 
-@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
   .header-title {
     font-size: large;
   }

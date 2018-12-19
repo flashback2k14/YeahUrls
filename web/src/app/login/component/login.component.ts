@@ -2,7 +2,11 @@ import { Component } from "@angular/core";
 import { Router } from "@angular/router";
 import { Helper } from "../../../helper/index";
 import { LoginResult, StorageKeys } from "../../../models/index";
-import { AuthService, UiService, NotifyService } from "../../core/services/index";
+import {
+  AuthService,
+  UiService,
+  NotifyService
+} from "../../core/services/index";
 
 @Component({
   selector: "yeah-login",
@@ -10,18 +14,20 @@ import { AuthService, UiService, NotifyService } from "../../core/services/index
   styleUrls: ["./login.component.css"]
 })
 export class LoginComponent {
-
-  constructor (
+  constructor(
     private _authService: AuthService,
     private _uiService: UiService,
     private _notifyService: NotifyService,
     private _router: Router
-  ) { }
+  ) {}
 
-  async login (value: any): Promise<void> {
+  async login(value: any): Promise<void> {
     this._notifyService.onInfo("Logging in...");
     try {
-      const result: LoginResult = await this._authService.signIn(value.username, value.password);
+      const result: LoginResult = await this._authService.signIn(
+        value.username,
+        value.password
+      );
       this._setResultToLocalStorage(result);
       this._uiService.toggleHeaderAreaForUserinformation();
       this._uiService.changeUsernameAtHeaderArea(result.user.name);

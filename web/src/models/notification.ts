@@ -5,17 +5,17 @@ export class Notification {
   message: string;
   removeAfterDelay: boolean;
 
-  setType (type: NotificationType): this {
+  setType(type: NotificationType): this {
     this.type = type;
     return this;
   }
 
-  setMessage (message: string): this {
+  setMessage(message: string): this {
     this.message = message;
     return this;
   }
 
-  setRemoveAfterDelay (removeAfterDelay: boolean): this {
+  setRemoveAfterDelay(removeAfterDelay: boolean): this {
     this.removeAfterDelay = removeAfterDelay;
     return this;
   }

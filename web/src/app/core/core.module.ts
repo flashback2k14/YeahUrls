@@ -1,9 +1,13 @@
 import { NgModule, Optional, SkipSelf } from "@angular/core";
 import {
-  AuthService, AuthguardService,
+  AuthService,
+  AuthguardService,
   UiService,
-  SocketService, TagService, UrlService,
-  NotifyService
+  SocketService,
+  TagService,
+  UrlService,
+  NotifyService,
+  UserService
 } from "./services/index";
 
 @NgModule({
@@ -14,13 +18,16 @@ import {
     TagService,
     UiService,
     UrlService,
-    NotifyService
+    NotifyService,
+    UserService
   ]
 })
 export class CoreModule {
-  constructor (@Optional() @SkipSelf() parentModule: CoreModule) {
+  constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
     if (parentModule) {
-      throw new Error("CoreModule is already loaded. Import it in the AppModule only!");
+      throw new Error(
+        "CoreModule is already loaded. Import it in the AppModule only!"
+      );
     }
   }
 }
