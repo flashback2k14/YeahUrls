@@ -1,5 +1,5 @@
 import { BrowserModule } from "@angular/platform-browser";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { HttpClientModule } from "@angular/common/http";
 import { NgModule, APP_INITIALIZER } from "@angular/core";
 
@@ -12,8 +12,9 @@ import { BasicModule } from "./basic/basic.module";
 import { SharedModule } from "./shared/shared.module";
 
 import { AppComponent } from "./app/app.component";
+import { ServiceWorkerModule } from "@angular/service-worker";
 
-export function ConfigLoader (configService: ConfigService) {
+export function ConfigLoader(configService: ConfigService) {
   return () => configService.load(environment.configFile);
 }
 
@@ -25,7 +26,10 @@ export function ConfigLoader (configService: ConfigService) {
     AppRoutingModule,
     CoreModule,
     BasicModule,
-    SharedModule
+    SharedModule,
+    ServiceWorkerModule.register("ngsw-worker.js", {
+      enabled: environment.production
+    })
   ],
   declarations: [AppComponent],
   providers: [
@@ -39,4 +43,4 @@ export function ConfigLoader (configService: ConfigService) {
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

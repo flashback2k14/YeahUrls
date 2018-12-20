@@ -1,21 +1,22 @@
 {
   "name": "Yeah! URLs",
   "short_name": "Yeah! URLs",
+  "theme_color": "#252C36",
+  "background_color": "#252C36",
+  "display": "standalone",
+  "orientation": "portrait",
+  "scope": "/",
+  "start_url": "/",
   "icons": [
     {
-      "src": "assets/android-chrome-192x192.png",
+      "src": "assets/icons/icon-192x192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "assets/android-chrome-512x512.png",
+      "src": "assets/icons/icon-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
-  ],
-  "start_url": "/",
-  "display": "standalone",
-  "orientation": "portrait",
-  "background_color": "#252C36",
-  "theme_color": "#252C36"
+  ]
 }
