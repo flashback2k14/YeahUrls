@@ -1,7 +1,7 @@
 <div class="profile-container">
   <div class="profile-container_username profile-container_username-mb profile-container_username-h">
     <div class="profile-container_title">Change Username</div>
-    <form #form="ngForm" (ngSubmit)="changeUsername(form.value)">
+    <form #formUsername="ngForm" (ngSubmit)="changeUsername(formUsername)">
       <input name="newUsername" ngModel type="text" class="profile-container_input" required placeholder="Enter new Username..." />
       <div class="profile-container_action"><button type="submit" class="profile-container_button">Change</button></div>
     </form>
@@ -9,7 +9,7 @@
 
   <div class="profile-container_password profile-container_password-h ">
     <div class="profile-container_title">Change Password</div>
-    <form #form="ngForm" (ngSubmit)="changeUserpassword(form.value)">
+    <form #formPassword="ngForm" (ngSubmit)="changeUserpassword(formPassword)">
       <input name="oldPassword" ngModel type="password" class="profile-container_input" required placeholder="Enter your old Password..." />
       <input name="newPassword" ngModel type="password" class="profile-container_input" required placeholder="Enter your new Password..." />
       <div class="profile-container_action"><button type="submit" class="profile-container_button">Change</button></div>
