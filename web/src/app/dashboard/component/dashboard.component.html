@@ -1,21 +1,29 @@
 <div class="dashboard-container">
-  <yeah-url-list-search #yeahUrlSearchElement [tagList]="tagList"
+  <yeah-url-list-search
+    #yeahUrlSearchElement
+    [tagList]="tagList"
     (searchRequestSubmitted)="handleSubmittedSearchRequest($event)"
-    (addRequestSubmitted)="handleSubmittedAddRequest()">
+    (addRequestSubmitted)="handleSubmittedAddRequest()"
+  >
   </yeah-url-list-search>
   <yeah-url-list>
     <div *ngIf="showLoading" class="loading-text text-color">Loading...</div>
     <div *ngIf="!showLoading && showNoData" class="no-data-text text-color">No Data available...</div>
-    <virtual-scroll #urlVirtualScroll [items]="filteredUrlList" [bufferAmount]="5"
-      [childHeight]="urlChildHeight" (update)="scrollUrlItems=$event">
-      <yeah-url-list-item *ngFor="let url of scrollUrlItems; trackBy:urlItemTracker" [url]="url"
+    <virtual-scroller [items]="filteredUrlList" [enableUnequalChildrenSizes]="true" (vsUpdate)="scrollUrlItems = $event">
+      <yeah-url-list-item
+        *ngFor="let url of scrollUrlItems; trackBy: urlItemTracker"
+        [url]="url"
         (editUrlItemRequestSubmitted)="handleSubmittedEditUrlItemRequest($event)"
-        (deleteUrlItemRequestSubmitted)="handleSubmittedDeleteUrlItemRequest($event)">
-        <yeah-url-list-tag *ngFor="let tag of url.tags" [tag]="tag"
-          (tagNameAsSearchRequestSubmitted)="handleSubmittedTagNameAsSearchRequest($event)">
+        (deleteUrlItemRequestSubmitted)="handleSubmittedDeleteUrlItemRequest($event)"
+      >
+        <yeah-url-list-tag
+          *ngFor="let tag of url.tags"
+          [tag]="tag"
+          (tagNameAsSearchRequestSubmitted)="handleSubmittedTagNameAsSearchRequest($event)"
+        >
         </yeah-url-list-tag>
       </yeah-url-list-item>
-    </virtual-scroll>
+    </virtual-scroller>
   </yeah-url-list>
   <yeah-dialog-add #yeahUrlAddDialog [tagList]="tagList"></yeah-dialog-add>
   <yeah-dialog-edit #yeahUrlEditDialog [tagList]="tagList"></yeah-dialog-edit>
