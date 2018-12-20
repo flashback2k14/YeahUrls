@@ -20,6 +20,10 @@ const appRoutes: Routes = [
     loadChildren: "app/profile/profile.module#ProfileModule"
   },
   {
+    path: "share",
+    loadChildren: "app/share/share.module#ShareModule"
+  },
+  {
     path: "**",
     redirectTo: "login"
   }
