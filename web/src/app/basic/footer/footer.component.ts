@@ -8,24 +8,26 @@ import { UiService } from "../../core/services";
   styleUrls: ["./footer.component.css"]
 })
 export class FooterComponent implements OnDestroy {
-
   @Output() openImportRequestSubmitted: EventEmitter<void>;
 
   private _toggleFooterAreaForImportFunctionSubscription: Subscription;
   showFooterAreaForImportFunction: boolean;
 
-  constructor (private _uiService: UiService) {
+  constructor(private _uiService: UiService) {
     this.openImportRequestSubmitted = new EventEmitter<void>();
     this.showFooterAreaForImportFunction = false;
-    this._toggleFooterAreaForImportFunctionSubscription = this._uiService.toggleFooterAreaForImportFunction$
-      .subscribe(() => this.showFooterAreaForImportFunction = !this.showFooterAreaForImportFunction);
+    this._toggleFooterAreaForImportFunctionSubscription = this._uiService.toggleFooterAreaForImportFunction$.subscribe(
+      () =>
+        (this.showFooterAreaForImportFunction = !this
+          .showFooterAreaForImportFunction)
+    );
   }
 
-  ngOnDestroy (): void {
+  ngOnDestroy(): void {
     this._toggleFooterAreaForImportFunctionSubscription.unsubscribe();
   }
 
-  openImport (): void {
+  openImport(e: any): void {
     this.openImportRequestSubmitted.emit();
   }
 }

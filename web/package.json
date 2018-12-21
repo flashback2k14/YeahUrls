@@ -1,6 +1,6 @@
 {
   "name": "yeah-urls-web",
-  "version": "1.2.0",
+  "version": "1.2.7",
   "author": "flashback2k14",
   "license": "MIT",
   "scripts": {
@@ -11,6 +11,7 @@
     "start:o": "ng serve --aot --build-optimizer --named-chunks --port 4201",
     "start:p": "ng serve --prod --named-chunks --port 4202",
     "start:d": "ng serve --aot --host 0.0.0.0 --disable-host-check --port 4203",
+    "serve:dist": "http-server -p 8080 -c-1 dist/",
     "build": "ng build",
     "build:p": "ng build --prod --named-chunks",
     "build:o": "ng build --prod --aot --build-optimizer --named-chunks --vendor-chunk --common-chunk",
@@ -18,8 +19,7 @@
     "lint": "ng lint --type-check",
     "e2e": "ng e2e",
     "create:200": "cat dist/index.html >> dist/200.html",
-    "copy:m": "cp -rv src/manifest.json dist/",
-    "deploy": "npm run clean && npm run build:o && npm run copy:m && cd dist && npm run create:200 && surge --domain https://yeah-urls.surge.sh && npm run clean"
+    "deploy": "npm run clean && npm run build:o && cd dist && npm run create:200 && surge --domain https://yeah-urls.surge.sh && npm run clean"
   },
   "engines": {
     "node": "10.14.2",
@@ -50,6 +50,7 @@
     "@angular/cli": "~7.1.4",
     "@angular/compiler-cli": "~7.1.4",
     "@angular/language-service": "~7.1.4",
+    "http-server": "~0.11.1",
     "@types/jasmine": "~3.3.4",
     "@types/jasminewd2": "~2.0.6",
     "@types/node": "~10.12.18",

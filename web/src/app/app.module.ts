@@ -27,8 +27,8 @@ export function ConfigLoader(configService: ConfigService) {
     CoreModule,
     BasicModule,
     SharedModule,
-    ServiceWorkerModule.register("./ngsw-worker.js", {
-      enabled: !environment.production
+    ServiceWorkerModule.register("ngsw-worker.js", {
+      enabled: environment.production
     })
   ],
   declarations: [AppComponent],
