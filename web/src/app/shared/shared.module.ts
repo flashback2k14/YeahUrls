@@ -2,9 +2,18 @@ import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import {
-  YeahUrlListComponent, YeahUrlListSearchComponent, YeahUrlListItemComponent, YeahUrlListTagComponent,
-  YeahDialogAddComponent, YeahDialogBaseComponent, YeahDialogImportComponent, YeahDialogEditComponent, YeahDialogDeleteComponent,
-  YeahAutocompleteComponent, YeahNotifyComponent
+  YeahUrlListComponent,
+  YeahUrlListSearchComponent,
+  YeahUrlListItemComponent,
+  YeahUrlListTagComponent,
+  YeahDialogAddComponent,
+  YeahDialogBaseComponent,
+  YeahDialogImportComponent,
+  YeahDialogEditComponent,
+  YeahDialogDeleteComponent,
+  YeahAutocompleteComponent,
+  YeahNotifyComponent,
+  YeahTabsComponent
 } from "./components/index";
 
 @NgModule({
@@ -20,7 +29,8 @@ import {
     YeahDialogEditComponent,
     YeahDialogDeleteComponent,
     YeahAutocompleteComponent,
-    YeahNotifyComponent
+    YeahNotifyComponent,
+    YeahTabsComponent
   ],
   exports: [
     YeahUrlListComponent,
@@ -34,8 +44,9 @@ import {
     YeahDialogDeleteComponent,
     YeahAutocompleteComponent,
     YeahNotifyComponent,
+    YeahTabsComponent,
     CommonModule,
     FormsModule
   ]
 })
-export class SharedModule { }
+export class SharedModule {}

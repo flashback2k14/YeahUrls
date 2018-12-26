@@ -1,9 +1,14 @@
 import { Component } from "@angular/core";
-import { Router } from "@angular/router";
 import { NgForm } from "@angular/forms";
-import { UserService, NotifyService, UiService } from "../../core/services";
+import {
+  UserService,
+  TagService,
+  NotifyService,
+  UiService,
+  UrlService
+} from "../../core/services";
 import { Helper } from "../../../helper";
-import { User, StorageKeys } from "../../../models";
+import { User, StorageKeys, TagExt } from "../../../models";
 
 @Component({
   selector: "yeah-profile",
@@ -11,12 +16,30 @@ import { User, StorageKeys } from "../../../models";
   styleUrls: ["./profile.component.css"]
 })
 export class ProfileComponent {
+  tagList: Array<TagExt>;
+
   constructor(
     private _userService: UserService,
+    private _urlService: UrlService,
+    private _tagService: TagService,
     private _notifyService: NotifyService,
-    private _uiService: UiService,
-    private _router: Router
+    private _uiService: UiService
   ) {}
+
+  async handleTabSwitched(e: string) {
+    if (e === "tabTags") {
+      const unsortedUrls = await this._urlService.getUrlsByUser(
+        Helper.getUserId()
+      );
+      const unsortedTags = await this._tagService.getTags();
+      this.tagList = Helper.getSortedTagListWithUsage(
+        unsortedUrls,
+        unsortedTags
+      );
+    } else {
+      this.tagList = new Array<TagExt>();
+    }
+  }
 
   async changeUsername(form: NgForm): Promise<void> {
     this._notifyService.onInfo("Changing username...");

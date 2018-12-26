@@ -12,13 +12,7 @@ import {
   SocketService
 } from "../../core/services/index";
 import { Helper } from "../../../helper/index";
-import {
-  Url,
-  SocketEvents,
-  Tag,
-  TagUsage,
-  TagExt
-} from "../../../models/index";
+import { Url, SocketEvents, Tag, TagExt } from "../../../models/index";
 
 @Component({
   selector: "yeah-dashboard",
@@ -26,7 +20,6 @@ import {
   styleUrls: ["./dashboard.component.css"]
 })
 export class DashboardComponent implements OnInit, OnDestroy {
-
   @ViewChild("yeahUrlSearchElement")
   yeahUrlSearchElement: YeahUrlListSearchComponent;
 
@@ -70,7 +63,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
       this._urlList = [...unsortedUrls.sort(this._compareUrls)];
       this.filteredUrlList = [...this._urlList];
-      this.tagList = this._getSortedTagListWithUsage(
+
+      this.tagList = Helper.getSortedTagListWithUsage(
         unsortedUrls,
         unsortedTags
       );
@@ -100,7 +94,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         const tmpUrlList = [addedUrl, ...this._urlList];
         this._urlList = tmpUrlList;
         this.filteredUrlList = tmpUrlList;
-        this.tagList = this._getSortedTagListWithUsage(
+        this.tagList = Helper.getSortedTagListWithUsage(
           this._urlList,
           this.tagList
         );
@@ -113,7 +107,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         );
         this._urlList.splice(foundIndex, 1, modifiedUrl);
         this.filteredUrlList = [...this._urlList];
-        this.tagList = this._getSortedTagListWithUsage(
+        this.tagList = Helper.getSortedTagListWithUsage(
           this._urlList,
           this.tagList
         );
@@ -126,7 +120,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         );
         this._urlList = tmpUrlList;
         this.filteredUrlList = tmpUrlList;
-        this.tagList = this._getSortedTagListWithUsage(
+        this.tagList = Helper.getSortedTagListWithUsage(
           this._urlList,
           this.tagList
         );
@@ -138,7 +132,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       .getSocket()
       .on(SocketEvents.TAGADDED, (addedTag: Tag) => {
         const tmpTagList = [...this.tagList, addedTag];
-        this.tagList = this._getSortedTagListWithUsage(
+        this.tagList = Helper.getSortedTagListWithUsage(
           this._urlList,
           tmpTagList
         );
@@ -150,7 +144,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
           (tag: Tag) => tag.id === modifiedTag.id
         );
         this.tagList.splice(foundIndex, 1, modifiedTag as TagExt);
-        this.tagList = this._getSortedTagListWithUsage(
+        this.tagList = Helper.getSortedTagListWithUsage(
           this._urlList,
           this.tagList
         );
@@ -162,7 +156,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
           (tag: Tag) => tag.id === removedTag.urlId
         );
         this.tagList.splice(foundIndex, 1);
-        this.tagList = this._getSortedTagListWithUsage(
+        this.tagList = Helper.getSortedTagListWithUsage(
           this._urlList,
           this.tagList
         );
@@ -240,63 +234,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   // region helper
 
-  private _calculateTagUsage(
-    urls: Array<Url>,
-    tags: Array<Tag>
-  ): Array<TagUsage> {
-    const result = new Array<TagUsage>();
-
-    tags.forEach((tag: Tag) => {
-      let found = 0;
-      urls.forEach((url: Url) => {
-        url.tags.forEach((urlTag: Tag) => {
-          if (urlTag.id === tag.id) {
-            found++;
-          }
-        });
-      });
-      result.push(new TagUsage(tag.id, found));
-    });
-
-    return result;
-  }
-
-  private _extendTags(
-    tags: Array<Tag>,
-    tagUsage: Array<TagUsage>
-  ): Array<TagExt> {
-    const result = tags.map((tag: Tag) => {
-      const count = tagUsage.find((usage: TagUsage) => {
-        return usage.referenceId === tag.id;
-      }).count;
-
-      const patchedTag = new TagExt();
-      patchedTag.id = tag.id;
-      patchedTag.name = tag.name;
-      patchedTag.created = tag.created;
-      patchedTag.updated = tag.updated;
-      patchedTag.count = count;
-
-      return patchedTag;
-    });
-    return result;
-  }
-
-  private _getSortedTagListWithUsage(
-    urls: Array<Url>,
-    tags: Array<Tag>
-  ): Array<TagExt> {
-    const tagUsage = this._calculateTagUsage(urls, tags);
-    const unsortedPatchedTags = this._extendTags(tags, tagUsage);
-    return [...unsortedPatchedTags.sort(this._compareTags)];
-  }
-
   private _compareUrls(a: Url, b: Url): number {
     return a.updated > b.updated ? -1 : a.updated < b.updated ? 1 : 0;
-  }
-
-  private _compareTags(a: Tag, b: Tag): number {
-    return a.name.toUpperCase().localeCompare(b.name.toLocaleUpperCase());
   }
 
   urlItemTracker(index, url: Url) {

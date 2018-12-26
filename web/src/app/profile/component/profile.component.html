@@ -1,18 +1,45 @@
 <div class="profile-container">
-  <div class="profile-container_username profile-container_username-mb profile-container_username-h">
-    <div class="profile-container_title">Change Username</div>
-    <form #formUsername="ngForm" (ngSubmit)="changeUsername(formUsername)">
-      <input name="newUsername" ngModel type="text" class="profile-container_input" required placeholder="Enter new Username..." />
-      <div class="profile-container_action"><button type="submit" class="profile-container_button">Change</button></div>
-    </form>
-  </div>
+  <yeah-tabs (tabSwitched)="handleTabSwitched($event)">
+    <div class="tab-user">
+      <div class="profile-container_username profile-container_username-mb profile-container_username-h">
+        <div class="profile-container_title">Change Username</div>
+        <form #formUsername="ngForm" (ngSubmit)="changeUsername(formUsername)">
+          <input name="newUsername" ngModel type="text" class="profile-container_input" required placeholder="Enter new Username..." />
+          <div class="profile-container_action"><button type="submit" class="profile-container_button">Change</button></div>
+        </form>
+      </div>
 
-  <div class="profile-container_password profile-container_password-h ">
-    <div class="profile-container_title">Change Password</div>
-    <form #formPassword="ngForm" (ngSubmit)="changeUserpassword(formPassword)">
-      <input name="oldPassword" ngModel type="password" class="profile-container_input" required placeholder="Enter your old Password..." />
-      <input name="newPassword" ngModel type="password" class="profile-container_input" required placeholder="Enter your new Password..." />
-      <div class="profile-container_action"><button type="submit" class="profile-container_button">Change</button></div>
-    </form>
-  </div>
+      <div class="profile-container_password profile-container_password-h ">
+        <div class="profile-container_title">Change Password</div>
+        <form #formPassword="ngForm" (ngSubmit)="changeUserpassword(formPassword)">
+          <input
+            name="oldPassword"
+            ngModel
+            type="password"
+            class="profile-container_input"
+            required
+            placeholder="Enter your old Password..."
+          />
+          <input
+            name="newPassword"
+            ngModel
+            type="password"
+            class="profile-container_input"
+            required
+            placeholder="Enter your new Password..."
+          />
+          <div class="profile-container_action"><button type="submit" class="profile-container_button">Change</button></div>
+        </form>
+      </div>
+    </div>
+    <div class="tab-tags">
+      <div *ngIf="!tagList">Loading...</div>
+      <div>
+        <div *ngFor="let tag of tagList">
+          <div>{{ tag.name }} - {{ tag.count }}</div>
+          <button>move</button> <button>edit</button> <button>delete</button>
+        </div>
+      </div>
+    </div>
+  </yeah-tabs>
 </div>

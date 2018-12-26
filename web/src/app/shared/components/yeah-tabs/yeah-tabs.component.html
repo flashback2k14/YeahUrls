@@ -1,0 +1,11 @@
+<div class="tab-slider--nav">
+  <ul class="tab-slider--tabs">
+    <li class="tab-slider--trigger" [class.active]="viewMode == 'tabUser'" rel="tabUser" (click)="switchTab('tabUser')">User</li>
+    <li class="tab-slider--trigger" [class.active]="viewMode == 'tabTags'" rel="tabTags" (click)="switchTab('tabTags')">Tags</li>
+  </ul>
+</div>
+
+<div class="tab-slider--container" [ngSwitch]="viewMode">
+  <div id="tabUser" class="tab-slider--body" *ngSwitchCase="'tabUser'"><ng-content select=".tab-user"></ng-content></div>
+  <div id="tabTags" class="tab-slider--body" *ngSwitchCase="'tabTags'"><ng-content select=".tab-tags"></ng-content></div>
+</div>

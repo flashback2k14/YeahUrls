@@ -9,3 +9,4 @@ export * from "./url-list/yeah-url-list-search/yeah-url-list-search.component";
 export * from "./url-list/yeah-url-list-tag/yeah-url-list-tag.component";
 export * from "./yeah-autocomplete/yeah-autocomplete.component";
 export * from "./yeah-notify/yeah-notify.component";
+export * from "./yeah-tabs/yeah-tabs.component";
