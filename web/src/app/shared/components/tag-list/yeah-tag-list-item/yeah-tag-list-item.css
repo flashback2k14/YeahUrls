@@ -1,0 +1,31 @@
+.tag-item {
+  display: flex;
+  flex-direction: row;
+  padding: 6px;
+  margin: 3px 6px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+}
+
+.tag-item_text {
+  display: flex;
+  align-items: center;
+  width: 88%;
+  padding-left: 4px;
+  font-size: large;
+  word-wrap: break-word;
+}
+
+.tag-item_text-name {
+  width: 80%;
+}
+
+.tag-item_text-count  {
+  display: flex;
+  align-items: flex-end;
+}
+
+.tag-item_actions {
+  display: flex;
+  align-items: center;
+}

@@ -5,9 +5,11 @@
   margin-bottom: 12px;
   background: #252c36;
   color: #cfd6e0;
+  border-bottom: 1px solid #141e2a;
   overflow-x: hidden;
   overflow-y: visible;
 }
+
 .tab-slider--tabs {
   display: block;
   float: left;
@@ -60,11 +62,21 @@
 }
 
 .tab-slider--container {
-  width: 50vw;
-  /* height: 280px;
-  max-height: 45vh; */
+  width: 52vw;
 }
 
 .tab-slider--body {
   margin-bottom: 20px;
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+  .tab-slider--container {
+    width: 90vw;
+  }
+}
+
+@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) {
+  .tab-slider--container {
+    width: 75vw;
+  }
 }

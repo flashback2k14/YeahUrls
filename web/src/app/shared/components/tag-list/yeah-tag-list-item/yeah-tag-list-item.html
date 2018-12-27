@@ -1,0 +1,31 @@
+<div class="tag-item">
+  <div class="tag-item_text">
+    <div class="tag-item_text-name">{{ tag.name }}</div>
+    <div class="tag-item_text-count">Count: {{ tag.count }}</div>
+  </div>
+  <div class="tag-item_actions">
+    <button class="custom-button-small custom-button_add" (click)="moveItem()">
+      <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMin slice">
+        <path
+          class="svg-icon"
+          fill="#83FA81"
+          d="M14,17H18V14L23,18.5L18,23V20H14V17M13,9H18.5L13,3.5V9M6,2H14L20,8V12.34C19.37,12.12 18.7,12 18,12A6,6 0 0,0 12,18C12,19.54 12.58,20.94 13.53,22H6C4.89,22 4,21.1 4,20V4A2,2 0 0,1 6,2Z"
+        />
+      </svg>
+    </button>
+    <button class="custom-button-small custom-button_ok right-spacing" (click)="editItem()">
+      <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMin slice">
+        <path
+          class="svg-icon"
+          fill="#81D4FA"
+          d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z"
+        />
+      </svg>
+    </button>
+    <button class="custom-button-small custom-button_cancel" (click)="deleteItem()">
+      <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMin slice">
+        <path class="svg-icon" fill="#E4676A" d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" />
+      </svg>
+    </button>
+  </div>
+</div>

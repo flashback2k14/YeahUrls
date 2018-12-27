@@ -30,4 +30,30 @@ export class TagService {
         .subscribe(result => resolve(result), error => reject(error));
     });
   }
+
+  putTagById(tagId: string, data: any): Promise<Tag> {
+    return new Promise((resolve, reject) => {
+      this._http
+        .put<Tag>(`${this._baseUrl}/${tagId}`, data, {
+          headers: this._headers.append(
+            "X-Access-Token",
+            localStorage.getItem(StorageKeys.USERTOKEN)
+          )
+        })
+        .subscribe(result => resolve(result), error => reject(error));
+    });
+  }
+
+  deleteTagById(tagId: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+      this._http
+        .delete<any>(`${this._baseUrl}/${tagId}`, {
+          headers: this._headers.append(
+            "X-Access-Token",
+            localStorage.getItem(StorageKeys.USERTOKEN)
+          )
+        })
+        .subscribe(result => resolve(result.id), error => reject(error));
+    });
+  }
 }

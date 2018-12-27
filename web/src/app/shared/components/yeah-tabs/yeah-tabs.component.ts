@@ -1,4 +1,5 @@
 import { Component, Output, EventEmitter } from "@angular/core";
+import { TabType } from "../../../../models";
 
 @Component({
   selector: "yeah-tabs",
@@ -6,17 +7,17 @@ import { Component, Output, EventEmitter } from "@angular/core";
   styleUrls: ["./yeah-tabs.component.css"]
 })
 export class YeahTabsComponent {
-  @Output() tabSwitched: EventEmitter<string>;
+  @Output() tabSwitched: EventEmitter<TabType>;
 
   viewMode: string;
 
   constructor() {
     this.viewMode = "tabUser";
-    this.tabSwitched = new EventEmitter<string>();
+    this.tabSwitched = new EventEmitter<TabType>();
   }
 
   switchTab(tabName: string) {
     this.viewMode = tabName;
-    this.tabSwitched.emit(tabName);
+    this.tabSwitched.emit(tabName === "tabUser" ? TabType.User : TabType.Tags);
   }
 }

@@ -33,13 +33,17 @@
       </div>
     </div>
     <div class="tab-tags">
-      <div *ngIf="!tagList">Loading...</div>
-      <div>
-        <div *ngFor="let tag of tagList">
-          <div>{{ tag.name }} - {{ tag.count }}</div>
-          <button>move</button> <button>edit</button> <button>delete</button>
-        </div>
-      </div>
+      <yeah-tag-list>
+        <div *ngIf="!tagList">Loading...</div>
+        <yeah-tag-list-item
+          *ngFor="let tag of tagList"
+          [tag]="tag"
+          (moveItemRequestSubmitted)="handleMoveItemRequestSubmitted($event)"
+          (editItemRequestSubmitted)="handleEditItemRequestSubmitted($event)"
+          (deleteItemRequestSubmitted)="handleDeleteItemRequestSubmitted($event)"
+        >
+        </yeah-tag-list-item>
+      </yeah-tag-list>
     </div>
   </yeah-tabs>
 </div>

@@ -6,7 +6,6 @@ import { Component, Input, Output, EventEmitter } from "@angular/core";
   styleUrls: ["./yeah-url-list-item.component.css"]
 })
 export class YeahUrlListItemComponent {
-
   @Input() url: any;
   @Output() editUrlItemRequestSubmitted: EventEmitter<any>;
   @Output() deleteUrlItemRequestSubmitted: EventEmitter<any>;
@@ -16,11 +15,11 @@ export class YeahUrlListItemComponent {
     this.deleteUrlItemRequestSubmitted = new EventEmitter<any>();
   }
 
-  editUrlItem (): void {
+  editUrlItem(): void {
     this.editUrlItemRequestSubmitted.emit(this.url);
   }
 
-  deleteUrlItem (): void {
+  deleteUrlItem(): void {
     this.deleteUrlItemRequestSubmitted.emit(this.url);
   }
 }

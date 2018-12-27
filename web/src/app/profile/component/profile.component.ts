@@ -8,7 +8,7 @@ import {
   UrlService
 } from "../../core/services";
 import { Helper } from "../../../helper";
-import { User, StorageKeys, TagExt } from "../../../models";
+import { User, StorageKeys, TagExt, TabType } from "../../../models";
 
 @Component({
   selector: "yeah-profile",
@@ -26,8 +26,12 @@ export class ProfileComponent {
     private _uiService: UiService
   ) {}
 
-  async handleTabSwitched(e: string) {
-    if (e === "tabTags") {
+  /**
+   * TABS
+   */
+
+  async handleTabSwitched(e: TabType) {
+    if (e === TabType.Tags) {
       const unsortedUrls = await this._urlService.getUrlsByUser(
         Helper.getUserId()
       );
@@ -40,6 +44,10 @@ export class ProfileComponent {
       this.tagList = new Array<TagExt>();
     }
   }
+
+  /**
+   * USER
+   */
 
   async changeUsername(form: NgForm): Promise<void> {
     this._notifyService.onInfo("Changing username...");
@@ -73,5 +81,69 @@ export class ProfileComponent {
     localStorage.setItem(StorageKeys.USERINFO, JSON.stringify(result));
     this._uiService.changeUsernameAtHeaderArea(result.name);
     this._notifyService.onSuccess(`${message} successfully changed!`);
+  }
+
+  /**
+   * TAGS
+   */
+
+  handleMoveItemRequestSubmitted(e: TagExt): void {
+    console.log(e);
+  }
+
+  async handleEditItemRequestSubmitted(e: TagExt): Promise<void> {
+    const newTagName = prompt(
+      `Please provide a new Name (old Name: ${e.name}).`,
+      e.name
+    );
+
+    if (newTagName === e.name) {
+      return;
+    }
+
+    try {
+      this._notifyService.onInfo("Change Tag Name...");
+
+      const updatedTag = await this._tagService.putTagById(e.id, {
+        name: newTagName
+      });
+
+      this.tagList = this.tagList.map((tag: TagExt) =>
+        tag.id === updatedTag.id
+          ? ({ ...tag, name: updatedTag.name } as TagExt)
+          : tag
+      );
+
+      this._notifyService.onSuccess("Tag Name successfully changed!");
+    } catch (error) {
+      this._notifyService.onError(Helper.extractBackendError(error));
+    }
+  }
+
+  async handleDeleteItemRequestSubmitted(e: TagExt): Promise<void> {
+    if (e.count > 0) {
+      this._notifyService.onError(
+        "It's not possible to delete a Tag with a Count greater than Zero. Please move before delete.",
+        false
+      );
+      return;
+    }
+
+    if (!confirm(`Are you sure to delete this Tag (${e.name})?`)) {
+      return;
+    }
+
+    try {
+      this._notifyService.onInfo("Delete Tag...");
+
+      const deletedTagId = await this._tagService.deleteTagById(e.id);
+      this.tagList = this.tagList.filter(
+        (tag: TagExt) => tag.id !== deletedTagId
+      );
+
+      this._notifyService.onSuccess("Tag successfully deleted!");
+    } catch (error) {
+      this._notifyService.onError(Helper.extractBackendError(error));
+    }
   }
 }

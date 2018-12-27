@@ -3,6 +3,8 @@ export * from "./dialogs/yeah-dialog-base/yeah-dialog-base.component";
 export * from "./dialogs/yeah-dialog-delete/yeah-dialog-delete.component";
 export * from "./dialogs/yeah-dialog-edit/yeah-dialog-edit.component";
 export * from "./dialogs/yeah-dialog-import/yeah-dialog-import.component";
+export * from "./tag-list/yeah-tag-list/yeah-tag-list";
+export * from "./tag-list/yeah-tag-list-item/yeah-tag-list-item";
 export * from "./url-list/yeah-url-list/yeah-url-list.component";
 export * from "./url-list/yeah-url-list-item/yeah-url-list-item.component";
 export * from "./url-list/yeah-url-list-search/yeah-url-list-search.component";
