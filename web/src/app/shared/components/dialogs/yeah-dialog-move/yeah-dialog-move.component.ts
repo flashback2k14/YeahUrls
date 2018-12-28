@@ -3,8 +3,8 @@ import { TagExt, Tag, TagMoveContainer } from "../../../../../models";
 
 @Component({
   selector: "yeah-dialog-move",
-  templateUrl: "./yeah-dialog-move.html",
-  styleUrls: ["./yeah-dialog-move.css"]
+  templateUrl: "./yeah-dialog-move.component.html",
+  styleUrls: ["./yeah-dialog-move.component.css"]
 })
 export class YeahDialogMoveComponent {
   @Input() tagList: Array<TagExt>;

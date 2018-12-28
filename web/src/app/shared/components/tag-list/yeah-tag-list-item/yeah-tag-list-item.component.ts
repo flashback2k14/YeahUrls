@@ -3,8 +3,8 @@ import { TagExt } from "../../../../../models";
 
 @Component({
   selector: "yeah-tag-list-item",
-  templateUrl: "./yeah-tag-list-item.html",
-  styleUrls: ["./yeah-tag-list-item.css"]
+  templateUrl: "./yeah-tag-list-item.component.html",
+  styleUrls: ["./yeah-tag-list-item.component.css"]
 })
 export class YeahTagListItemComponent {
   @Input() tag: TagExt;

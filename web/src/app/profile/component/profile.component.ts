@@ -92,6 +92,10 @@ export class ProfileComponent {
    * TAGS
    */
 
+  /**
+   * MOVE
+   */
+
   handleMoveItemRequestSubmitted(e: TagExt): void {
     if (e.count === 0) {
       this._notifyService.onError(
@@ -146,6 +150,10 @@ export class ProfileComponent {
     }
   }
 
+  /**
+   * EDIT
+   */
+
   async handleEditItemRequestSubmitted(e: TagExt): Promise<void> {
     const newTagName = prompt(
       `Please provide a new Name (old Name: ${e.name}).`,
@@ -175,6 +183,10 @@ export class ProfileComponent {
     }
   }
 
+  /**
+   * DELETE
+   */
+
   async handleDeleteItemRequestSubmitted(e: TagExt): Promise<void> {
     if (e.count > 0) {
       this._notifyService.onError(
@@ -201,6 +213,10 @@ export class ProfileComponent {
       this._notifyService.onError(Helper.extractBackendError(error));
     }
   }
+
+  /**
+   * UTIL
+   */
 
   private async _load() {
     this.urlList = await this._urlService.getUrlsByUser(Helper.getUserId());
