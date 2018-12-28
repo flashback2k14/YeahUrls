@@ -1,4 +1,11 @@
-import { Component, Input, Output, EventEmitter, ViewChild, ElementRef } from "@angular/core";
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  ViewChild,
+  ElementRef
+} from "@angular/core";
 import { UrlService, NotifyService } from "../../../../core/services/index";
 import { Helper } from "../../../../../helper/index";
 import { Url, Tag } from "../../../../../models/index";
@@ -9,7 +16,6 @@ import { Url, Tag } from "../../../../../models/index";
   styleUrls: ["./yeah-dialog-add.component.css"]
 })
 export class YeahDialogAddComponent {
-
   @ViewChild("taAddInput") taAddInput: ElementRef;
 
   @Input() showDialog: boolean;
@@ -19,7 +25,7 @@ export class YeahDialogAddComponent {
   private _url: Url;
   selectedTags: Array<Tag>;
 
-  constructor (
+  constructor(
     private _urlService: UrlService,
     private _notifyService: NotifyService
   ) {
@@ -32,11 +38,13 @@ export class YeahDialogAddComponent {
 
   // region eventhandler
 
-  handleSubmittedTagNameAsRemoveRequest (event): void {
-    this.selectedTags = this.selectedTags.filter((tag: Tag) => tag.id !== event);
+  handleSubmittedTagNameAsRemoveRequest(event: string): void {
+    this.selectedTags = this.selectedTags.filter(
+      (tag: Tag) => tag.id !== event
+    );
   }
 
-  handleSubmittedNewlyCreatedTagRequest (event): void {
+  handleSubmittedNewlyCreatedTagRequest(event: Tag): void {
     this.selectedTags = [...this.selectedTags, event];
   }
 
@@ -44,11 +52,11 @@ export class YeahDialogAddComponent {
 
   // region dialog
 
-  open (url?: Url): void {
+  open(url?: Url): void {
     this.showDialog = true;
     this.taAddInput.nativeElement.value = "";
     if (url) {
-      this._url = {...url};
+      this._url = { ...url };
       this.selectedTags = this._url.tags;
       this.taAddInput.nativeElement.value = this._url.url;
     }
@@ -58,18 +66,23 @@ export class YeahDialogAddComponent {
 
   // region buttons
 
-  cancel (): void {
+  cancel(): void {
     this._clearDialog();
   }
 
-  async add (taAddInput: HTMLTextAreaElement): Promise<void> {
-    if (!taAddInput.value) { return; }
+  async add(taAddInput: HTMLTextAreaElement): Promise<void> {
+    if (!taAddInput.value) {
+      return;
+    }
     try {
       const urlData = {
         url: taAddInput.value,
         tags: this._getTags()
       };
-      const addeddUrl = await this._urlService.postUrlByUser(Helper.getUserId(), urlData);
+      const addeddUrl = await this._urlService.postUrlByUser(
+        Helper.getUserId(),
+        urlData
+      );
       this._notifyService.onSuccess("Successfully added Url!");
       this.addUrlCompleted.emit(addeddUrl);
       this._clearDialog();
@@ -78,11 +91,11 @@ export class YeahDialogAddComponent {
     }
   }
 
-  private _getTags (): Array<string> {
+  private _getTags(): Array<string> {
     return this.selectedTags.map((tag: Tag) => tag.name);
   }
 
-  private _clearDialog (): void {
+  private _clearDialog(): void {
     this.taAddInput.nativeElement.value = "";
     this.selectedTags = new Array<Tag>();
     this._url = new Url();

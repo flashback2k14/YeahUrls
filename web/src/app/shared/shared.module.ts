@@ -15,7 +15,8 @@ import {
   YeahNotifyComponent,
   YeahTabsComponent,
   YeahTagListComponent,
-  YeahTagListItemComponent
+  YeahTagListItemComponent,
+  YeahDialogMoveComponent
 } from "./components/index";
 
 @NgModule({
@@ -34,7 +35,8 @@ import {
     YeahNotifyComponent,
     YeahTabsComponent,
     YeahTagListComponent,
-    YeahTagListItemComponent
+    YeahTagListItemComponent,
+    YeahDialogMoveComponent
   ],
   exports: [
     YeahUrlListComponent,
@@ -51,6 +53,7 @@ import {
     YeahTabsComponent,
     YeahTagListComponent,
     YeahTagListItemComponent,
+    YeahDialogMoveComponent,
     CommonModule,
     FormsModule
   ]

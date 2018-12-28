@@ -1,0 +1,23 @@
+.title-text {
+  font-size: larger;
+  margin-bottom: 12px;
+}
+
+.text {
+  font-size: large;
+  margin-bottom: 12px;
+}
+
+.margin-top {
+  margin-top: 12px;
+}
+
+.tag-list-container {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+.action-container {
+  text-align: right;
+}

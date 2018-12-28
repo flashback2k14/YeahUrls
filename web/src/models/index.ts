@@ -10,3 +10,4 @@ export * from "./enums/notification-type";
 export * from "./enums/tab-type";
 export * from "./login-result";
 export * from "./notification";
+export * from "./tag-move-container";

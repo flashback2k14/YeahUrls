@@ -1,0 +1,25 @@
+<yeah-dialog-base [(visible)]="showDialog">
+  <div class="title-text">Please select a new Tag Destination for the URLs</div>
+  <div>
+    <div class="text">Source</div>
+    <yeah-url-list-tag [tag]="tag" [showRemoveButton]="false"> </yeah-url-list-tag>
+  </div>
+  <div class="margin-top">
+    <div class="text">Destination</div>
+    <div class="tag-list-container">
+      <yeah-url-list-tag
+        *ngFor="let tag of selectedTags"
+        [tag]="tag"
+        [showRemoveButton]="true"
+        (tagNameAsRemoveRequestSubmitted)="handleSubmittedTagNameAsRemoveRequest($event)"
+      >
+      </yeah-url-list-tag>
+    </div>
+    <yeah-autocomplete [tagList]="tagList" (newlyCreatedTagRequestSubmitted)="handleSubmittedNewlyCreatedTagRequest($event)">
+    </yeah-autocomplete>
+  </div>
+  <div class="action-container">
+    <button class="custom-button custom-button_cancel" (click)="cancel()">Cancel</button>
+    <button class="custom-button custom-button_ok" (click)="move()">Move</button>
+  </div>
+</yeah-dialog-base>

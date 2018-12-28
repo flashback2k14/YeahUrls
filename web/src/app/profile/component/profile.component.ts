@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, ViewChild } from "@angular/core";
 import { NgForm } from "@angular/forms";
 import {
   UserService,
@@ -8,7 +8,16 @@ import {
   UrlService
 } from "../../core/services";
 import { Helper } from "../../../helper";
-import { User, StorageKeys, TagExt, TabType } from "../../../models";
+import {
+  User,
+  StorageKeys,
+  TagExt,
+  TabType,
+  TagMoveContainer,
+  Url,
+  Tag
+} from "../../../models";
+import { YeahDialogMoveComponent } from "../../shared/components";
 
 @Component({
   selector: "yeah-profile",
@@ -16,6 +25,9 @@ import { User, StorageKeys, TagExt, TabType } from "../../../models";
   styleUrls: ["./profile.component.css"]
 })
 export class ProfileComponent {
+  @ViewChild("yeahUrlMoveDialog") yeahUrlMoveDialog: YeahDialogMoveComponent;
+
+  urlList: Array<Url>;
   tagList: Array<TagExt>;
 
   constructor(
@@ -32,16 +44,9 @@ export class ProfileComponent {
 
   async handleTabSwitched(e: TabType) {
     if (e === TabType.Tags) {
-      const unsortedUrls = await this._urlService.getUrlsByUser(
-        Helper.getUserId()
-      );
-      const unsortedTags = await this._tagService.getTags();
-      this.tagList = Helper.getSortedTagListWithUsage(
-        unsortedUrls,
-        unsortedTags
-      );
+      await this._load();
     } else {
-      this.tagList = new Array<TagExt>();
+      this.tagList = null;
     }
   }
 
@@ -88,7 +93,57 @@ export class ProfileComponent {
    */
 
   handleMoveItemRequestSubmitted(e: TagExt): void {
-    console.log(e);
+    if (e.count === 0) {
+      this._notifyService.onError(
+        "It's not possible to move a Tag with a Count equals Zero.",
+        false
+      );
+      return;
+    }
+
+    this.yeahUrlMoveDialog.open(e);
+  }
+
+  async handleMoveTag(event: TagMoveContainer): Promise<void> {
+    this._notifyService.onInfo("Start Moving Tag...");
+
+    const foundUrlsForSourceTag = this.urlList
+      .map((url: Url) => {
+        const tagCountForUrl = url.tags.findIndex(
+          (tag: Tag) => tag.id === event.sourceTag.id
+        );
+        return tagCountForUrl > -1 ? url : undefined;
+      })
+      .filter(Boolean);
+
+    const patchUrls = foundUrlsForSourceTag.map((url: Url) => {
+      const tags = url.tags.filter((tag: Tag) => tag.id !== event.sourceTag.id);
+      event.destinationTags.forEach((tag: TagExt) => tags.push(tag));
+      url.tags = tags;
+      return url;
+    });
+
+    try {
+      const promHolder = patchUrls.map(async (url: Url) => {
+        const urlData = {
+          url: url.url,
+          tags: url.tags.map((tag: Tag) => tag.name)
+        };
+
+        await this._urlService.putUrlByUserAndId(
+          Helper.getUserId(),
+          url.id,
+          urlData
+        );
+      });
+
+      await Promise.all(promHolder);
+      await this._load();
+
+      this._notifyService.onSuccess("Successfully moved Tag!");
+    } catch (error) {
+      this._notifyService.onError(Helper.extractBackendError(error));
+    }
   }
 
   async handleEditItemRequestSubmitted(e: TagExt): Promise<void> {
@@ -145,5 +200,14 @@ export class ProfileComponent {
     } catch (error) {
       this._notifyService.onError(Helper.extractBackendError(error));
     }
+  }
+
+  private async _load() {
+    this.urlList = await this._urlService.getUrlsByUser(Helper.getUserId());
+    const unsortedTags = await this._tagService.getTags();
+    this.tagList = Helper.getSortedTagListWithUsage(
+      this.urlList,
+      unsortedTags
+    ).sort((a: TagExt, b: TagExt) => a.count - b.count);
   }
 }
