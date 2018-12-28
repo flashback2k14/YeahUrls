@@ -17,7 +17,11 @@ import {
   Url,
   Tag
 } from "../../../models";
-import { YeahDialogMoveComponent } from "../../shared/components";
+import {
+  YeahDialogMoveComponent,
+  YeahDialogEditTagComponent,
+  YeahDialogDeleteTagComponent
+} from "../../shared/components";
 
 @Component({
   selector: "yeah-profile",
@@ -25,7 +29,12 @@ import { YeahDialogMoveComponent } from "../../shared/components";
   styleUrls: ["./profile.component.css"]
 })
 export class ProfileComponent {
-  @ViewChild("yeahUrlMoveDialog") yeahUrlMoveDialog: YeahDialogMoveComponent;
+  @ViewChild("yeahTagMoveDialog")
+  yeahTagMoveDialog: YeahDialogMoveComponent;
+  @ViewChild("yeahTagEditDialog")
+  yeahTagEditDialog: YeahDialogEditTagComponent;
+  @ViewChild("yeahTagDeleteDialog")
+  yeahTagDeleteDialog: YeahDialogDeleteTagComponent;
 
   urlList: Array<Url>;
   tagList: Array<TagExt>;
@@ -105,7 +114,7 @@ export class ProfileComponent {
       return;
     }
 
-    this.yeahUrlMoveDialog.open(e);
+    this.yeahTagMoveDialog.open(e);
   }
 
   async handleMoveTag(event: TagMoveContainer): Promise<void> {
@@ -154,21 +163,16 @@ export class ProfileComponent {
    * EDIT
    */
 
-  async handleEditItemRequestSubmitted(e: TagExt): Promise<void> {
-    const newTagName = prompt(
-      `Please provide a new Name (old Name: ${e.name}).`,
-      e.name
-    );
+  handleEditItemRequestSubmitted(event: TagExt): void {
+    this.yeahTagEditDialog.open(event);
+  }
 
-    if (newTagName === e.name) {
-      return;
-    }
-
+  async handleEditTag(event: TagExt): Promise<void> {
     try {
       this._notifyService.onInfo("Change Tag Name...");
 
-      const updatedTag = await this._tagService.putTagById(e.id, {
-        name: newTagName
+      const updatedTag = await this._tagService.putTagById(event.id, {
+        name: event.name
       });
 
       this.tagList = this.tagList.map((tag: TagExt) =>
@@ -187,8 +191,8 @@ export class ProfileComponent {
    * DELETE
    */
 
-  async handleDeleteItemRequestSubmitted(e: TagExt): Promise<void> {
-    if (e.count > 0) {
+  async handleDeleteItemRequestSubmitted(event: TagExt): Promise<void> {
+    if (event.count > 0) {
       this._notifyService.onError(
         "It's not possible to delete a Tag with a Count greater than Zero. Please move before delete.",
         false
@@ -196,14 +200,14 @@ export class ProfileComponent {
       return;
     }
 
-    if (!confirm(`Are you sure to delete this Tag (${e.name})?`)) {
-      return;
-    }
+    this.yeahTagDeleteDialog.open(event);
+  }
 
+  async handleDeleteTag(event: TagExt): Promise<void> {
     try {
       this._notifyService.onInfo("Delete Tag...");
 
-      const deletedTagId = await this._tagService.deleteTagById(e.id);
+      const deletedTagId = await this._tagService.deleteTagById(event.id);
       this.tagList = this.tagList.filter(
         (tag: TagExt) => tag.id !== deletedTagId
       );

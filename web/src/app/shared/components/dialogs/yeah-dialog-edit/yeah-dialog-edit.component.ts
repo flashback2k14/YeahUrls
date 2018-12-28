@@ -1,4 +1,11 @@
-import { Component, Input, Output, EventEmitter, ViewChild, ElementRef } from "@angular/core";
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  ViewChild,
+  ElementRef
+} from "@angular/core";
 import { UrlService, NotifyService } from "../../../../core/services/index";
 import { Helper } from "../../../../../helper/index";
 import { Url, Tag } from "../../../../../models/index";
@@ -9,7 +16,6 @@ import { Url, Tag } from "../../../../../models/index";
   styleUrls: ["./yeah-dialog-edit.component.css"]
 })
 export class YeahDialogEditComponent {
-
   @ViewChild("taEditInput") taEditInput: ElementRef;
 
   @Input() showDialog: boolean;
@@ -19,7 +25,7 @@ export class YeahDialogEditComponent {
   private _url: Url;
   selectedTags: Array<Tag>;
 
-  constructor (
+  constructor(
     private _urlService: UrlService,
     private _notifyService: NotifyService
   ) {
@@ -32,11 +38,13 @@ export class YeahDialogEditComponent {
 
   // region eventhandler
 
-  handleSubmittedTagNameAsRemoveRequest (event): void {
-    this.selectedTags = this.selectedTags.filter((tag: Tag) => tag.id !== event);
+  handleSubmittedTagNameAsRemoveRequest(event): void {
+    this.selectedTags = this.selectedTags.filter(
+      (tag: Tag) => tag.id !== event
+    );
   }
 
-  handleSubmittedNewlyCreatedTagRequest (event): void {
+  handleSubmittedNewlyCreatedTagRequest(event): void {
     this.selectedTags = [...this.selectedTags, event];
   }
 
@@ -44,9 +52,9 @@ export class YeahDialogEditComponent {
 
   // region dialog
 
-  open (url: Url): void {
+  open(url: Url): void {
     this.showDialog = true;
-    this._url = {...url};
+    this._url = { ...url };
     this.selectedTags = this._url.tags;
     this.taEditInput.nativeElement.value = this._url.url;
   }
@@ -55,18 +63,24 @@ export class YeahDialogEditComponent {
 
   // region buttons
 
-  cancel (): void {
+  cancel(): void {
     this._clearDialog();
   }
 
-  async edit (taEditInput: HTMLTextAreaElement): Promise<void> {
-    if (!taEditInput.value) { return; }
+  async edit(taEditInput: HTMLTextAreaElement): Promise<void> {
+    if (!taEditInput.value) {
+      return;
+    }
     try {
       const urlData = {
         url: taEditInput.value,
         tags: this._getTags()
       };
-      const modifiedUrl = await this._urlService.putUrlByUserAndId(Helper.getUserId(), this._url.id, urlData);
+      const modifiedUrl = await this._urlService.putUrlByUserAndId(
+        Helper.getUserId(),
+        this._url.id,
+        urlData
+      );
       this._notifyService.onSuccess("Successfully modified Url!");
       this.editUrlCompleted.emit(modifiedUrl);
       this._clearDialog();
@@ -75,11 +89,11 @@ export class YeahDialogEditComponent {
     }
   }
 
-  private _getTags (): Array<string> {
+  private _getTags(): Array<string> {
     return this.selectedTags.map((tag: Tag) => tag.name);
   }
 
-  private _clearDialog (): void {
+  private _clearDialog(): void {
     this.taEditInput.nativeElement.value = "";
     this.selectedTags = new Array<Tag>();
     this._url = new Url();

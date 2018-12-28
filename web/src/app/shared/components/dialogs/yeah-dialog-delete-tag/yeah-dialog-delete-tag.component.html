@@ -1,0 +1,7 @@
+<yeah-dialog-base [(visible)]="showDialog">
+  <div class="title-text">Are you sure to delete this Tag ({{ tag.name }})?</div>
+  <div class="action-container">
+    <button class="custom-button custom-button_cancel" (click)="cancel()">Cancel</button>
+    <button class="custom-button custom-button_ok" (click)="delete()">Delete</button>
+  </div>
+</yeah-dialog-base>

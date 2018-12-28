@@ -1,0 +1,13 @@
+.title-text {
+  font-size: larger;
+  margin-bottom: 12px;
+}
+
+.keyword-input {
+  width: 98%;
+  margin: 12px 12px 8px 0;
+}
+
+.action-container {
+  text-align: right;
+}

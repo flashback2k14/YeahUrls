@@ -48,4 +48,6 @@
   </yeah-tabs>
 </div>
 
-<yeah-dialog-move #yeahUrlMoveDialog [tagList]="tagList" (moveTag)="handleMoveTag($event)"></yeah-dialog-move>
+<yeah-dialog-move #yeahTagMoveDialog [tagList]="tagList" (moveTag)="handleMoveTag($event)"></yeah-dialog-move>
+<yeah-dialog-edit-tag #yeahTagEditDialog (editTag)="handleEditTag($event)"></yeah-dialog-edit-tag>
+<yeah-dialog-delete-tag #yeahTagDeleteDialog (deleteTag)="handleDeleteTag($event)"></yeah-dialog-delete-tag>

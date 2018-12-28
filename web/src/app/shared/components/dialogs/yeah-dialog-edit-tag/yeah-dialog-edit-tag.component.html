@@ -1,0 +1,16 @@
+<yeah-dialog-base [(visible)]="showDialog">
+  <div class="title-text">Please provide a new Name (old Name: {{ oldName }}).</div>
+  <div>
+    <input
+      class="custom-input background-color text-color keyword-input"
+      type="text"
+      required
+      placeholder="Please enter new Tag Name..."
+      [(ngModel)]="tag.name"
+    />
+  </div>
+  <div class="action-container">
+    <button class="custom-button custom-button_cancel" (click)="cancel()">Cancel</button>
+    <button class="custom-button custom-button_ok" (click)="edit()">Edit</button>
+  </div>
+</yeah-dialog-base>
