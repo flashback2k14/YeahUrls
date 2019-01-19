@@ -109,6 +109,46 @@ const Util = (() => {
       }
     }
 
+    const setCheckboxState = (ckb) => {
+      const isChecked = localStorage.getItem("YEAH#URLS#EXTENSION#AUTOMAICSIGNIN");
+      if (!isChecked) {
+        return;
+      }
+      ckb.checked = new Boolean(isChecked);
+    }
+
+    const automaticSignIn = (infoText) => {
+      const isChecked = localStorage.getItem("YEAH#URLS#EXTENSION#AUTOMAICSIGNIN");
+      if (!isChecked) {
+        return;
+      }
+
+      const username = localStorage.getItem("YEAH#URLS#EXTENSION#USERNAME");
+      const password = localStorage.getItem("YEAH#URLS#EXTENSION#PASSWORD");
+
+      if (!username && !password) {
+        const msg = "Username and / or password is not set.";
+        showInfoText(infoText, msg, false, 3000);
+        return;
+      }
+
+      window.fetch(createRequest("https://yeah-urls.herokuapp.com/api/v1/signin", { username, atob(password) }))
+        .then(response => {
+          if (!response.ok) { 
+            throw new Error(response.statusText);
+          }
+          return response.json();
+        })
+        .then(data => {
+          localStorage.setItem("YEAH#URLS#EXTENSION#TOKEN", data.token);
+          localStorage.setItem("YEAH#URLS#EXTENSION#USERID", data.user.id);
+          showInfoText(infoText, `User ${data.user.name} is successfully authenticated!`, true);
+        })
+        .catch(error => {
+          showInfoText(infoText, error, false, 3000);
+        });
+    }
+
     const showInfoText = (el, text, isSuccess, duration = 2000) => {
       const content = document.createTextNode(text);
       el.appendChild(content);
@@ -135,6 +175,8 @@ const Util = (() => {
       getTagsAndFillSelect,
       getUrls,
       setExtensionIcon,
+      setCheckboxState,
+      automaticSignIn,
       showInfoText,
       sortTags
     }

@@ -12,10 +12,18 @@
       <div class="headline">Authentication</div>
       <div class="separator"></div>
       <div class="container-auth">
-        <label for="txtUsername">Username</label>
-        <input id="txtUsername" class="yeah-input" type="text" placeholder="Enter here..." required>
-        <label for="txtPassword">Password</label>
-        <input id="txtPassword" class="yeah-input" type="password" placeholder="Enter here..." required>
+        <label for="txtUsername">
+          Username
+          <input id="txtUsername" class="yeah-input input-width" type="text" placeholder="Enter here..." required>
+        </label>
+        <label for="txtPassword">
+          Password
+          <input id="txtPassword" class="yeah-input input-width" type="password" placeholder="Enter here..." required>
+        </label>
+        <label for="chkAutomaticSignIn" style="margin-bottom: 12px;">
+          <input id="chkAutomaticSignIn" type="checkbox" />
+          Automatic Sign In
+        </label>
         <div class="container-auth_actions">
           <button class="yeah-button yeah-button_cancel yeah-button_offset" id="btnReset">reset</button>
           <button class="yeah-button yeah-button_cancel" id="btnClear">clear</button>
@@ -25,11 +33,13 @@
       <div class="headline">Extension Icon</div>
       <div class="separator"></div>
       <div class="container-icon">
-        <label for="slctIcon">Change Icon</label>
-        <select id="slctIcon" class="yeah-select">
-          <option value="light">White</option>
-          <option value="dark">Black</option>
-        </select>
+        <label for="slctIcon">
+          Change Icon
+          <select id="slctIcon" class="yeah-select select-width">
+            <option value="light">White</option>
+            <option value="dark">Black</option>
+          </select>
+        </label>
         <div class="container-auth_actions">
           <button class="yeah-button yeah-button_ok" id="btnChange">Change</button>
         </div>

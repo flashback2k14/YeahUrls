@@ -99,5 +99,6 @@ window.addEventListener("DOMContentLoaded", () => {
   });
 
   Util.get().setExtensionIcon();
+  Util.get(),automaticSignIn(infoText);
   Util.get().getTagsAndFillSelect(slctKeywords, infoText, TAG);  
 });

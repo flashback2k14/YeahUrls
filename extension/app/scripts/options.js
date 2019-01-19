@@ -7,6 +7,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const SIGNINURL = "https://yeah-urls.herokuapp.com/api/v1/signin";
   const txtUsername = document.querySelector("#txtUsername");
   const txtPassword = document.querySelector("#txtPassword");
+  const chkAutomaticSignIn = document.querySelector("#chkAutomaticSignIn");
   const btnReset = document.querySelector("#btnReset");
   const btnClear = document.querySelector("#btnClear");
   const btnSend = document.querySelector("#btnSend");
@@ -14,9 +15,19 @@ window.addEventListener("DOMContentLoaded", () => {
   const btnChange = document.querySelector("#btnChange");
   const infoText = document.querySelector("#infoText");
 
+  chkAutomaticSignIn.addEventListener("click", () => {
+    if (chkAutomaticSignIn.checked) {
+      localStorage.setItem("YEAH#URLS#EXTENSION#AUTOMAICSIGNIN", "true");
+    } else {
+      localStorage.removeItem("YEAH#URLS#EXTENSION#AUTOMAICSIGNIN");
+    }
+  });
+
   btnReset.addEventListener("click", () => {
     localStorage.removeItem("YEAH#URLS#EXTENSION#TOKEN");
     localStorage.removeItem("YEAH#URLS#EXTENSION#USERID");
+    localStorage.removeItem("YEAH#URLS#EXTENSION#USERNAME");
+    localStorage.removeItem("YEAH#URLS#EXTENSION#PASSWORD");
     Util.get().showInfoText(infoText, "Successfully resetted!", true);
   });
 
@@ -37,12 +48,18 @@ window.addEventListener("DOMContentLoaded", () => {
 
     window.fetch(Util.get().createRequest(SIGNINURL, { username, password }))
       .then(response => {
-        if (!response.ok) { throw new Error(response.statusText); }
+        if (!response.ok) { 
+          throw new Error(response.statusText);
+        }
         return response.json();
       })
       .then(data => {
         localStorage.setItem("YEAH#URLS#EXTENSION#TOKEN", data.token);
         localStorage.setItem("YEAH#URLS#EXTENSION#USERID", data.user.id);
+        if (chkAutomaticSignIn.checked) {
+          localStorage.setItem("YEAH#URLS#EXTENSION#USERNAME", username);
+          localStorage.setItem("YEAH#URLS#EXTENSION#PASSWORD", btoa(password));
+        }
         txtUsername.value = "";
         txtPassword.value = "";
         Util.get().showInfoText(infoText, `User ${data.user.name} is successfully authenticated!`, true);
@@ -69,4 +86,5 @@ window.addEventListener("DOMContentLoaded", () => {
   });
 
   Util.get().setExtensionIcon(slctIcon);  
+  Util.get().setCheckboxState(chkAutomaticSignIn);
 });

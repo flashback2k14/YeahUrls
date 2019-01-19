@@ -26,3 +26,11 @@
   margin-bottom: 8px;
   background: #141E2A;
 }
+
+.input-width {
+  width: 78%;
+}
+
+.select-width {
+  width: 75%;
+}
