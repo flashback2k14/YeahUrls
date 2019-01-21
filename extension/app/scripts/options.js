@@ -15,6 +15,12 @@ window.addEventListener("DOMContentLoaded", () => {
   const btnChange = document.querySelector("#btnChange");
   const infoText = document.querySelector("#infoText");
 
+
+  Util.get().setExtensionIcon(slctIcon);
+  Util.get().setCheckboxState(chkAutomaticSignIn);
+  Util.get().setLoginForm(txtUsername, txtPassword);
+
+
   chkAutomaticSignIn.addEventListener("click", () => {
     if (chkAutomaticSignIn.checked) {
       localStorage.setItem("YEAH#URLS#EXTENSION#AUTOMAICSIGNIN", "true");
@@ -84,7 +90,4 @@ window.addEventListener("DOMContentLoaded", () => {
         break;
     }
   });
-
-  Util.get().setExtensionIcon(slctIcon);  
-  Util.get().setCheckboxState(chkAutomaticSignIn);
 });

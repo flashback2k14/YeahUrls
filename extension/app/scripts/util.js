@@ -117,6 +117,18 @@ const Util = (() => {
       ckb.checked = new Boolean(isChecked);
     }
 
+    const setLoginForm = (txtUsername, txtPassword) => {
+      const username = localStorage.getItem("YEAH#URLS#EXTENSION#USERNAME");
+      const password = localStorage.getItem("YEAH#URLS#EXTENSION#PASSWORD");
+
+      if (!username && !password) {
+        return;
+      }
+
+      txtUsername.value = username;
+      txtPassword.value = atob(password);
+    }
+
     const automaticSignIn = (infoText) => {
       const isChecked = localStorage.getItem("YEAH#URLS#EXTENSION#AUTOMAICSIGNIN");
       if (!isChecked) {
@@ -176,6 +188,7 @@ const Util = (() => {
       getUrls,
       setExtensionIcon,
       setCheckboxState,
+      setLoginForm,
       automaticSignIn,
       showInfoText,
       sortTags

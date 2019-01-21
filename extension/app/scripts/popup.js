@@ -18,6 +18,12 @@ window.addEventListener("DOMContentLoaded", () => {
 
   const infoText = document.querySelector("#infoText");
 
+
+  Util.get().setExtensionIcon();
+  Util.get().automaticSignIn(infoText);
+  Util.get().getTagsAndFillSelect(slctKeywords, infoText, TAG);
+
+
   urlList.addEventListener("dblclick", (e) => {
     const urls = [...urlList.childNodes];
     urls.forEach(url => {
@@ -97,8 +103,4 @@ window.addEventListener("DOMContentLoaded", () => {
         Util.get().showInfoText(infoText, `Save request failed. Please open the console for more details.`, false, 3000);
       });
   });
-
-  Util.get().setExtensionIcon();
-  Util.get(),automaticSignIn(infoText);
-  Util.get().getTagsAndFillSelect(slctKeywords, infoText, TAG);  
 });
