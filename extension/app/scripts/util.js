@@ -132,7 +132,7 @@ const Util = (() => {
         return;
       }
 
-      window.fetch(createRequest("https://yeah-urls.herokuapp.com/api/v1/signin", { username, atob(password) }))
+      window.fetch(createRequest("https://yeah-urls.herokuapp.com/api/v1/signin", { username, password: atob(password) }))
         .then(response => {
           if (!response.ok) { 
             throw new Error(response.statusText);
