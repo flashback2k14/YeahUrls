@@ -1,6 +1,6 @@
 {
   "name": "yeah-urls-backend",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "Backend for YeaHUrls",
   "scripts": {
     "create": "mkdir tmp",
@@ -30,7 +30,7 @@
     "express": "~4.16.4",
     "helmet": "~3.15.0",
     "jsonwebtoken": "~8.4.0",
-    "mongoose": "~5.4.0",
+    "mongoose": "~5.4.8",
     "mailgun-js": "~0.22.0",
     "node-schedule": "~1.3.1",
     "socket.io": "~2.2.0"

@@ -10,6 +10,16 @@ module.exports = (express, UrlRepository) => {
     }
   });
 
+  url.get("/duplicates/:userid", async (req, res) => {
+    try {
+      const isLean = !!req.query.lean;
+      const data = await UrlRepository.findDuplicatesByUserId(req.params.userid, isLean);
+      res.status(200).json(data);
+    } catch (error) {
+      res.status(400).json({ message: error.message});
+    }
+  });
+
   url.get("/:userid", async (req, res) => {
     try {
       const data = await UrlRepository.getAllByUserId(req.params.userid);

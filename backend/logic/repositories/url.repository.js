@@ -66,6 +66,35 @@ module.exports = (UrlModel, TagModel, UserModel, SocketHelper) => {
     return await this._transformUrl(url);
   }
 
+  async function findDuplicatesByUserId (userId, isLean) {
+    const foundDups = await UrlModel.aggregate([
+      {$group: {
+          _id: {URL: "$url"},
+          duplicateUrlIds: {$addToSet: "$_id"},
+          count: {$sum: 1}
+        }
+      },
+      {$match: {
+          count: {"$gt": 1}
+        }
+      },
+      {$sort: {
+          count: -1
+        }
+      }
+    ]);
+    return isLean ?
+      foundDups :
+      await Promise.all(foundDups.map(async dup => {
+        dup.duplicateUrls = await Promise.all(
+          dup.duplicateUrlIds.map(urlId => {
+            return this.getByUserIdAndUrlId(userId, urlId);
+          })
+        );
+        return dup;
+    }));
+  }
+
   async function updateByUserIdAndUrlId (userId, urlId, body) {
     await UserModel.findById(userId).lean();
     const tagIds = await this._createNewTags(body.tags);
@@ -78,7 +107,7 @@ module.exports = (UrlModel, TagModel, UserModel, SocketHelper) => {
     const updatedUrl = await UrlModel.findByIdAndUpdate({ _id: urlId, }, { $set: modifiedUrl }, { new: true }).lean();
     const transformedUrl = await this._transformUrl(updatedUrl);
 
-    SocketHelper.publishChanges(SocketHelper.EVENTNAME.URLUPDATED, transformedUrl);    
+    SocketHelper.publishChanges(SocketHelper.EVENTNAME.URLUPDATED, transformedUrl);
     return transformedUrl;
   }
 
@@ -145,6 +174,7 @@ module.exports = (UrlModel, TagModel, UserModel, SocketHelper) => {
     getAll,
     getAllByUserId,
     getByUserIdAndUrlId,
+    findDuplicatesByUserId,
     updateByUserIdAndUrlId,
     createNewUrlForUserId,
     createNewTagForUserIdAndUrlId,
