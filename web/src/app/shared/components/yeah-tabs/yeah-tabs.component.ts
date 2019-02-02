@@ -18,6 +18,6 @@ export class YeahTabsComponent {
 
   switchTab(tabName: string) {
     this.viewMode = tabName;
-    this.tabSwitched.emit(tabName === "tabUser" ? TabType.User : TabType.Tags);
+    this.tabSwitched.emit(tabName === "tabUser" ? TabType.User : tabName === "tabTags" ? TabType.Tags : TabType.Urls);
   }
 }

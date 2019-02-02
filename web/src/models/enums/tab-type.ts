@@ -1,4 +1,5 @@
 export enum TabType {
   User,
-  Tags
+  Tags,
+  Urls
 }

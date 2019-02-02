@@ -1,0 +1,12 @@
+.list-container {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 188px);
+  margin-top: 12px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  overflow-x: auto;
+  overflow-y: visible;
+}

@@ -1,22 +1,8 @@
 import { Component, ViewChild } from "@angular/core";
 import { NgForm } from "@angular/forms";
-import {
-  UserService,
-  TagService,
-  NotifyService,
-  UiService,
-  UrlService
-} from "../../core/services";
+import { UserService, TagService, NotifyService, UiService, UrlService } from "../../core/services";
 import { Helper } from "../../../helper";
-import {
-  User,
-  StorageKeys,
-  TagExt,
-  TabType,
-  TagMoveContainer,
-  Url,
-  Tag
-} from "../../../models";
+import { User, StorageKeys, TagExt, TabType, TagMoveContainer, Url, Tag, DuplicateUrlLean } from "../../../models";
 import {
   YeahDialogMoveComponent,
   YeahDialogEditTagComponent,
@@ -39,6 +25,8 @@ export class ProfileComponent {
   urlList: Array<Url>;
   tagList: Array<TagExt>;
 
+  duplicatedUrls: Array<DuplicateUrlLean>;
+
   constructor(
     private _userService: UserService,
     private _urlService: UrlService,
@@ -52,10 +40,21 @@ export class ProfileComponent {
    */
 
   async handleTabSwitched(e: TabType) {
-    if (e === TabType.Tags) {
-      await this._load();
-    } else {
-      this.tagList = null;
+    switch (e) {
+      case TabType.User:
+        this.tagList = null;
+        this.duplicatedUrls = null;
+        break;
+      case TabType.Tags:
+        await this._load();
+        this.duplicatedUrls = null;
+        break;
+      case TabType.Urls:
+        this.tagList = null;
+        this.duplicatedUrls = await this._urlService.getDuplicateUrls(Helper.getUserId());
+        break;
+      default:
+        break;
     }
   }
 
@@ -66,10 +65,7 @@ export class ProfileComponent {
   async changeUsername(form: NgForm): Promise<void> {
     this._notifyService.onInfo("Changing username...");
     try {
-      const result: User = await this._userService.putNameByUser(
-        Helper.getUserId(),
-        { name: form.value.newUsername }
-      );
+      const result: User = await this._userService.putNameByUser(Helper.getUserId(), { name: form.value.newUsername });
       this._handleBackendResult(result, "Username");
       form.resetForm();
     } catch (error) {
@@ -80,10 +76,7 @@ export class ProfileComponent {
   async changeUserpassword(form: NgForm): Promise<void> {
     this._notifyService.onInfo("Changing password...");
     try {
-      const result: User = await this._userService.putPasswordByUser(
-        Helper.getUserId(),
-        form.value
-      );
+      const result: User = await this._userService.putPasswordByUser(Helper.getUserId(), form.value);
       this._handleBackendResult(result, "Password");
       form.resetForm();
     } catch (error) {
@@ -107,10 +100,7 @@ export class ProfileComponent {
 
   handleMoveItemRequestSubmitted(e: TagExt): void {
     if (e.count === 0) {
-      this._notifyService.onError(
-        "It's not possible to move a Tag with a Count equals Zero.",
-        false
-      );
+      this._notifyService.onError("It's not possible to move a Tag with a Count equals Zero.", false);
       return;
     }
 
@@ -122,9 +112,7 @@ export class ProfileComponent {
 
     const foundUrlsForSourceTag = this.urlList
       .map((url: Url) => {
-        const tagCountForUrl = url.tags.findIndex(
-          (tag: Tag) => tag.id === event.sourceTag.id
-        );
+        const tagCountForUrl = url.tags.findIndex((tag: Tag) => tag.id === event.sourceTag.id);
         return tagCountForUrl > -1 ? url : undefined;
       })
       .filter(Boolean);
@@ -143,11 +131,7 @@ export class ProfileComponent {
           tags: url.tags.map((tag: Tag) => tag.name)
         };
 
-        await this._urlService.putUrlByUserAndId(
-          Helper.getUserId(),
-          url.id,
-          urlData
-        );
+        await this._urlService.putUrlByUserAndId(Helper.getUserId(), url.id, urlData);
       });
 
       await Promise.all(promHolder);
@@ -176,9 +160,7 @@ export class ProfileComponent {
       });
 
       this.tagList = this.tagList.map((tag: TagExt) =>
-        tag.id === updatedTag.id
-          ? ({ ...tag, name: updatedTag.name } as TagExt)
-          : tag
+        tag.id === updatedTag.id ? ({ ...tag, name: updatedTag.name } as TagExt) : tag
       );
 
       this._notifyService.onSuccess("Tag Name successfully changed!");
@@ -208,9 +190,7 @@ export class ProfileComponent {
       this._notifyService.onInfo("Delete Tag...");
 
       const deletedTagId = await this._tagService.deleteTagById(event.id);
-      this.tagList = this.tagList.filter(
-        (tag: TagExt) => tag.id !== deletedTagId
-      );
+      this.tagList = this.tagList.filter((tag: TagExt) => tag.id !== deletedTagId);
 
       this._notifyService.onSuccess("Tag successfully deleted!");
     } catch (error) {
@@ -225,9 +205,8 @@ export class ProfileComponent {
   private async _load() {
     this.urlList = await this._urlService.getUrlsByUser(Helper.getUserId());
     const unsortedTags = await this._tagService.getTags();
-    this.tagList = Helper.getSortedTagListWithUsage(
-      this.urlList,
-      unsortedTags
-    ).sort((a: TagExt, b: TagExt) => a.count - b.count);
+    this.tagList = Helper.getSortedTagListWithUsage(this.urlList, unsortedTags).sort(
+      (a: TagExt, b: TagExt) => a.count - b.count
+    );
   }
 }

@@ -84,6 +84,33 @@
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.6);
 }
 
+.loading-text {
+  width: inherit;
+  margin-top: 48px;
+  font-size: larger;
+  text-align: center;
+}
+
+.loading-text:before {
+  content: " ";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20%;
+  height: 2px;
+  background: #81d4fa;
+  animation: loading-animation 2s ease-out infinite;
+}
+
+@keyframes loading-animation {
+  0% {
+    transform: translate(0%);
+  }
+  100% {
+    transform: translate(500%);
+  }
+}
+
 form {
   display: flex;
   flex-direction: column;

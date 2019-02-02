@@ -1,4 +1,4 @@
-import { User } from "./api/user";
+import { User } from "../api/user";
 
 export class LoginResult {
   private _token: string;

@@ -4,8 +4,17 @@
       <div class="profile-container_username profile-container_username-mb profile-container_username-h">
         <div class="profile-container_title">Change Username</div>
         <form #formUsername="ngForm" (ngSubmit)="changeUsername(formUsername)">
-          <input name="newUsername" ngModel type="text" class="profile-container_input" required placeholder="Enter new Username..." />
-          <div class="profile-container_action"><button type="submit" class="profile-container_button">Change</button></div>
+          <input
+            name="newUsername"
+            ngModel
+            type="text"
+            class="profile-container_input"
+            required
+            placeholder="Enter new Username..."
+          />
+          <div class="profile-container_action">
+            <button type="submit" class="profile-container_button">Change</button>
+          </div>
         </form>
       </div>
 
@@ -28,13 +37,15 @@
             required
             placeholder="Enter your new Password..."
           />
-          <div class="profile-container_action"><button type="submit" class="profile-container_button">Change</button></div>
+          <div class="profile-container_action">
+            <button type="submit" class="profile-container_button">Change</button>
+          </div>
         </form>
       </div>
     </div>
     <div class="tab-tags">
+      <div *ngIf="!tagList" class="loading-text text-color">Loading...</div>
       <yeah-tag-list>
-        <div *ngIf="!tagList">Loading...</div>
         <yeah-tag-list-item
           *ngFor="let tag of tagList"
           [tag]="tag"
@@ -44,6 +55,13 @@
         >
         </yeah-tag-list-item>
       </yeah-tag-list>
+    </div>
+    <div class="tab-urls">
+      <div *ngIf="!duplicatedUrls" class="loading-text text-color">Loading...</div>
+      <yeah-duplicate-url-list>
+        <yeah-duplicate-url-list-item *ngFor="let dupUrl of duplicatedUrls" [duplicateUrlLean]="dupUrl">
+        </yeah-duplicate-url-list-item>
+      </yeah-duplicate-url-list>
     </div>
   </yeah-tabs>
 </div>

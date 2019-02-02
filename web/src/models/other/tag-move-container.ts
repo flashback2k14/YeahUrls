@@ -1,4 +1,4 @@
-import { TagExt } from "./api/tag-ext";
+import { TagExt } from "../api/tag-ext";
 
 export class TagMoveContainer {
   constructor(
