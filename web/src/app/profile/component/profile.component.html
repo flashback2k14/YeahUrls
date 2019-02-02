@@ -44,8 +44,8 @@
       </div>
     </div>
     <div class="tab-tags">
-      <div *ngIf="!tagList" class="loading-text text-color">Loading...</div>
       <yeah-tag-list>
+        <div *ngIf="!tagList" class="loading-text text-color">Loading...</div>
         <yeah-tag-list-item
           *ngFor="let tag of tagList"
           [tag]="tag"
@@ -57,8 +57,8 @@
       </yeah-tag-list>
     </div>
     <div class="tab-urls">
-      <div *ngIf="!duplicatedUrls" class="loading-text text-color">Loading...</div>
       <yeah-duplicate-url-list>
+        <div *ngIf="!duplicatedUrls" class="loading-text text-color">Loading...</div>
         <yeah-duplicate-url-list-item *ngFor="let dupUrl of duplicatedUrls" [duplicateUrlLean]="dupUrl">
         </yeah-duplicate-url-list-item>
       </yeah-duplicate-url-list>

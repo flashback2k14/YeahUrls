@@ -52,7 +52,9 @@
 
 .item-container_bottom {
   display: flex;
-  margin-top: 2px;
+  padding-top: 4px;
+  padding-bottom: 2px;
+  overflow: auto;
 }
 
 .right-spacing {
