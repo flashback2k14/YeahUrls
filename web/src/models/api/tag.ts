@@ -3,8 +3,9 @@ export class Tag {
   name: string;
   created: Date;
   updated: Date;
+  count: number;
 
-  setName (name: string): this {
+  setName(name: string): this {
     this.name = name;
     return this;
   }

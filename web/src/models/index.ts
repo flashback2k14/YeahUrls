@@ -1,5 +1,3 @@
-export * from "./api/tag-ext";
-export * from "./api/tag-usage";
 export * from "./api/tag";
 export * from "./api/url";
 export * from "./api/user";

@@ -12,7 +12,8 @@ import {
   SocketService
 } from "../../core/services/index";
 import { Helper } from "../../../helper/index";
-import { Url, SocketEvents, Tag, TagExt } from "../../../models/index";
+import { Url, SocketEvents, Tag } from "../../../models/index";
+import { async } from "@angular/core/testing";
 
 @Component({
   selector: "yeah-dashboard",
@@ -35,7 +36,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   private _urlList: Array<Url>;
   filteredUrlList: Array<Url>;
   scrollUrlItems: Array<Url>;
-  tagList: Array<TagExt>;
+  tagList: Array<Tag>;
 
   showLoading: boolean;
   showNoData: boolean;
@@ -49,7 +50,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this._urlList = new Array<Url>();
     this.filteredUrlList = new Array<Url>();
     this.scrollUrlItems = new Array<Url>();
-    this.tagList = new Array<TagExt>();
+    this.tagList = new Array<Tag>();
     this.showLoading = true;
     this.showNoData = true;
   }
@@ -59,15 +60,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
       const unsortedUrls = await this._urlService.getUrlsByUser(
         Helper.getUserId()
       );
-      const unsortedTags = await this._tagService.getTags();
-
-      this._urlList = [...unsortedUrls.sort(this._compareUrls)];
+      this._urlList = [...unsortedUrls.sort(Helper.compareUrls)];
       this.filteredUrlList = [...this._urlList];
 
-      this.tagList = Helper.getSortedTagListWithUsage(
-        unsortedUrls,
-        unsortedTags
-      );
+      const unsortedTags = await this._tagService.getTags();
+      this.tagList = [...unsortedTags.sort(Helper.compareTags)];
 
       this._initSocketListener();
 
@@ -90,76 +87,68 @@ export class DashboardComponent implements OnInit, OnDestroy {
      */
     this._socketService
       .getSocket()
-      .on(SocketEvents.URLADDED, (addedUrl: Url) => {
+      .on(SocketEvents.URLADDED, async (addedUrl: Url) => {
         const tmpUrlList = [addedUrl, ...this._urlList];
         this._urlList = tmpUrlList;
         this.filteredUrlList = tmpUrlList;
-        this.tagList = Helper.getSortedTagListWithUsage(
-          this._urlList,
-          this.tagList
-        );
+
+        const unsortedTags = await this._tagService.getTags();
+        this.tagList = [...unsortedTags.sort(Helper.compareTags)];
       });
     this._socketService
       .getSocket()
-      .on(SocketEvents.URLUPDATED, (modifiedUrl: Url) => {
+      .on(SocketEvents.URLUPDATED, async (modifiedUrl: Url) => {
         const foundIndex = this._urlList.findIndex(
           (url: Url) => url.id === modifiedUrl.id
         );
         this._urlList.splice(foundIndex, 1, modifiedUrl);
         this.filteredUrlList = [...this._urlList];
-        this.tagList = Helper.getSortedTagListWithUsage(
-          this._urlList,
-          this.tagList
-        );
+
+        const unsortedTags = await this._tagService.getTags();
+        this.tagList = [...unsortedTags.sort(Helper.compareTags)];
       });
     this._socketService
       .getSocket()
-      .on(SocketEvents.URLDELETED, (removedUrl: any) => {
+      .on(SocketEvents.URLDELETED, async (removedUrl: any) => {
         const tmpUrlList = this._urlList.filter(
           (url: Url) => url.id !== removedUrl.urlId
         );
         this._urlList = tmpUrlList;
         this.filteredUrlList = tmpUrlList;
-        this.tagList = Helper.getSortedTagListWithUsage(
-          this._urlList,
-          this.tagList
-        );
+
+        const unsortedTags = await this._tagService.getTags();
+        this.tagList = [...unsortedTags.sort(Helper.compareTags)];
       });
     /**
      * TAGS
      */
     this._socketService
       .getSocket()
-      .on(SocketEvents.TAGADDED, (addedTag: Tag) => {
+      .on(SocketEvents.TAGADDED, async (addedTag: Tag) => {
         const tmpTagList = [...this.tagList, addedTag];
-        this.tagList = Helper.getSortedTagListWithUsage(
-          this._urlList,
-          tmpTagList
-        );
+        this.tagList = [...tmpTagList.sort(Helper.compareTags)];
       });
     this._socketService
       .getSocket()
-      .on(SocketEvents.TAGUPDATED, (modifiedTag: Tag) => {
+      .on(SocketEvents.TAGUPDATED, async (modifiedTag: Tag) => {
         const foundIndex = this.tagList.findIndex(
           (tag: Tag) => tag.id === modifiedTag.id
         );
-        this.tagList.splice(foundIndex, 1, modifiedTag as TagExt);
-        this.tagList = Helper.getSortedTagListWithUsage(
-          this._urlList,
-          this.tagList
-        );
+        this.tagList.splice(foundIndex, 1, modifiedTag as Tag);
+
+        const unsortedTags = await this._tagService.getTags();
+        this.tagList = [...unsortedTags.sort(Helper.compareTags)];
       });
     this._socketService
       .getSocket()
-      .on(SocketEvents.TAGDELETED, (removedTag: any) => {
+      .on(SocketEvents.TAGDELETED, async (removedTag: any) => {
         const foundIndex = this.tagList.findIndex(
           (tag: Tag) => tag.id === removedTag.urlId
         );
         this.tagList.splice(foundIndex, 1);
-        this.tagList = Helper.getSortedTagListWithUsage(
-          this._urlList,
-          this.tagList
-        );
+
+        const unsortedTags = await this._tagService.getTags();
+        this.tagList = [...unsortedTags.sort(Helper.compareTags)];
       });
   }
 
@@ -233,10 +222,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
   // endregion
 
   // region helper
-
-  private _compareUrls(a: Url, b: Url): number {
-    return a.updated > b.updated ? -1 : a.updated < b.updated ? 1 : 0;
-  }
 
   urlItemTracker(index, url: Url) {
     return url ? url.id : undefined;

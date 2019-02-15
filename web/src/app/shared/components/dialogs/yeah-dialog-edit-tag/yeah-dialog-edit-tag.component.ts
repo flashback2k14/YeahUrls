@@ -1,5 +1,5 @@
 import { Component, Output, EventEmitter } from "@angular/core";
-import { TagExt } from "../../../../../models";
+import { Tag } from "../../../../../models";
 
 @Component({
   selector: "yeah-dialog-edit-tag",
@@ -7,20 +7,20 @@ import { TagExt } from "../../../../../models";
   styleUrls: ["./yeah-dialog-edit-tag.component.css"]
 })
 export class YeahDialogEditTagComponent {
-  @Output() editTag: EventEmitter<TagExt>;
+  @Output() editTag: EventEmitter<Tag>;
   showDialog: boolean;
   oldName: string;
-  tag: TagExt;
+  tag: Tag;
 
   constructor() {
-    this.editTag = new EventEmitter<TagExt>();
+    this.editTag = new EventEmitter<Tag>();
     this.showDialog = false;
     this.oldName = "";
-    this.tag = new TagExt();
+    this.tag = new Tag();
   }
 
-  open(tag: TagExt): void {
-    this.tag = { ...tag } as TagExt;
+  open(tag: Tag): void {
+    this.tag = { ...tag } as Tag;
     this.oldName = this.tag.name;
     this.showDialog = true;
   }
@@ -35,7 +35,7 @@ export class YeahDialogEditTagComponent {
   }
 
   private _clearDialog() {
-    this.tag = new TagExt();
+    this.tag = new Tag();
     this.oldName = "";
     this.showDialog = false;
   }

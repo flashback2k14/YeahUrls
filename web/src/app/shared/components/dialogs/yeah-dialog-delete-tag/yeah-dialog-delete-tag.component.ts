@@ -1,5 +1,5 @@
 import { Component, Output, EventEmitter } from "@angular/core";
-import { TagExt } from "../../../../../models";
+import { Tag } from "../../../../../models";
 
 @Component({
   selector: "yeah-dialog-delete-tag",
@@ -7,23 +7,23 @@ import { TagExt } from "../../../../../models";
   styleUrls: ["./yeah-dialog-delete-tag.component.css"]
 })
 export class YeahDialogDeleteTagComponent {
-  @Output() deleteTag: EventEmitter<TagExt>;
+  @Output() deleteTag: EventEmitter<Tag>;
   showDialog: boolean;
-  tag: TagExt;
+  tag: Tag;
 
   constructor() {
-    this.deleteTag = new EventEmitter<TagExt>();
+    this.deleteTag = new EventEmitter<Tag>();
     this.showDialog = false;
-    this.tag = new TagExt();
+    this.tag = new Tag();
   }
 
-  open(tag: TagExt): void {
-    this.tag = { ...tag } as TagExt;
+  open(tag: Tag): void {
+    this.tag = { ...tag } as Tag;
     this.showDialog = true;
   }
 
   cancel(): void {
-    this.tag = new TagExt();
+    this.tag = new Tag();
     this.showDialog = false;
   }
 

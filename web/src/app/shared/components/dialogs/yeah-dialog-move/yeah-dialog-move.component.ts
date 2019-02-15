@@ -1,5 +1,5 @@
 import { Input, Component, Output, EventEmitter } from "@angular/core";
-import { TagExt, Tag, TagMoveContainer } from "../../../../../models";
+import { Tag, TagMoveContainer } from "../../../../../models";
 
 @Component({
   selector: "yeah-dialog-move",
@@ -7,33 +7,33 @@ import { TagExt, Tag, TagMoveContainer } from "../../../../../models";
   styleUrls: ["./yeah-dialog-move.component.css"]
 })
 export class YeahDialogMoveComponent {
-  @Input() tagList: Array<TagExt>;
+  @Input() tagList: Array<Tag>;
   @Output() moveTag: EventEmitter<TagMoveContainer>;
 
-  tag: TagExt;
+  tag: Tag;
   showDialog: boolean;
-  selectedTags: Array<TagExt>;
+  selectedTags: Array<Tag>;
 
   constructor() {
     this.moveTag = new EventEmitter<TagMoveContainer>();
-    this.tag = new TagExt();
+    this.tag = new Tag();
     this.showDialog = false;
-    this.selectedTags = new Array<TagExt>();
+    this.selectedTags = new Array<Tag>();
   }
 
-  open(tag: TagExt): void {
+  open(tag: Tag): void {
     this.tag = tag;
     this.showDialog = true;
   }
 
   handleSubmittedTagNameAsRemoveRequest(event: string) {
     this.selectedTags = this.selectedTags.filter(
-      (tag: TagExt) => tag.id !== event
+      (tag: Tag) => tag.id !== event
     );
   }
 
   handleSubmittedNewlyCreatedTagRequest(event: Tag) {
-    this.selectedTags = [...this.selectedTags, event as TagExt];
+    this.selectedTags = [...this.selectedTags, event as Tag];
   }
 
   cancel() {
@@ -46,8 +46,8 @@ export class YeahDialogMoveComponent {
   }
 
   private _clearDialog(): void {
-    this.tag = new TagExt();
+    this.tag = new Tag();
     this.showDialog = false;
-    this.selectedTags = new Array<TagExt>();
+    this.selectedTags = new Array<Tag>();
   }
 }

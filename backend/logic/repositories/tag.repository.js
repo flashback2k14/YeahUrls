@@ -19,7 +19,7 @@ module.exports = (TagModel, UrlModel, SocketHelper) => {
       });
     });
 
-    return tags.reduce(
+    return tagIdsWithDuplicates.reduce(
       (prev, curr) => ((prev[curr] = ++prev[curr] || 1), prev),
       {}
     );
@@ -63,6 +63,7 @@ module.exports = (TagModel, UrlModel, SocketHelper) => {
     await TagModel.findOne({ name }).lean();
     const createdTag = await new TagModel({ name }).save();
     const transformedTag = this._transformTag(createdTag);
+    transformedTag.count = 1;
     SocketHelper.publishChanges(
       SocketHelper.EVENTNAME.TAGADDED,
       transformedTag

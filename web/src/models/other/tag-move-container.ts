@@ -1,8 +1,5 @@
-import { TagExt } from "../api/tag-ext";
+import { Tag } from "../api/tag";
 
 export class TagMoveContainer {
-  constructor(
-    public sourceTag: TagExt,
-    public destinationTags: Array<TagExt>
-  ) {}
+  constructor(public sourceTag: Tag, public destinationTags: Array<Tag>) {}
 }

@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from "@angular/core";
-import { TagExt } from "../../../../../models";
+import { Tag } from "../../../../../models";
 
 @Component({
   selector: "yeah-tag-list-item",
@@ -7,16 +7,16 @@ import { TagExt } from "../../../../../models";
   styleUrls: ["./yeah-tag-list-item.component.css"]
 })
 export class YeahTagListItemComponent {
-  @Input() tag: TagExt;
+  @Input() tag: Tag;
 
-  @Output() moveItemRequestSubmitted: EventEmitter<TagExt>;
-  @Output() editItemRequestSubmitted: EventEmitter<TagExt>;
-  @Output() deleteItemRequestSubmitted: EventEmitter<TagExt>;
+  @Output() moveItemRequestSubmitted: EventEmitter<Tag>;
+  @Output() editItemRequestSubmitted: EventEmitter<Tag>;
+  @Output() deleteItemRequestSubmitted: EventEmitter<Tag>;
 
   constructor() {
-    this.moveItemRequestSubmitted = new EventEmitter<TagExt>();
-    this.editItemRequestSubmitted = new EventEmitter<TagExt>();
-    this.deleteItemRequestSubmitted = new EventEmitter<TagExt>();
+    this.moveItemRequestSubmitted = new EventEmitter<Tag>();
+    this.editItemRequestSubmitted = new EventEmitter<Tag>();
+    this.deleteItemRequestSubmitted = new EventEmitter<Tag>();
   }
 
   moveItem(): void {
