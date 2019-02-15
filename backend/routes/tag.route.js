@@ -18,7 +18,7 @@ module.exports = (express, TagRepository) => {
       res.status(400).json({ message: error.message });
     }
   });
-  
+
   tag.put("/:id", async (req, res) => {
     try {
       const data = await TagRepository.updateById(req.params.id, req.body.name);
@@ -47,4 +47,4 @@ module.exports = (express, TagRepository) => {
   });
 
   return tag;
-}
+};
