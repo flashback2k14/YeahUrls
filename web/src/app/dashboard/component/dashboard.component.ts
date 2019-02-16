@@ -106,6 +106,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
         const unsortedTags = await this._tagService.getTags();
         this.tagList = [...unsortedTags.sort(Helper.compareTags)];
+
+        this.yeahUrlSearchElement.sendSearchRequest();
       });
     this._socketService
       .getSocket()
@@ -118,6 +120,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
         const unsortedTags = await this._tagService.getTags();
         this.tagList = [...unsortedTags.sort(Helper.compareTags)];
+
+        this.yeahUrlSearchElement.sendSearchRequest();
       });
     /**
      * TAGS
@@ -135,9 +139,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
           (tag: Tag) => tag.id === modifiedTag.id
         );
         this.tagList.splice(foundIndex, 1, modifiedTag as Tag);
-
-        const unsortedTags = await this._tagService.getTags();
-        this.tagList = [...unsortedTags.sort(Helper.compareTags)];
+        this.yeahUrlSearchElement.sendSearchRequest();
       });
     this._socketService
       .getSocket()
@@ -149,6 +151,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
         const unsortedTags = await this._tagService.getTags();
         this.tagList = [...unsortedTags.sort(Helper.compareTags)];
+
+        this.yeahUrlSearchElement.sendSearchRequest();
       });
   }
 

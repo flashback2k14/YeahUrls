@@ -236,6 +236,7 @@ export class ProfileComponent {
    */
 
   private async _load() {
+    this.urlList = await this._urlService.getUrlsByUser(Helper.getUserId());
     const unsortedTags = await this._tagService.getTags();
     this.tagList = [...unsortedTags.sort(Helper.compareTags)];
   }
