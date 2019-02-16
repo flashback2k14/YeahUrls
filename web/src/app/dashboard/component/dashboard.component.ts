@@ -13,7 +13,6 @@ import {
 } from "../../core/services/index";
 import { Helper } from "../../../helper/index";
 import { Url, SocketEvents, Tag } from "../../../models/index";
-import { async } from "@angular/core/testing";
 
 @Component({
   selector: "yeah-dashboard",

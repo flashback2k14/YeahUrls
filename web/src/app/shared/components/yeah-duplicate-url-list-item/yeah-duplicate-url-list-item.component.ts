@@ -1,6 +1,6 @@
 import { Component, Input } from "@angular/core";
-import { DuplicateUrlLean } from "./../../../../../models";
-import { NotifyService } from "./../../../../core/services";
+import { DuplicateUrlLean } from "./../../../../models";
+import { NotifyService } from "./../../../core/services";
 
 @Component({
   selector: "yeah-duplicate-url-list-item",

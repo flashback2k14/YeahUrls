@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from "@angular/core";
-import { Tag } from "../../../../../models/index";
+import { Tag } from "../../../../models/index";
 
 @Component({
   selector: "yeah-url-list-tag",
@@ -7,7 +7,6 @@ import { Tag } from "../../../../../models/index";
   styleUrls: ["./yeah-url-list-tag.component.css"]
 })
 export class YeahUrlListTagComponent {
-
   @Input() tag: Tag;
   @Input() showRemoveButton: boolean;
   @Output() tagNameAsSearchRequestSubmitted: EventEmitter<string>;
@@ -20,11 +19,11 @@ export class YeahUrlListTagComponent {
     this.tagNameAsRemoveRequestSubmitted = new EventEmitter<string>();
   }
 
-  tagNameClicked () {
+  tagNameClicked() {
     this.tagNameAsSearchRequestSubmitted.emit(this.tag.name);
   }
 
-  tagNameClickedForRemoving () {
+  tagNameClickedForRemoving() {
     this.tagNameAsRemoveRequestSubmitted.emit(this.tag.id);
   }
 }

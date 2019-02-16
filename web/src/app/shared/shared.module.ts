@@ -2,7 +2,6 @@ import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import {
-  YeahUrlListComponent,
   YeahUrlListSearchComponent,
   YeahUrlListItemComponent,
   YeahUrlListTagComponent,
@@ -14,19 +13,17 @@ import {
   YeahAutocompleteComponent,
   YeahNotifyComponent,
   YeahTabsComponent,
-  YeahTagListComponent,
   YeahTagListItemComponent,
   YeahDialogMoveComponent,
   YeahDialogEditTagComponent,
   YeahDialogDeleteTagComponent,
-  YeahDuplicateUrlListComponent,
-  YeahDuplicateUrlListItemComponent
+  YeahDuplicateUrlListItemComponent,
+  YeahListComponent
 } from "./components/index";
 
 @NgModule({
   imports: [CommonModule, FormsModule],
   declarations: [
-    YeahUrlListComponent,
     YeahUrlListSearchComponent,
     YeahUrlListItemComponent,
     YeahUrlListTagComponent,
@@ -38,16 +35,14 @@ import {
     YeahAutocompleteComponent,
     YeahNotifyComponent,
     YeahTabsComponent,
-    YeahTagListComponent,
     YeahTagListItemComponent,
     YeahDialogMoveComponent,
     YeahDialogEditTagComponent,
     YeahDialogDeleteTagComponent,
-    YeahDuplicateUrlListComponent,
-    YeahDuplicateUrlListItemComponent
+    YeahDuplicateUrlListItemComponent,
+    YeahListComponent
   ],
   exports: [
-    YeahUrlListComponent,
     YeahUrlListSearchComponent,
     YeahUrlListItemComponent,
     YeahUrlListTagComponent,
@@ -59,13 +54,12 @@ import {
     YeahAutocompleteComponent,
     YeahNotifyComponent,
     YeahTabsComponent,
-    YeahTagListComponent,
     YeahTagListItemComponent,
     YeahDialogMoveComponent,
     YeahDialogEditTagComponent,
     YeahDialogDeleteTagComponent,
-    YeahDuplicateUrlListComponent,
     YeahDuplicateUrlListItemComponent,
+    YeahListComponent,
     CommonModule,
     FormsModule
   ]

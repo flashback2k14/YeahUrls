@@ -1,6 +1,6 @@
 import { Component, Output, EventEmitter, ViewChild, Input, ElementRef } from "@angular/core";
-import { YeahAutocompleteComponent } from "../../yeah-autocomplete/yeah-autocomplete.component";
-import { Tag } from "../../../../../models/index";
+import { YeahAutocompleteComponent } from "../yeah-autocomplete/yeah-autocomplete.component";
+import { Tag } from "../../../../models/index";
 
 @Component({
   selector: "yeah-url-list-search",

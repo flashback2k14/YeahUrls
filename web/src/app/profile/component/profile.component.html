@@ -1,7 +1,9 @@
 <div class="profile-container">
   <yeah-tabs (tabSwitched)="handleTabSwitched($event)">
     <div class="tab-user">
-      <div class="profile-container_username profile-container_username-mb profile-container_username-h">
+      <div
+        class="profile-container_username profile-container_username-mb profile-container_username-h"
+      >
         <div class="profile-container_title">Change Username</div>
         <form #formUsername="ngForm" (ngSubmit)="changeUsername(formUsername)">
           <input
@@ -13,14 +15,19 @@
             placeholder="Enter new Username..."
           />
           <div class="profile-container_action">
-            <button type="submit" class="profile-container_button">Change</button>
+            <button type="submit" class="profile-container_button">
+              Change
+            </button>
           </div>
         </form>
       </div>
 
       <div class="profile-container_password profile-container_password-h ">
         <div class="profile-container_title">Change Password</div>
-        <form #formPassword="ngForm" (ngSubmit)="changeUserpassword(formPassword)">
+        <form
+          #formPassword="ngForm"
+          (ngSubmit)="changeUserpassword(formPassword)"
+        >
           <input
             name="oldPassword"
             ngModel
@@ -38,34 +45,55 @@
             placeholder="Enter your new Password..."
           />
           <div class="profile-container_action">
-            <button type="submit" class="profile-container_button">Change</button>
+            <button type="submit" class="profile-container_button">
+              Change
+            </button>
           </div>
         </form>
       </div>
     </div>
     <div class="tab-tags">
-      <yeah-tag-list>
+      <yeah-list>
         <div *ngIf="!tagList" class="loading-text text-color">Loading...</div>
         <yeah-tag-list-item
           *ngFor="let tag of tagList"
           [tag]="tag"
           (moveItemRequestSubmitted)="handleMoveItemRequestSubmitted($event)"
           (editItemRequestSubmitted)="handleEditItemRequestSubmitted($event)"
-          (deleteItemRequestSubmitted)="handleDeleteItemRequestSubmitted($event)"
+          (deleteItemRequestSubmitted)="
+            handleDeleteItemRequestSubmitted($event)
+          "
         >
         </yeah-tag-list-item>
-      </yeah-tag-list>
+      </yeah-list>
     </div>
     <div class="tab-urls">
-      <yeah-duplicate-url-list>
-        <div *ngIf="!duplicatedUrls" class="loading-text text-color">Loading...</div>
-        <yeah-duplicate-url-list-item *ngFor="let dupUrl of duplicatedUrls" [duplicateUrlLean]="dupUrl">
+      <yeah-list>
+        <div *ngIf="!duplicatedUrls" class="loading-text text-color">
+          Loading...
+        </div>
+        <yeah-duplicate-url-list-item
+          *ngFor="let dupUrl of duplicatedUrls"
+          [duplicateUrlLean]="dupUrl"
+        >
         </yeah-duplicate-url-list-item>
-      </yeah-duplicate-url-list>
+      </yeah-list>
     </div>
   </yeah-tabs>
 </div>
 
-<yeah-dialog-move #yeahTagMoveDialog [tagList]="tagList" (moveTag)="handleMoveTag($event)"></yeah-dialog-move>
-<yeah-dialog-edit-tag #yeahTagEditDialog (editTag)="handleEditTag($event)"></yeah-dialog-edit-tag>
-<yeah-dialog-delete-tag #yeahTagDeleteDialog (deleteTag)="handleDeleteTag($event)"></yeah-dialog-delete-tag>
+<yeah-dialog-move
+  #yeahTagMoveDialog
+  [tagList]="tagList"
+  (moveTag)="handleMoveTag($event)"
+></yeah-dialog-move>
+
+<yeah-dialog-edit-tag
+  #yeahTagEditDialog
+  (editTag)="handleEditTag($event)"
+></yeah-dialog-edit-tag>
+
+<yeah-dialog-delete-tag
+  #yeahTagDeleteDialog
+  (deleteTag)="handleDeleteTag($event)"
+></yeah-dialog-delete-tag>
