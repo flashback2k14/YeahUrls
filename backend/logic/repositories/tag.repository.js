@@ -25,6 +25,12 @@ module.exports = (TagModel, UrlModel, SocketHelper) => {
     );
   }
 
+  async function _getTagCountById(id) {
+    const tagCountObj = await this._getTagCount();
+    const objKey = Object.keys(tagCountObj).filter(key => key === id)[0];
+    return tagCountObj[objKey];
+  }
+
   function _extend(tags, tagCount) {
     const formattedTagCount = Object.keys(tagCount).map(key => {
       return {
@@ -47,6 +53,10 @@ module.exports = (TagModel, UrlModel, SocketHelper) => {
     return extendedTags;
   }
 
+  function _extendSingle(tag, count) {
+    return { ...this._transformTag(tag), count };
+  }
+
   async function getAll() {
     const tagCount = await this._getTagCount();
     const tags = await TagModel.find({}).lean();
@@ -55,15 +65,17 @@ module.exports = (TagModel, UrlModel, SocketHelper) => {
   }
 
   async function getById(id) {
+    const count = await this._getTagCountById(id);
     const tag = await TagModel.findById(id).lean();
-    return this._transformTag(tag);
+    return this._extendSingle(tag, count);
   }
 
   async function createNewTag(name) {
     await TagModel.findOne({ name }).lean();
     const createdTag = await new TagModel({ name }).save();
-    const transformedTag = this._transformTag(createdTag);
-    transformedTag.count = 1;
+
+    const transformedTag = this._extendSingle(createdTag, 1);
+
     SocketHelper.publishChanges(
       SocketHelper.EVENTNAME.TAGADDED,
       transformedTag
@@ -78,7 +90,10 @@ module.exports = (TagModel, UrlModel, SocketHelper) => {
       { $set: body },
       { new: true }
     ).lean();
-    const transformedTag = this._transformTag(updatedTag);
+
+    const count = await this._getTagCountById(id);
+    const transformedTag = this._extendSingle(updatedTag, count);
+
     SocketHelper.publishChanges(
       SocketHelper.EVENTNAME.TAGUPDATED,
       transformedTag
@@ -95,7 +110,9 @@ module.exports = (TagModel, UrlModel, SocketHelper) => {
   return {
     _transformTag,
     _getTagCount,
+    _getTagCountById,
     _extend,
+    _extendSingle,
     getAll,
     getById,
     createNewTag,
