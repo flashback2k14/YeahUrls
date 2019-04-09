@@ -135,7 +135,7 @@ const Util = (() => {
       txtPassword.value = atob(password);
     };
 
-    const automaticSignIn = infoText => {
+    const automaticSignIn = async (infoText) => {
       const isChecked = localStorage.getItem(
         "YEAH#URLS#EXTENSION#AUTOMAICSIGNIN"
       );
@@ -152,31 +152,26 @@ const Util = (() => {
         return;
       }
 
-      window
-        .fetch(
+      try {
+        const response = await window.fetch(
           createRequest("https://yeah-urls.herokuapp.com/api/v1/signin", {
             username,
             password: atob(password)
           })
-        )
-        .then(response => {
-          if (!response.ok) {
-            throw new Error(response.statusText);
-          }
-          return response.json();
-        })
-        .then(data => {
-          localStorage.setItem("YEAH#URLS#EXTENSION#TOKEN", data.token);
-          localStorage.setItem("YEAH#URLS#EXTENSION#USERID", data.user.id);
-          showInfoText(
-            infoText,
-            `User ${data.user.name} is successfully authenticated!`,
-            true
-          );
-        })
-        .catch(error => {
-          showInfoText(infoText, error, false, 3000);
-        });
+        );
+
+        const data = await response.json();
+
+        localStorage.setItem("YEAH#URLS#EXTENSION#TOKEN", data.token);
+        localStorage.setItem("YEAH#URLS#EXTENSION#USERID", data.user.id);
+        showInfoText(
+          infoText,
+          `User ${data.user.name} is successfully authenticated!`,
+          true
+        );
+      } catch (error) {
+        showInfoText(infoText, error, false, 3000);
+      }  
     };
 
     const showInfoText = (el, text, isSuccess, duration = 2000) => {

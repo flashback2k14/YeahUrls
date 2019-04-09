@@ -2,7 +2,7 @@ window.browser = (function () {
   return window.msBrowser || window.browser || window.chrome;
 })();
 
-window.addEventListener("DOMContentLoaded", () => {
+window.addEventListener("DOMContentLoaded", async () => {
 
   const URL = "https://yeah-urls.herokuapp.com/api/v1/url";
   const TAG = "https://yeah-urls.herokuapp.com/api/v1/tag";
@@ -20,7 +20,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
 
   Util.get().setExtensionIcon();
-  Util.get().automaticSignIn(infoText);
+  await Util.get().automaticSignIn(infoText);
   Util.get().getTagsAndFillSelect(slctKeywords, infoText, TAG);
 
 
