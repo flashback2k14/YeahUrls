@@ -45,10 +45,7 @@ module.exports = (UrlModel, TagModel, UserModel, SocketHelper) => {
         let foundOrCreatedTag = await TagModel.findOne({ name: tag }).lean();
         if (!foundOrCreatedTag) {
           foundOrCreatedTag = await new TagModel({ name: tag }).save();
-          SocketHelper.publishChanges(
-            SocketHelper.EVENTNAME.TAGADDED,
-            this._transformTag(foundOrCreatedTag)
-          );
+          SocketHelper.publishChanges(SocketHelper.EVENTNAME.TAGADDED, this._transformTag(foundOrCreatedTag));
         }
         return foundOrCreatedTag._id;
       })
@@ -108,6 +105,14 @@ module.exports = (UrlModel, TagModel, UserModel, SocketHelper) => {
         );
   }
 
+  async function getLastUpdated(userId) {
+    const urls = await UrlModel.find({ user: userId })
+      .sort({ updatedAt: -1 })
+      .limit(1)
+      .lean();
+    return { lastUpdated: urls[0].updatedAt };
+  }
+
   async function updateByUserIdAndUrlId(userId, urlId, body) {
     await UserModel.findById(userId).lean();
     const tagIds = await this._createNewTags(body.tags);
@@ -117,17 +122,10 @@ module.exports = (UrlModel, TagModel, UserModel, SocketHelper) => {
       tags: tagIds
     };
 
-    const updatedUrl = await UrlModel.findByIdAndUpdate(
-      { _id: urlId },
-      { $set: modifiedUrl },
-      { new: true }
-    ).lean();
+    const updatedUrl = await UrlModel.findByIdAndUpdate({ _id: urlId }, { $set: modifiedUrl }, { new: true }).lean();
     const transformedUrl = await this._transformUrl(updatedUrl);
 
-    SocketHelper.publishChanges(
-      SocketHelper.EVENTNAME.URLUPDATED,
-      transformedUrl
-    );
+    SocketHelper.publishChanges(SocketHelper.EVENTNAME.URLUPDATED, transformedUrl);
     return transformedUrl;
   }
 
@@ -144,10 +142,7 @@ module.exports = (UrlModel, TagModel, UserModel, SocketHelper) => {
     const createdUrl = await newUrl.save();
     const transformedUrl = await this._transformUrl(createdUrl);
 
-    SocketHelper.publishChanges(
-      SocketHelper.EVENTNAME.URLADDED,
-      transformedUrl
-    );
+    SocketHelper.publishChanges(SocketHelper.EVENTNAME.URLADDED, transformedUrl);
     return transformedUrl;
   }
 
@@ -161,10 +156,7 @@ module.exports = (UrlModel, TagModel, UserModel, SocketHelper) => {
     const updatedUrl = await foundUrl.save();
     const transformedUrl = await this._transformUrl(updatedUrl);
 
-    SocketHelper.publishChanges(
-      SocketHelper.EVENTNAME.URLADDED,
-      transformedUrl
-    );
+    SocketHelper.publishChanges(SocketHelper.EVENTNAME.URLADDED, transformedUrl);
     return transformedUrl;
   }
 
@@ -187,10 +179,7 @@ module.exports = (UrlModel, TagModel, UserModel, SocketHelper) => {
     const updatedUrl = await foundUrl.save();
     const transformedUrl = await this._transformUrl(updatedUrl);
 
-    SocketHelper.publishChanges(
-      SocketHelper.EVENTNAME.URLADDED,
-      transformedUrl
-    );
+    SocketHelper.publishChanges(SocketHelper.EVENTNAME.URLADDED, transformedUrl);
     return transformedUrl;
   }
 
@@ -204,6 +193,7 @@ module.exports = (UrlModel, TagModel, UserModel, SocketHelper) => {
     getAllByUserId,
     getByUserIdAndUrlId,
     findDuplicatesByUserId,
+    getLastUpdated,
     updateByUserIdAndUrlId,
     createNewUrlForUserId,
     createNewTagForUserIdAndUrlId,

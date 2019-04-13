@@ -22,6 +22,15 @@ module.exports = (express, UrlRepository) => {
       res.status(400).json({ message: error.message });
     }
   });
+  
+  url.get("/lastupdated/:userid", async (req, res) => {
+    try {
+      const data = await UrlRepository.getLastUpdated(req.params.userid);
+      res.status(200).json(data);
+    } catch (error) {
+      res.status(400).json({ message: error.message });
+    }
+  });
 
   url.get("/:userid", async (req, res) => {
     try {
