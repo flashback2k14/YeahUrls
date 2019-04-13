@@ -51,7 +51,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.scrollUrlItems = new Array<Url>();
     this.tagList = new Array<Tag>();
     this.showLoading = true;
-    this.showNoData = true;
+    this.showNoData = false;
   }
 
   async ngOnInit() {
@@ -60,15 +60,19 @@ export class DashboardComponent implements OnInit, OnDestroy {
         Helper.getUserId()
       );
       this._urlList = [...unsortedUrls.sort(Helper.compareUrls)];
+
+      if (this._urlList.length <= 0) {
+        this.showNoData = true;
+        return;
+      }
+
       this.filteredUrlList = [...this._urlList];
+      this.showLoading = false;
 
       const unsortedTags = await this._tagService.getTags();
       this.tagList = [...unsortedTags.sort(Helper.compareTags)];
 
       this._initSocketListener();
-
-      this.showLoading = false;
-      this.showNoData = this._urlList.length <= 0;
     } catch (error) {
       this._notifyService.onError(Helper.extractBackendError(error));
     }
