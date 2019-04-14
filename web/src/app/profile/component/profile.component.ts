@@ -40,6 +40,7 @@ export class ProfileComponent {
   tagList: Array<Tag>;
 
   duplicatedUrls: Array<DuplicateUrlLean>;
+  showNoData: boolean;
 
   constructor(
     private _userService: UserService,
@@ -47,7 +48,9 @@ export class ProfileComponent {
     private _tagService: TagService,
     private _notifyService: NotifyService,
     private _uiService: UiService
-  ) {}
+  ) {
+    this.showNoData = false;
+  }
 
   /**
    * TABS
@@ -68,6 +71,9 @@ export class ProfileComponent {
         this.duplicatedUrls = await this._urlService.getDuplicateUrls(
           Helper.getUserId()
         );
+        if (this.duplicatedUrls == null || this.duplicatedUrls.length <= 0) {
+          this.showNoData = true;
+        }
         break;
       default:
         break;

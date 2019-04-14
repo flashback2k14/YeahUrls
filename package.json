@@ -4,7 +4,9 @@
   "description": "Rewrite from YeaHUrls without firebase",
   "scripts": {
     "start:backend": "cd backend && npm install && npm run create && npm start",
-    "pack:extension": "zip -r -X extension.zip extension"
+    "pack:extension": "zip -r -X extension.zip extension",
+    "mongo:start": "brew services start mongodb-community",
+    "mongo:stop": "brew services stop mongodb-community"
   },
   "engines": {
     "node": "8.4.0",

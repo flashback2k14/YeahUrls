@@ -7,6 +7,7 @@ export * from "./constants/storage-keys";
 export * from "./enums/notification-type";
 export * from "./enums/tab-type";
 export * from "./other/duplicate-url";
+export * from "./other/last-updated-result";
 export * from "./other/login-result";
 export * from "./other/notification";
 export * from "./other/tag-move-container";

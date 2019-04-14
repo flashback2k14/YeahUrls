@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Url, StorageKeys, DuplicateUrlLean } from "../../../../models/index";
+import { Url, StorageKeys, DuplicateUrlLean, LastUpdatedResult } from "../../../../models/index";
 import { ConfigService } from "./config.service";
 
 @Injectable()
@@ -30,6 +30,16 @@ export class UrlService {
           headers: this._headers.append("X-Access-Token", localStorage.getItem(StorageKeys.USERTOKEN))
         })
         .subscribe(result => resolve(result), error => reject(error));
+    });
+  }
+
+  getLastUpdated(userId: string): Promise<LastUpdatedResult> {
+    return new Promise((resolve, reject) => {
+      this._http
+        .get<LastUpdatedResult>(`${this._baseUrl}/lastupdated/${userId}`, {
+          headers: this._headers.append("X-Access-Token", localStorage.getItem(StorageKeys.USERTOKEN))
+        })
+        .subscribe(result => resolve(new LastUpdatedResult(new Date(result.lastUpdated))), reject);
     });
   }
 

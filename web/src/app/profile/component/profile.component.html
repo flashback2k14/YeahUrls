@@ -72,6 +72,9 @@
         <div *ngIf="!duplicatedUrls" class="loading-text text-color">
           Loading...
         </div>
+        <div *ngIf="showNoData" class="no-data-text text-color">
+          No Data available...
+        </div>
         <yeah-duplicate-url-list-item
           *ngFor="let dupUrl of duplicatedUrls"
           [duplicateUrlLean]="dupUrl"

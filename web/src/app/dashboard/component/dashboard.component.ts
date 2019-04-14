@@ -6,7 +6,7 @@ import {
   YeahUrlListSearchComponent
 } from "../../shared/components/index";
 import {
-  UrlService,
+  CachingService,
   NotifyService,
   TagService,
   SocketService
@@ -41,7 +41,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   showNoData: boolean;
 
   constructor(
-    private _urlService: UrlService,
+    private _cachingService: CachingService,
     private _socketService: SocketService,
     private _tagService: TagService,
     private _notifyService: NotifyService
@@ -56,13 +56,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   async ngOnInit() {
     try {
-      const unsortedUrls = await this._urlService.getUrlsByUser(
+      this._urlList = await this._cachingService.fetchUrls(
         Helper.getUserId()
       );
-      this._urlList = [...unsortedUrls.sort(Helper.compareUrls)];
 
-      if (this._urlList.length <= 0) {
+      if (this._urlList == null || this._urlList.length <= 0) {
         this.showNoData = true;
+        this.showLoading = false;
         return;
       }
 
