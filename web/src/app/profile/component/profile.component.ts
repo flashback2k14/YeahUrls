@@ -1,22 +1,8 @@
 import { Component, ViewChild } from "@angular/core";
 import { NgForm } from "@angular/forms";
-import {
-  UserService,
-  TagService,
-  NotifyService,
-  UiService,
-  UrlService
-} from "../../core/services";
+import { UserService, TagService, NotifyService, UiService, UrlService } from "../../core/services";
 import { Helper } from "../../../helper";
-import {
-  User,
-  StorageKeys,
-  TabType,
-  TagMoveContainer,
-  Url,
-  Tag,
-  DuplicateUrlLean
-} from "../../../models";
+import { User, StorageKeys, TabType, TagMoveContainer, Url, Tag, DuplicateUrlLean } from "../../../models";
 import {
   YeahDialogMoveComponent,
   YeahDialogEditTagComponent,
@@ -68,9 +54,7 @@ export class ProfileComponent {
         break;
       case TabType.Urls:
         this.tagList = null;
-        this.duplicatedUrls = await this._urlService.getDuplicateUrls(
-          Helper.getUserId()
-        );
+        this.duplicatedUrls = await this._urlService.getDuplicateUrls(Helper.getUserId());
         if (this.duplicatedUrls == null || this.duplicatedUrls.length <= 0) {
           this.showNoData = true;
         }
@@ -87,10 +71,7 @@ export class ProfileComponent {
   async changeUsername(form: NgForm): Promise<void> {
     this._notifyService.onInfo("Changing username...");
     try {
-      const result: User = await this._userService.putNameByUser(
-        Helper.getUserId(),
-        { name: form.value.newUsername }
-      );
+      const result: User = await this._userService.putNameByUser(Helper.getUserId(), { name: form.value.newUsername });
       this._handleBackendResult(result, "Username");
       form.resetForm();
     } catch (error) {
@@ -101,10 +82,7 @@ export class ProfileComponent {
   async changeUserpassword(form: NgForm): Promise<void> {
     this._notifyService.onInfo("Changing password...");
     try {
-      const result: User = await this._userService.putPasswordByUser(
-        Helper.getUserId(),
-        form.value
-      );
+      const result: User = await this._userService.putPasswordByUser(Helper.getUserId(), form.value);
       this._handleBackendResult(result, "Password");
       form.resetForm();
     } catch (error) {
@@ -128,10 +106,7 @@ export class ProfileComponent {
 
   handleMoveItemRequestSubmitted(e: Tag): void {
     if (e.count === 0) {
-      this._notifyService.onError(
-        "It's not possible to move a Tag with a Count equals Zero.",
-        false
-      );
+      this._notifyService.onError("It's not possible to move a Tag with a Count equals Zero.", false);
       return;
     }
 
@@ -143,9 +118,7 @@ export class ProfileComponent {
 
     const foundUrlsForSourceTag = this.urlList
       .map((url: Url) => {
-        const tagCountForUrl = url.tags.findIndex(
-          (tag: Tag) => tag.id === event.sourceTag.id
-        );
+        const tagCountForUrl = url.tags.findIndex((tag: Tag) => tag.id === event.sourceTag.id);
         return tagCountForUrl > -1 ? url : undefined;
       })
       .filter(Boolean);
@@ -164,11 +137,7 @@ export class ProfileComponent {
           tags: url.tags.map((tag: Tag) => tag.name)
         };
 
-        await this._urlService.putUrlByUserAndId(
-          Helper.getUserId(),
-          url.id,
-          urlData
-        );
+        await this._urlService.putUrlByUserAndId(Helper.getUserId(), url.id, urlData);
       });
 
       await Promise.all(promHolder);
@@ -197,9 +166,7 @@ export class ProfileComponent {
       });
 
       this.tagList = this.tagList.map((tag: Tag) =>
-        tag.id === updatedTag.id
-          ? ({ ...tag, name: updatedTag.name } as Tag)
-          : tag
+        tag.id === updatedTag.id ? ({ ...tag, name: updatedTag.name } as Tag) : tag
       );
 
       this._notifyService.onSuccess("Tag Name successfully changed!");
@@ -244,6 +211,6 @@ export class ProfileComponent {
   private async _load() {
     this.urlList = await this._urlService.getUrlsByUser(Helper.getUserId());
     const unsortedTags = await this._tagService.getTags();
-    this.tagList = [...unsortedTags.sort(Helper.compareTags)];
+    this.tagList = [...unsortedTags.sort(Helper.compareTags).sort((a: Tag, b: Tag) => a.count - b.count)];
   }
 }
