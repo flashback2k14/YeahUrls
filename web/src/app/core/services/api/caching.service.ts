@@ -49,7 +49,7 @@ export class CachingService {
   private async _getUrlsForUser(userId: string): Promise<Array<Url>> {
     const urls = await this._urlService.getUrlsByUser(userId);
     urls.sort(Helper.compareUrls);
-    localStorage.setItem(StorageKeys.URLS_CACHED, JSON.stringify(this._urls));
+    localStorage.setItem(StorageKeys.URLS_CACHED, JSON.stringify(urls));
     return urls;
   }
 }
