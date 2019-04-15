@@ -49,6 +49,8 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem(StorageKeys.USERTOKEN);
     localStorage.removeItem(StorageKeys.USERINFO);
+    localStorage.removeItem(StorageKeys.URLS_LAST_UPDATED);
+    localStorage.removeItem(StorageKeys.URLS_CACHED);
     this._isLoggedIn = false;
   }
 }
