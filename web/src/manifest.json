@@ -2,7 +2,7 @@
   "name": "Yeah! URLs",
   "short_name": "Yeah! URLs",
   "share_target": {
-    "action": "/share",
+    "action": "/dashboard",
     "params": {
       "title": "title",
       "text": "text",

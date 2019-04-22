@@ -13,6 +13,8 @@ import {
 } from "../../core/services/index";
 import { Helper } from "../../../helper/index";
 import { Url, SocketEvents, Tag } from "../../../models/index";
+import { ActivatedRoute } from "@angular/router";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "yeah-dashboard",
@@ -32,6 +34,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   @ViewChild("yeahUrlAddDialog")
   yeahUrlAddDialog: YeahDialogAddComponent;
 
+  private _queryParamsSubscription$: Subscription;
+
   private _urlList: Array<Url>;
   filteredUrlList: Array<Url>;
   scrollUrlItems: Array<Url>;
@@ -44,8 +48,16 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private _cachingService: CachingService,
     private _socketService: SocketService,
     private _tagService: TagService,
-    private _notifyService: NotifyService
+    private _notifyService: NotifyService,
+    private _route: ActivatedRoute
   ) {
+    this._route.queryParams.subscribe(params => {
+      const textAsUrl = params["text"];
+      const urlToOpening = new Url();
+      urlToOpening.url = textAsUrl;
+      this.yeahUrlAddDialog.open(urlToOpening);
+    });
+
     this._urlList = new Array<Url>();
     this.filteredUrlList = new Array<Url>();
     this.scrollUrlItems = new Array<Url>();
@@ -80,6 +92,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this._removeSocketListener();
+    this._queryParamsSubscription$.unsubscribe();
   }
 
   // region socket.io
