@@ -22,7 +22,6 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     if (this._authService.isLoggedIn) {
-      this._router.navigate(["/dashboard"]);
       this._uiService.toggleHeaderAreaForUserinformation();
       this._uiService.changeUsernameAtHeaderArea(Helper.getUsername());
       this._uiService.toggleFooterAreaForImportFunction();
