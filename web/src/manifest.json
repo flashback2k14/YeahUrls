@@ -1,6 +1,14 @@
 {
   "name": "Yeah! URLs",
   "short_name": "Yeah! URLs",
+  "share_target": {
+    "action": "/share",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  },
   "theme_color": "#252C36",
   "background_color": "#252C36",
   "display": "standalone",

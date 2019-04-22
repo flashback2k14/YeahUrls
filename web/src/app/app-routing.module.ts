@@ -3,11 +3,6 @@ import { Routes, RouterModule } from "@angular/router";
 
 const appRoutes: Routes = [
   {
-    path: "",
-    redirectTo: "login",
-    pathMatch: "full"
-  },
-  {
     path: "login",
     loadChildren: "app/login/login.module#LoginModule"
   },
@@ -18,6 +13,15 @@ const appRoutes: Routes = [
   {
     path: "profile",
     loadChildren: "app/profile/profile.module#ProfileModule"
+  },
+  {
+    path: "share",
+    loadChildren: "app/share/share.module#ShareModule"
+  },
+  {
+    path: "",
+    redirectTo: "login",
+    pathMatch: "full"
   },
   {
     path: "**",
