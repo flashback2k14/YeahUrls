@@ -51,13 +51,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private _notifyService: NotifyService,
     private _route: ActivatedRoute
   ) {
-    this._route.queryParams.subscribe(params => {
-      const textAsUrl = params["text"];
-      const urlToOpening = new Url();
-      urlToOpening.url = textAsUrl;
-      this.yeahUrlAddDialog.open(urlToOpening);
-    });
-
     this._urlList = new Array<Url>();
     this.filteredUrlList = new Array<Url>();
     this.scrollUrlItems = new Array<Url>();
@@ -68,9 +61,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   async ngOnInit() {
     try {
-      this._urlList = await this._cachingService.fetchUrls(
-        Helper.getUserId()
-      );
+      this._handleShareMenu();
+
+      this._urlList = await this._cachingService.fetchUrls(Helper.getUserId());
 
       if (this._urlList == null || this._urlList.length <= 0) {
         this.showNoData = true;
@@ -108,6 +101,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this._urlList = tmpUrlList;
         this.filteredUrlList = tmpUrlList;
 
+        await this._cachingService.updateUrls(Helper.getUserId(), this._urlList);
+
         const unsortedTags = await this._tagService.getTags();
         this.tagList = [...unsortedTags.sort(Helper.compareTags)];
       });
@@ -119,6 +114,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
         );
         this._urlList.splice(foundIndex, 1, modifiedUrl);
         this.filteredUrlList = [...this._urlList];
+
+        await this._cachingService.updateUrls(Helper.getUserId(), this._urlList);
 
         const unsortedTags = await this._tagService.getTags();
         this.tagList = [...unsortedTags.sort(Helper.compareTags)];
@@ -133,6 +130,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
         );
         this._urlList = tmpUrlList;
         this.filteredUrlList = tmpUrlList;
+
+        await this._cachingService.updateUrls(Helper.getUserId(), this._urlList);
 
         const unsortedTags = await this._tagService.getTags();
         this.tagList = [...unsortedTags.sort(Helper.compareTags)];
@@ -245,6 +244,17 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   urlItemTracker(index, url: Url) {
     return url ? url.id : undefined;
+  }
+
+  private _handleShareMenu() {
+    this._queryParamsSubscription$ = this._route.queryParams.subscribe(params => {
+      const textAsUrl = params["text"];
+      if (textAsUrl) {
+        const urlToOpening = new Url();
+        urlToOpening.url = textAsUrl;
+        this.yeahUrlAddDialog.open(urlToOpening);
+      }
+    });
   }
 
   // endregion
