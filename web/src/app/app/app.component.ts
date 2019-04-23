@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
+import { Router, ActivatedRoute } from "@angular/router";
 import { Helper } from "../../helper/index";
 import { AuthService, UiService } from "../core/services/index";
 
@@ -15,7 +15,8 @@ export class AppComponent implements OnInit {
   constructor (
     private _authService: AuthService,
     private _uiService: UiService,
-    private _router: Router
+    private _router: Router,
+    private _route: ActivatedRoute
   ) {
     this.showImportDialog = false;
   }
@@ -25,6 +26,14 @@ export class AppComponent implements OnInit {
       this._uiService.toggleHeaderAreaForUserinformation();
       this._uiService.changeUsernameAtHeaderArea(Helper.getUsername());
       this._uiService.toggleFooterAreaForImportFunction();
+
+      const { searchParams } = new URL(<any>window.location);
+      const textAsUrl = searchParams.get("text");
+
+      this._router.navigate(["/dashboard"], {
+        queryParams: { text: textAsUrl },
+        queryParamsHandling: "merge"
+      });
     } else {
       this._router.navigate(["/login"]);
     }

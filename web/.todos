@@ -6,4 +6,4 @@
 - update scripts - check
 - check change username --> error on prod site - check
 - update angular2-virtual-scroll to https://github.com/rintoj/ngx-virtual-scroller - check
-- implement "add to share menu" - https://glitch.com/edit/#!/web-share - not working
+- implement "add to share menu" - https://glitch.com/edit/#!/web-share - check
