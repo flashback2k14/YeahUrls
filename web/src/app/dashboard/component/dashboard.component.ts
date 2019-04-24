@@ -1,4 +1,6 @@
 import { Component, OnInit, ViewChild, OnDestroy } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
+import { Subscription } from "rxjs";
 import {
   YeahDialogDeleteComponent,
   YeahDialogEditComponent,
@@ -13,8 +15,7 @@ import {
 } from "../../core/services/index";
 import { Helper } from "../../../helper/index";
 import { Url, SocketEvents, Tag } from "../../../models/index";
-import { ActivatedRoute } from "@angular/router";
-import { Subscription } from "rxjs";
+
 
 @Component({
   selector: "yeah-dashboard",
@@ -248,10 +249,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   private _handleShareMenu() {
     this._queryParamsSubscription$ = this._route.queryParams.subscribe(params => {
-      const textAsUrl = params["text"];
-      if (textAsUrl) {
+      const urlAsText = params["text"];
+      if (urlAsText) {
         const urlToOpening = new Url();
-        urlToOpening.url = textAsUrl;
+        urlToOpening.url = urlAsText;
+        urlToOpening.tags = new Array<Tag>();
         this.yeahUrlAddDialog.open(urlToOpening);
       }
     });
