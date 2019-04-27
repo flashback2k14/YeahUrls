@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from "@angular/core";
+import { Component, OnDestroy, Output, EventEmitter } from "@angular/core";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { AuthService, UiService, NotifyService } from "../../core/services";
@@ -9,10 +9,13 @@ import { AuthService, UiService, NotifyService } from "../../core/services";
   styleUrls: ["./header.component.css"]
 })
 export class HeaderComponent implements OnDestroy {
-  private _toggleHeaderAreaForUserinformationSubscription: Subscription;
-  private _changeUsernameAtHeaderAreaSubscription: Subscription;
+
+  @Output() openImportRequestSubmitted: EventEmitter<void>;
   showHeaderAreaForUserinformation: boolean;
   username: string;
+
+  private _toggleHeaderAreaForUserinformationSubscription: Subscription;
+  private _changeUsernameAtHeaderAreaSubscription: Subscription;
 
   constructor(
     private _authService: AuthService,
@@ -20,6 +23,7 @@ export class HeaderComponent implements OnDestroy {
     private _notifyService: NotifyService,
     private _router: Router
   ) {
+    this.openImportRequestSubmitted = new EventEmitter<void>();
     this.showHeaderAreaForUserinformation = false;
     this.username = "Unknown User";
     this._toggleHeaderAreaForUserinformationSubscription = this._uiService.toggleHeaderAreaForUserinformation$.subscribe(
@@ -43,6 +47,14 @@ export class HeaderComponent implements OnDestroy {
 
   goToProfile(): void {
     this._router.navigate(["/profile"]);
+  }
+
+  goToFavorites(): void {
+    alert("TODO");
+  }
+
+  openImport(): void {
+    this.openImportRequestSubmitted.emit();
   }
 
   logout(): void {
