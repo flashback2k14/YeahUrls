@@ -1,6 +1,6 @@
-import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
+import { CommonModule } from "@angular/common";
 import { ProfileRouterModule } from "./profile-routing.module";
 import { ProfileComponent } from "./component/profile.component";
 import { SharedModule } from "../shared/shared.module";

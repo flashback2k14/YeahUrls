@@ -15,6 +15,10 @@ const appRoutes: Routes = [
     loadChildren: "app/profile/profile.module#ProfileModule"
   },
   {
+    path: "favorite",
+    loadChildren: "app/favorite/favorite.module#FavoriteModule"
+  },
+  {
     path: "",
     redirectTo: "login",
     pathMatch: "full"

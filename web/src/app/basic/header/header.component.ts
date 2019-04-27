@@ -50,7 +50,7 @@ export class HeaderComponent implements OnDestroy {
   }
 
   goToFavorites(): void {
-    alert("TODO");
+    this._router.navigate(["/favorite"]);
   }
 
   openImport(): void {

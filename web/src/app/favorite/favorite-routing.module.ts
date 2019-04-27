@@ -1,12 +1,12 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
-import { ProfileComponent } from "./component/profile.component";
+import { FavoriteComponent } from "./component/favorite.component";
 import { AuthguardService } from "../core/services";
 
 const routes: Routes = [
   {
     path: "",
-    component: ProfileComponent,
+    component: FavoriteComponent,
     canActivate: [AuthguardService]
   }
 ];
@@ -15,4 +15,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class ProfileRouterModule {}
+export class FavoriteRouterModule {}
