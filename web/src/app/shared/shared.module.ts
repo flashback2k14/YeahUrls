@@ -18,7 +18,8 @@ import {
   YeahDialogEditTagComponent,
   YeahDialogDeleteTagComponent,
   YeahDuplicateUrlListItemComponent,
-  YeahListComponent
+  YeahListComponent,
+  YeahUrlSearchComponent
 } from "./components/index";
 
 @NgModule({
@@ -40,7 +41,8 @@ import {
     YeahDialogEditTagComponent,
     YeahDialogDeleteTagComponent,
     YeahDuplicateUrlListItemComponent,
-    YeahListComponent
+    YeahListComponent,
+    YeahUrlSearchComponent
   ],
   exports: [
     YeahUrlListSearchComponent,
@@ -60,6 +62,7 @@ import {
     YeahDialogDeleteTagComponent,
     YeahDuplicateUrlListItemComponent,
     YeahListComponent,
+    YeahUrlSearchComponent,
     CommonModule,
     FormsModule
   ]

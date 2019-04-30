@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter } from "@angular/core";
+import { Url } from "../../../../models";
 
 @Component({
   selector: "yeah-url-list-item",
@@ -6,11 +7,13 @@ import { Component, Input, Output, EventEmitter } from "@angular/core";
   styleUrls: ["./yeah-url-list-item.component.css"]
 })
 export class YeahUrlListItemComponent {
-  @Input() url: any;
+  @Input() url: Url;
+  @Input() hideActionButtons: boolean;
   @Output() editUrlItemRequestSubmitted: EventEmitter<any>;
   @Output() deleteUrlItemRequestSubmitted: EventEmitter<any>;
 
   constructor() {
+    this.hideActionButtons = false;
     this.editUrlItemRequestSubmitted = new EventEmitter<any>();
     this.deleteUrlItemRequestSubmitted = new EventEmitter<any>();
   }

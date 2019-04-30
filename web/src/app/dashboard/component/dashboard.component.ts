@@ -191,26 +191,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const filteredUrlsByNameList = this._urlList.filter((urlItem: Url) => {
-      return urlItem.url
-        .toLowerCase()
-        .includes(requestedSearchTerm.toLowerCase());
-    });
-
-    const filteredUrlsByTagList = new Array<any>();
-    this._urlList.forEach(url => {
-      url.tags.forEach(tag => {
-        if (
-          tag.name.toLowerCase().includes(requestedSearchTerm.toLowerCase())
-        ) {
-          filteredUrlsByTagList.push(url);
-        }
-      });
-    });
-
-    this.filteredUrlList = Array.from(
-      new Set([...filteredUrlsByNameList, ...filteredUrlsByTagList])
-    );
+    this.filteredUrlList = Helper.performFiltering(this._urlList, requestedSearchTerm);
   }
 
   handleSubmittedAddRequest(): void {

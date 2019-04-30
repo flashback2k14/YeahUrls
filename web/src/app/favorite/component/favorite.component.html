@@ -1,5 +1,9 @@
 <div class="fav-container">
+  <yeah-url-search (searchRequestSubmitted)="handleSubmittedSearchRequest($event)"></yeah-url-search>
   <yeah-list>
-    <div class="loading-text text-color">Loading...</div>
+    <div *ngIf="showLoading" class="loading-text text-color">Loading...</div>
+    <yeah-url-list-item *ngFor="let url of filteredUrlList" [url]="url" [hideActionButtons]="true">
+      <yeah-url-list-tag *ngFor="let tag of url.tags" [tag]="tag"> </yeah-url-list-tag>
+    </yeah-url-list-item>
   </yeah-list>
 </div>

@@ -1,0 +1,28 @@
+.search-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 48px;
+  font-size: medium;
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 4px;
+}
+
+.search-container_input {
+  flex: 1 1 auto;
+  justify-content: center;
+}
+
+.search-container_actions {
+  justify-content: center;
+  margin-right: 12px;
+}
+
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+  .search-container {
+    height: 43px;
+  }
+  .search-container_input {
+    font-size: small;
+  }
+}

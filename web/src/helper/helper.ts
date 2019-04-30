@@ -41,4 +41,23 @@ export class Helper {
   public static compareTags(a: Tag, b: Tag): number {
     return a.name.toUpperCase().localeCompare(b.name.toLocaleUpperCase());
   }
+
+  public static performFiltering(urls: Array<Url>, requestedSearchTerm: string): Array<Url> {
+    const filteredUrlsByNameList = urls.filter((urlItem: Url) => {
+      return urlItem.url
+        .toLowerCase()
+        .includes(requestedSearchTerm.toLowerCase());
+    });
+
+    const filteredUrlsByTagList = new Array<Url>();
+    urls.forEach(url => {
+      url.tags.forEach(tag => {
+        if (tag.name.toLowerCase().includes(requestedSearchTerm.toLowerCase())) {
+          filteredUrlsByTagList.push(url);
+        }
+      });
+    });
+
+    return Array.from(new Set([...filteredUrlsByNameList, ...filteredUrlsByTagList]));
+  }
 }

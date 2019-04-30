@@ -15,3 +15,4 @@ export * from "./yeah-autocomplete/yeah-autocomplete.component";
 export * from "./yeah-list/yeah-list.component";
 export * from "./yeah-notify/yeah-notify.component";
 export * from "./yeah-tabs/yeah-tabs.component";
+export * from "./yeah-url-search/yeah-url-search.component";

@@ -1,0 +1,13 @@
+<div class="search-container">
+  <input #txtSearchInput
+    class="custom-input background-color text-color search-container_input"
+    type="text" required placeholder="Enter your search term..."
+    (keyup)="sendSearchRequest($event)">
+  <div class="search-container_actions">
+    <button class="custom-button-small custom-button_cancel" (click)="clearSearchRequest(txtSearchInput)">
+      <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMin slice">
+        <path class="svg-icon" fill="#E4676A" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" />
+      </svg>
+    </button>
+  </div>
+</div>
