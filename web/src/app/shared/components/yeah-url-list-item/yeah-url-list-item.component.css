@@ -13,10 +13,16 @@
 
 .item-container_top-url {
   display: flex;
-  width: 88%;
   padding-left: 4px;
   font-size: large;
-  /* word-wrap: break-word; */
+}
+
+.full-width {
+  width: 100%;
+}
+
+.width {
+  width: 88%;
 }
 
 .item-container_top-url_text {
