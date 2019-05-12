@@ -1,25 +1,35 @@
 <div class="login-container">
-  <div class="login-container_form">
-    <form #form="ngForm" (ngSubmit)="login(form.value)">
+  <form #form="ngForm" (keydown.enter)="loginOnEnter(form.value)">
+    <div class="input-container">
       <input
+        id="txtUsername"
+        class="input-control"
+        type="text"
+        placeholder="Enter your Username..."
+        tabindex="1"
         name="username"
         ngModel
-        type="text"
-        class="login-container_input background-color text-color"
-        required
-        placeholder="Enter your Username..."
       />
+      <label for="txtUsername" class="input-control_label">Username</label>
+      <span class="input-control_underline"></span>
+    </div>
+
+    <div class="input-container">
       <input
+        id="txtPassword"
+        class="input-control"
+        type="password"
+        placeholder="Enter your password..."
+        tabindex="2"
         name="password"
         ngModel
-        type="password"
-        class="login-container_input background-color text-color"
-        required
-        placeholder="Enter your Password..."
       />
-      <div class="login-container-buttons">
-        <button type="submit" class="login-container_button background-color_accent-1">Login</button>
-      </div>
-    </form>
-  </div>
+      <label for="txtPassword" class="input-control_label">Password</label>
+      <span class="input-control_underline"></span>
+    </div>
+
+    <div class="login-container-buttons">
+      <span class="button" tabindex="3" (click)="login(form.value)">Login</span>
+    </div>
+  </form>
 </div>
