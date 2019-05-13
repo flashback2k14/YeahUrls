@@ -21,7 +21,7 @@ form {
 .login-container-buttons {
   display: flex;
   justify-content: flex-end;
-  margin: 12px 24px 12px 12px;
+  margin: 12px 24px 18px 12px;
 }
 
 
@@ -30,7 +30,7 @@ form {
 }
 
 .input-control {
-  width: 94%;
+  width: 93%;
   height: 56px;
   margin: 12px;
   color: white;
@@ -49,6 +49,14 @@ form {
 .input-control::placeholder {
   color: hsla(0, 0%, 100%, 0.6);
 }
+
+.input-control:-webkit-autofill,
+.input-control:-webkit-autofill:hover, 
+.input-control:-webkit-autofill:focus {
+  -webkit-text-fill-color: #fc2f70;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
 
 .input-control_label {
   margin-left: 12px;
@@ -78,7 +86,7 @@ form {
   position: absolute;
   bottom: 12px;
   left: 12px;
-  right: 22px;
+  right: 12px;
   height: 1px;
   background-color: #3cefff;
   transform-origin: bottom right;
