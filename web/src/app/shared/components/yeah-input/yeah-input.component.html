@@ -1,0 +1,14 @@
+<div class="input-container">
+  <input
+    id="txt"
+    class="input-control"
+    tabindex="{{ inputTabIndex }}"
+    type="{{ inputType }}"
+    placeholder="{{ placeholderText }}"
+    [value]="inputValue"
+    (change)="onChange($event)"
+    (keyup)="onChange($event)"
+  />
+  <label for="txt" class="input-control_label">{{ labelText }}</label>
+  <span class="input-control_underline"></span>
+</div>

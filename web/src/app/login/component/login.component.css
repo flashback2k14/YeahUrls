@@ -11,7 +11,7 @@ form {
   flex-direction: column;
   justify-content: flex-start;
   width: 500px;
-  padding: 12px 24px;
+  padding: 12px 4px 4px 12px;
   border-radius: 8px;
   box-shadow: 0 4px 4px 0 rgba(0,0,0,0.6);
   transition: 0.3s;
@@ -23,108 +23,6 @@ form {
   justify-content: flex-end;
   margin: 12px 24px 18px 12px;
 }
-
-
-.input-container {
-  position: relative;
-}
-
-.input-control {
-  width: 93%;
-  height: 56px;
-  margin: 12px;
-  color: white;
-  box-sizing: border-box;
-  font-size: inherit;
-  font-family: inherit;
-  background-color: transparent;
-  border: 1px solid transparent;
-  border-bottom-color: hsla(185, 100%, 62%, 0.2);
-}
-
-.input-control:focus {
-  outline: none;
-}
-
-.input-control::placeholder {
-  color: hsla(0, 0%, 100%, 0.6);
-}
-
-.input-control:-webkit-autofill,
-.input-control:-webkit-autofill:hover, 
-.input-control:-webkit-autofill:focus {
-  -webkit-text-fill-color: #fc2f70;
-  transition: background-color 5000s ease-in-out 0s;
-}
-
-
-.input-control_label {
-  margin-left: 12px;
-  opacity: .8;
-  font-weight: 400;
-}
-
-.input-container .input-control_label {
-  position: absolute;
-  top: calc(50% - 7px);
-  left: 0;
-  opacity: 0;
-  margin-bottom: 0;
-  transition: all .3s ease;
-}
-.input-container .input-control:not(:placeholder-shown) {
-  padding: 28px 0 0 0;
-}
-.input-container .input-control:not(:placeholder-shown) + .input-control_label {
-  -webkit-transform: translateY(-10px);
-          transform: translateY(-10px);
-  opacity: .7;
-}
-
-
-.input-control_underline {
-  position: absolute;
-  bottom: 12px;
-  left: 12px;
-  right: 12px;
-  height: 1px;
-  background-color: #3cefff;
-  transform-origin: bottom right;
-  transform: scaleX(0);
-  transition: transform 0.5s ease;
-}
-
-.input-control:focus ~ .input-control_underline {
-  transform-origin: bottom left;
-  transform: scaleX(1);
-}
-
-.button {
-  position: relative;
-  z-index: 1;
-  cursor: pointer;
-  font-size: large;
-}
-
-.button::before {
-  content: '';
-  position: absolute;
-  z-index: -1;
-  top: 0;
-  bottom: 0;
-  left: -0.25em;
-  right: -0.25em;
-  background-color: #fc2f70;
-  transform-origin: bottom center;
-  transform: scaleY(0.1);
-  transition: all 0.1s ease-in-out;
-}
-
-.button:hover::before {
-  transform: scaleY(1);
-  background-color: hsla(341, 97%, 59%, 0.75);
-}
-
 
 @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
   form {

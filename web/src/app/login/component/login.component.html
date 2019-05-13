@@ -1,35 +1,25 @@
 <div class="login-container">
   <form #form="ngForm" (keydown.enter)="loginOnEnter(form.value)">
-    <div class="input-container">
-      <input
-        id="txtUsername"
-        class="input-control"
-        type="text"
-        placeholder="Enter your Username..."
-        tabindex="1"
-        name="username"
-        ngModel
-      />
-      <label for="txtUsername" class="input-control_label">Username</label>
-      <span class="input-control_underline"></span>
-    </div>
+    <yeah-input
+      inputTabIndex="1"
+      inputType="text"
+      placeholderText="Enter your username..."
+      labelText="Username"
+      name="username"
+      ngModel
+    ></yeah-input>
 
-    <div class="input-container">
-      <input
-        id="txtPassword"
-        class="input-control"
-        type="password"
-        placeholder="Enter your password..."
-        tabindex="2"
-        name="password"
-        ngModel
-      />
-      <label for="txtPassword" class="input-control_label">Password</label>
-      <span class="input-control_underline"></span>
-    </div>
+    <yeah-input
+      inputTabIndex="2"
+      inputType="password"
+      placeholderText="Enter your password..."
+      labelText="Password"
+      name="password"
+      ngModel
+    ></yeah-input>
 
     <div class="login-container-buttons">
-      <span class="button" tabindex="3" (click)="login(form.value)">Login</span>
+      <yeah-button buttonTabIndex="3" type="submit">Login</yeah-button>
     </div>
   </form>
 </div>
