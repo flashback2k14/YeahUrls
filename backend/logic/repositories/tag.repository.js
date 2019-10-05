@@ -50,7 +50,12 @@ module.exports = (TagModel, UrlModel, SocketHelper) => {
       });
     });
 
-    return extendedTags;
+    const currentSet = new Set(extendedTags);
+    const missingTags = tags
+      .filter(tag => !currentSet.has(tag))
+      .map(tag => ({ ...tag, count: 0 }));
+
+    return [...missingTags, ...extendedTags];
   }
 
   function _extendSingle(tag, count) {
