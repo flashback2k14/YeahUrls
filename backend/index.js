@@ -41,7 +41,11 @@ app.use(
     frameguard: { action: 'deny' },
   })
 );
-app.use(cors());
+app.use(
+  cors({
+    origin: Config.corsOriginUrl,
+  })
+);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
