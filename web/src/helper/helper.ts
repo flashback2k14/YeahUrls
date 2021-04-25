@@ -22,12 +22,21 @@ export class Helper {
     return "Unknown User";
   }
 
+  public static getPagingLimit(): number {
+    const limit = localStorage.getItem(StorageKeys.URLS_PAGING_LIMIT);
+    if (limit) {
+      return Number(limit);
+    }
+    return 200;
+  }
+
   public static extractBackendError(error: Response | any): string {
     let errMsg: string;
     if (error instanceof Response) {
       const body = error.json() || {};
-      errMsg = `${body.error || ""} ${body.error_description ||
-        ""} ${body.message || ""}`;
+      errMsg = `${body.error || ""} ${body.error_description || ""} ${
+        body.message || ""
+      }`;
     } else {
       errMsg = error.message || error.toString();
     }
@@ -42,7 +51,10 @@ export class Helper {
     return a.name.toUpperCase().localeCompare(b.name.toLocaleUpperCase());
   }
 
-  public static performFiltering(urls: Array<Url>, requestedSearchTerm: string): Array<Url> {
+  public static performFiltering(
+    urls: Array<Url>,
+    requestedSearchTerm: string
+  ): Array<Url> {
     const filteredUrlsByNameList = urls.filter((urlItem: Url) => {
       return urlItem.url
         .toLowerCase()
@@ -50,14 +62,18 @@ export class Helper {
     });
 
     const filteredUrlsByTagList = new Array<Url>();
-    urls.forEach(url => {
-      url.tags.forEach(tag => {
-        if (tag.name.toLowerCase().includes(requestedSearchTerm.toLowerCase())) {
+    urls.forEach((url) => {
+      url.tags.forEach((tag) => {
+        if (
+          tag.name.toLowerCase().includes(requestedSearchTerm.toLowerCase())
+        ) {
           filteredUrlsByTagList.push(url);
         }
       });
     });
 
-    return Array.from(new Set([...filteredUrlsByNameList, ...filteredUrlsByTagList]));
+    return Array.from(
+      new Set([...filteredUrlsByNameList, ...filteredUrlsByTagList])
+    );
   }
 }

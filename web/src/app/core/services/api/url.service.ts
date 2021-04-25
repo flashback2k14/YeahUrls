@@ -7,6 +7,7 @@ import {
   DuplicateUrlLean,
   LastUpdatedResult,
 } from "../../../../models/index";
+import { Helper } from "../../../../helper/index";
 import { ConfigService } from "./config.service";
 
 @Injectable()
@@ -49,7 +50,7 @@ export class UrlService {
 
   async getPagedUrlsByUser(userId: string): Promise<Array<Url>> {
     const finalResult = new Array<Url>();
-    const limit = 500;
+    const limit = Helper.getPagingLimit();
     let page = 1;
 
     const firstResult = await this._pagedUrlRequest(userId, page, limit);
