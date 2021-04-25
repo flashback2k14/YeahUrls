@@ -1,0 +1,19 @@
+# @name login
+POST http://localhost:6006/api/v1/signin
+Accept: application/json
+Content-Type: application/json
+
+{
+  "username": "YeahDev",
+  "password": "xxxxxxxxxx"
+}
+
+###
+
+@token = {{login.response.body.token}}
+
+###
+
+GET http://localhost:6006/api/v1/tag
+Content-Type: application/json
+x-access-token: {{token}}
