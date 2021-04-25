@@ -13,4 +13,5 @@ module.exports = {
   mailGunApiKey: process.env.MAIL_GUN_API_KEY || '',
   mailGunDomain: process.env.MAIL_GUN_DOMAIN || '',
   corsOriginUrl: process.env.CORS_ORIGIN_URL || '*',
+  sioCorsOriginUtl: process.env.SIO_CORS_ORIGIN_URL || 'http://localhost:4200',
 };

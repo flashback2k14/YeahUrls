@@ -14,7 +14,12 @@ const UserModel = require('./models/user.model');
 // create app, server and socket.io
 const app = express();
 const server = http.createServer(app);
-const sio = require('socket.io')(server);
+const sio = require('socket.io')(server, {
+  cors: {
+    origin: Config.sioCorsOriginUtl,
+    methods: ['GET', 'POST'],
+  },
+});
 
 // config mongoose
 mongoose.connect(

@@ -20,7 +20,9 @@ export class CachingService {
       return await this._initialFetchUrls(userId);
     }
 
-    const result: LastUpdatedResult = await this._urlService.getLastUpdated(userId);
+    const result: LastUpdatedResult = await this._urlService.getLastUpdated(
+      userId
+    );
 
     if (this._lastUpdated.getTime() < result.lastUpdated.getTime()) {
       return await this._refetchUrls(userId, result);
@@ -38,9 +40,14 @@ export class CachingService {
   private async _initialFetchUrls(userId: string) {
     this._urls = await this._getUrlsForUser(userId);
 
-    const lastUpdatedOnBackend: LastUpdatedResult = await this._urlService.getLastUpdated(userId);
+    const lastUpdatedOnBackend: LastUpdatedResult = await this._urlService.getLastUpdated(
+      userId
+    );
     this._lastUpdated = lastUpdatedOnBackend.lastUpdated;
-    localStorage.setItem(StorageKeys.URLS_LAST_UPDATED, JSON.stringify(this._lastUpdated));
+    localStorage.setItem(
+      StorageKeys.URLS_LAST_UPDATED,
+      JSON.stringify(this._lastUpdated)
+    );
 
     return this._urls;
   }
@@ -49,13 +56,16 @@ export class CachingService {
     this._urls = await this._getUrlsForUser(userId);
 
     this._lastUpdated = result.lastUpdated;
-    localStorage.setItem(StorageKeys.URLS_LAST_UPDATED, JSON.stringify(this._lastUpdated));
+    localStorage.setItem(
+      StorageKeys.URLS_LAST_UPDATED,
+      JSON.stringify(this._lastUpdated)
+    );
 
     return this._urls;
   }
 
   private async _getUrlsForUser(userId: string): Promise<Array<Url>> {
-    const urls = await this._urlService.getUrlsByUser(userId);
+    const urls = await this._urlService.getPagedUrlsByUser(userId);
     urls.sort(Helper.compareUrls);
 
     localStorage.removeItem(StorageKeys.URLS_CACHED);
@@ -65,9 +75,14 @@ export class CachingService {
   }
 
   async updateUrls(userId: string, urls: Array<Url>): Promise<void> {
-    const lastUpdatedOnBackend: LastUpdatedResult = await this._urlService.getLastUpdated(userId);
+    const lastUpdatedOnBackend: LastUpdatedResult = await this._urlService.getLastUpdated(
+      userId
+    );
     this._lastUpdated = lastUpdatedOnBackend.lastUpdated;
-    localStorage.setItem(StorageKeys.URLS_LAST_UPDATED, JSON.stringify(this._lastUpdated));
+    localStorage.setItem(
+      StorageKeys.URLS_LAST_UPDATED,
+      JSON.stringify(this._lastUpdated)
+    );
 
     this._urls = urls;
     localStorage.removeItem(StorageKeys.URLS_CACHED);
