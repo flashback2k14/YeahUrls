@@ -1,4 +1,5 @@
 .vscode/cred.txt
+.vscode/api.local.rest
 .vscode/api.prod.rest
 backend/node_modules
 backend/tmp

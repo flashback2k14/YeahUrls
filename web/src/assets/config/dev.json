@@ -1,6 +1,7 @@
 {
   "baseUrl": "http://localhost:6006",
   "apiVersion": "/api/v1",
+  "apiV2Version": "/api/v2",
   "signInRoute": "/signin",
   "urlRoute": "/url",
   "tagRoute": "/tag",
