@@ -1,5 +1,4 @@
 // 3rd party imports
-const bodyParser = require('body-parser');
 const cors = require('cors');
 const express = require('express');
 const helmet = require('helmet');
@@ -15,7 +14,7 @@ const UserModel = require('./models/user.model');
 // create app, server and socket.io
 const app = express();
 const server = http.createServer(app);
-const sio = require('socket.io').listen(server);
+const sio = require('socket.io')(server);
 
 // config mongoose
 mongoose.connect(
@@ -46,8 +45,12 @@ app.use(
     origin: Config.corsOriginUrl,
   })
 );
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(express.json());
+app.use(
+  express.urlencoded({
+    extended: true,
+  })
+);
 
 // create helpers
 const CryptoHelper = require('./logic/helpers/crypto.helper')(Config.pwSecret);
@@ -67,12 +70,14 @@ const authRoute = require('./routes/auth.route')(express, authRepository);
 const userRoute = require('./routes/user.route')(express, userRepository);
 const tagRoute = require('./routes/tag.route')(express, tagRepository);
 const urlRoute = require('./routes/url.route')(express, urlRepository);
+const urlV2Route = require('./routes/url-v2.route')(express, urlRepository);
 
 // set routes
 app.use('/api/v1', authRoute);
 app.use('/api/v1/user', authMiddleware.checkAuthState, userRoute);
 app.use('/api/v1/tag', authMiddleware.checkAuthState, tagRoute);
 app.use('/api/v1/url', authMiddleware.checkAuthState, urlRoute);
+app.use('/api/v2/url', authMiddleware.checkAuthState, urlV2Route);
 
 // create backup job
 try {

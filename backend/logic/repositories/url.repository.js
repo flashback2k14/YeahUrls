@@ -8,13 +8,13 @@ module.exports = (UrlModel, TagModel, UserModel, SocketHelper) => {
       id: tag._id,
       name: tag.name,
       created: tag.createdAt,
-      updated: tag.updatedAt
+      updated: tag.updatedAt,
     };
   }
 
   async function _getTagsFromUrl(tags) {
     return await Promise.all(
-      tags.map(async tag => {
+      tags.map(async (tag) => {
         return this._transformTag(await TagModel.findById(tag).lean());
       })
     );
@@ -27,13 +27,13 @@ module.exports = (UrlModel, TagModel, UserModel, SocketHelper) => {
       user: url.user,
       tags: await this._getTagsFromUrl(url.tags),
       created: url.createdAt,
-      updated: url.updatedAt
+      updated: url.updatedAt,
     };
   }
 
   async function _transformAllUrls(urls) {
     return await Promise.all(
-      urls.map(async url => {
+      urls.map(async (url) => {
         return await this._transformUrl(url);
       })
     );
@@ -41,7 +41,7 @@ module.exports = (UrlModel, TagModel, UserModel, SocketHelper) => {
 
   async function _createNewTags(tags) {
     return await Promise.all(
-      tags.map(async tag => {
+      tags.map(async (tag) => {
         let foundOrCreatedTag = await TagModel.findOne({ name: tag }).lean();
         if (!foundOrCreatedTag) {
           foundOrCreatedTag = await new TagModel({ name: tag }).save();
@@ -66,6 +66,24 @@ module.exports = (UrlModel, TagModel, UserModel, SocketHelper) => {
     return await this._transformAllUrls(urls);
   }
 
+  async function getPagedByUserId(userId, page, limit) {
+    const urls = await UrlModel.find({ user: userId })
+      .limit(limit * 1)
+      .skip((page - 1) * limit)
+      .exec();
+
+    const count = await UrlModel.countDocuments();
+
+    return {
+      data: {
+        urls: await this._transformAllUrls(urls),
+      },
+      count,
+      currentPage: Number(page),
+      totalPages: Math.ceil(count / limit),
+    };
+  }
+
   async function getByUserIdAndUrlId(userId, urlId) {
     const url = await UrlModel.findOne({ _id: urlId, user: userId }).lean();
     return await this._transformUrl(url);
@@ -75,28 +93,28 @@ module.exports = (UrlModel, TagModel, UserModel, SocketHelper) => {
     const foundDups = await UrlModel.aggregate([
       {
         $group: {
-          _id: { URL: "$url" },
-          duplicateUrlIds: { $addToSet: "$_id" },
-          count: { $sum: 1 }
-        }
+          _id: { URL: '$url' },
+          duplicateUrlIds: { $addToSet: '$_id' },
+          count: { $sum: 1 },
+        },
       },
       {
         $match: {
-          count: { $gt: 1 }
-        }
+          count: { $gt: 1 },
+        },
       },
       {
         $sort: {
-          count: -1
-        }
-      }
+          count: -1,
+        },
+      },
     ]);
     return isLean
       ? foundDups
       : await Promise.all(
-          foundDups.map(async dup => {
+          foundDups.map(async (dup) => {
             dup.duplicateUrls = await Promise.all(
-              dup.duplicateUrlIds.map(urlId => {
+              dup.duplicateUrlIds.map((urlId) => {
                 return this.getByUserIdAndUrlId(userId, urlId);
               })
             );
@@ -106,10 +124,7 @@ module.exports = (UrlModel, TagModel, UserModel, SocketHelper) => {
   }
 
   async function getLastUpdated(userId) {
-    const urls = await UrlModel.find({ user: userId })
-      .sort({ updatedAt: -1 })
-      .limit(1)
-      .lean();
+    const urls = await UrlModel.find({ user: userId }).sort({ updatedAt: -1 }).limit(1).lean();
     return { lastUpdated: urls[0].updatedAt };
   }
 
@@ -119,7 +134,7 @@ module.exports = (UrlModel, TagModel, UserModel, SocketHelper) => {
 
     const modifiedUrl = {
       url: body.url,
-      tags: tagIds
+      tags: tagIds,
     };
 
     const updatedUrl = await UrlModel.findByIdAndUpdate({ _id: urlId }, { $set: modifiedUrl }, { new: true }).lean();
@@ -136,7 +151,7 @@ module.exports = (UrlModel, TagModel, UserModel, SocketHelper) => {
     const newUrl = new UrlModel({
       url: body.url,
       user: userId,
-      tags: tagIds
+      tags: tagIds,
     });
 
     const createdUrl = await newUrl.save();
@@ -191,6 +206,7 @@ module.exports = (UrlModel, TagModel, UserModel, SocketHelper) => {
     _transformAllUrls,
     getAll,
     getAllByUserId,
+    getPagedByUserId,
     getByUserIdAndUrlId,
     findDuplicatesByUserId,
     getLastUpdated,
@@ -198,6 +214,6 @@ module.exports = (UrlModel, TagModel, UserModel, SocketHelper) => {
     createNewUrlForUserId,
     createNewTagForUserIdAndUrlId,
     deleteByUserIdAndUrlId,
-    deleteTagByUserIdAndUrlId
+    deleteTagByUserIdAndUrlId,
   };
 };
