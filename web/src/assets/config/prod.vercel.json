@@ -1,5 +1,5 @@
 {
-  "baseUrl": "https://yeah-urls.herokuapp.com",
+  "baseUrl": "https://yeah-urls-backend.vercel.app",
   "apiVersion": "/api/v1",
   "apiV2Version": "/api/v2",
   "signInRoute": "/signin",

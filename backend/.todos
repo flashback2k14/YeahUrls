@@ -1,1 +1,2 @@
 - update mailgun to https://www.npmjs.com/package/mailgun.js
+- cron job: https://vercel.com/docs/solutions/cron-jobs
